@@ -1,0 +1,46 @@
+# Dependencies
+node_modules/
+
+# Expo / React Native
+.expo/
+dist/
+web-build/
+expo-env.d.ts
+ios/
+android/
+*.jks
+*.p8
+*.p12
+*.key
+*.mobileprovision
+*.orig.*
+
+# Supabase local
+supabase/.temp/
+supabase/.branches/
+
+# Environment & secrets — never commit
+.env
+.env.*
+!.env.example
+
+# Build / test output
+coverage/
+build/
+*.tsbuildinfo
+
+# Logs
+npm-debug.*
+yarn-debug.*
+yarn-error.*
+*.log
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/*
+!.vscode/extensions.json
+
+# Local journal samples — only synthetic data may be committed
+samples/private/
