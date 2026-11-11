@@ -1,7 +1,7 @@
 # ADR-0004: Styling approach
 
 ## Status
-Proposed (D-10 TBD)
+Accepted (2026-11-11, product owner)
 
 ## Context
 Visual spec (`04`) wants semantic tokens, restrained visuals, light/dark TBD (D-20), Korean long-form readability, reduced motion.

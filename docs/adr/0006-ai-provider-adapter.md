@@ -1,7 +1,7 @@
 # ADR-0006: AI provider adapter and mock-first policy
 
 ## Status
-Proposed (D-08 provider/model TBD — not decided here)
+Accepted (2026-11-11, product owner) — adapter + mock-first policy only; D-08 provider/model remains TBD
 
 ## Context
 AI calls must be server-side, provider-replaceable, schema-validated, and must not process real journal text until provider retention/training/region terms are reviewed (`07`, REL-02).

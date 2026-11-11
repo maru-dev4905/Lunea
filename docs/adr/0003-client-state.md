@@ -1,7 +1,7 @@
 # ADR-0003: Client state management
 
 ## Status
-Proposed (D-09 TBD)
+Accepted (2026-11-11, product owner)
 
 ## Context
 `05` says "Jotai or Zustand only if needed; don't install both". Most app state is server state (entries, analysis runs) handled by TanStack Query. Local state: draft text, review edits, UI toggles.
@@ -16,7 +16,7 @@ Proposed: option 1. Add **one** library (Zustand is the default candidate for it
 
 ## Consequences
 - Fewer dependencies; no premature abstraction.
-- Draft persistence (JRN-01: survive navigation and transient failure) needs an explicit design; journal text stored on device is sensitive and needs a privacy decision before implementation.
+- On-device draft persistence is **deferred** (product owner, 2026-11-11): not in the first scaffold. Drafts survive in-memory navigation only until a later ticket designs secure local storage. Journal text on device is sensitive and needs that design reviewed first.
 
 ## Owner
 Product owner (human).

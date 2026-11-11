@@ -1,7 +1,7 @@
 # ADR-0002: Backend, auth, and database
 
 ## Status
-Proposed — **D-06 is TBD; this ADR is a recommendation, not a decision.**
+Accepted (2026-11-11, product owner) — **conditional**: Supabase is selected for the PoC; it becomes final only when all PoC gates below pass. Owner creates the Supabase project.
 
 ## Context
 Requirements: server-side owner checks/RLS, AI provider calls server-side only, no journal text in logs, separate dev/staging/prod, deletion that can be verified, minimal ops for a very small team. PoC gates in `05`: auth/session refresh, user-scoped CRUD/RLS, server-side AI structured output, secret management, deletion, provider terms.

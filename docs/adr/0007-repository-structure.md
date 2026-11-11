@@ -1,7 +1,7 @@
 # ADR-0007: Repository structure
 
 ## Status
-Proposed
+Accepted (2026-11-11, product owner)
 
 ## Context
 `05` proposes `apps/mobile`, `backend/` or `supabase/`, and `packages/contracts/`, and allows a simpler structure if deviations are explained.

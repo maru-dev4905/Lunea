@@ -1,7 +1,7 @@
 # ADR-0001: Mobile app stack
 
 ## Status
-Proposed
+Accepted (2026-11-11, product owner)
 
 ## Context
 D-02 (mobile, iOS + Android) is Accepted. D-04 (React Native + Expo + TypeScript) and D-05 (Expo Router) are Proposed. The team is one human owner plus AI agents, so build/release operations must stay simple.

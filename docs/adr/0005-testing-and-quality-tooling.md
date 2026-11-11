@@ -1,7 +1,7 @@
 # ADR-0005: Testing and quality tooling
 
 ## Status
-Proposed
+Accepted (2026-11-11, product owner)
 
 ## Context
 CI minimum (`08`): lockfile install, format, lint, typecheck, unit tests, build, dependency check. Release gates need cross-user access tests and AI schema regression tests.
