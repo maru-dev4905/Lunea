@@ -1,0 +1,32 @@
+# CodeRabbit configuration — Lunéa
+# Review criteria: CODEX_REVIEW.md (shared by all independent reviewers).
+language: "ko-KR"
+early_access: false
+reviews:
+  profile: "chill"
+  request_changes_workflow: false
+  high_level_summary: true
+  poem: false
+  review_status: true
+  collapse_walkthrough: false
+  auto_review:
+    enabled: true
+    drafts: false
+    base_branches:
+      - "main"
+  finishing_touches:
+    unit_tests:
+      enabled: false
+  path_instructions:
+    - path: "**/*"
+      instructions: |
+        리뷰는 한국어로 작성한다. CODEX_REVIEW.md의 리뷰 기준과 심각도(Critical/High/Medium/Low)를 따른다.
+        최우선 확인: 일기 원문·비밀 값의 로그/분석/클라이언트 번들 노출, 서버 측 소유권 검사 누락,
+        사용자 확인 없이 AI 결과를 확정 저장하는 경로, AI 출력의 런타임 검증 누락, 프롬프트 인젝션.
+        제품 결정이 필요한 사항은 NEEDS_PRODUCT_DECISION으로 표시한다. 추측성 스타일 지적은 피한다.
+    - path: "docs/**"
+      instructions: |
+        문서 간 상태명·용어 불일치, Accepted/Proposed/TBD 상태의 무단 변경, TBD 항목(Balance, Collection 은유 등)을
+        확정한 것처럼 서술하는 부분을 지적한다.
+chat:
+  auto_reply: true

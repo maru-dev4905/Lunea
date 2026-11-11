@@ -16,6 +16,6 @@ Lunéa (`lunea`, 루네아) is an AI-assisted emotional journal. This package is
 11. `docs/10_OPEN_DECISIONS.md`
 12. `CLAUDE_HANDOFF_PROMPT.md`
 
-`Accepted` is binding. `Proposed` is a reversible default. `TBD` means Claude must ask, not silently decide. Human is product owner and final approver; Claude Code is primary developer; Codex is independent reviewer.
+`Accepted` is binding. `Proposed` is a reversible default. `TBD` means Claude must ask, not silently decide. Human is product owner and final approver; Claude Code is primary developer; CodeRabbit is the current independent reviewer (Codex deferred, D-21).
 
 Lunéa is not a diagnostic, treatment, crisis-response, or therapy replacement. AI suggests; the user decides. Original journal text must be preserved. No agent may merge to `main` or deploy production without explicit human approval.
