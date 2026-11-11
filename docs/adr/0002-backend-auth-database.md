@@ -18,7 +18,7 @@ Requirements: server-side owner checks/RLS, AI provider calls server-side only, 
 | Risk | RLS mistakes are silent; must be tested with cross-user tests | More code and infra to secure |
 
 ## Decision
-Recommended: **A. Supabase**, conditional on a PoC that proves, before any real data:
+Selected: **A. Supabase**, conditional on a PoC that proves, before any real data:
 1. RLS denies cross-user insert/read/update/delete on every journal table, including inserts that set another user's `user_id` (automated tests).
 2. Edge Function can call the (mock) AI adapter with the secret never reaching the client.
 3. Session refresh works on device.

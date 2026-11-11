@@ -12,7 +12,7 @@ Visual spec (`04`) wants semantic tokens, restrained visuals, light/dark TBD (D-
 3. Utility-class libraries (e.g. NativeWind) — fast to write, but adds a build layer and a different mental model.
 
 ## Decision
-Proposed: option 1. Tokens (`background`, `surface`, `textPrimary`, … from `04`) live in one typed module; components read tokens through a small `useTheme()` hook so light/dark can be added later without rewriting components. Exact palette and fonts remain TBD.
+Accepted: option 1. Tokens (`background`, `surface`, `textPrimary`, … from `04`) live in one typed module; components read tokens through a small `useTheme()` hook so light/dark can be added later without rewriting components. Exact palette and fonts remain TBD.
 
 ## Consequences
 - Zero extra styling dependency.

@@ -6,7 +6,7 @@ Accepted (2026-11-11, product owner) — adapter + mock-first policy only; D-08 
 ## Context
 AI calls must be server-side, provider-replaceable, schema-validated, and must not process real journal text until provider retention/training/region terms are reviewed (`07`, REL-02).
 
-## Decision (proposed)
+## Decision
 - Define a server-side `AnalysisProvider` interface: input = minimized entry context + prompt version; output = raw model response validated by a versioned Zod schema (AI-01).
 - Ship **only a deterministic mock provider** until D-08 is decided and provider terms are approved. Selected via `AI_PROVIDER=mock` (already in `.env.example`).
 - Invalid output → `analysis_failed`, draft preserved, never coerced into labels (`07`).

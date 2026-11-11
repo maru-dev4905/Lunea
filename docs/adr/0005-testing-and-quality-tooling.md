@@ -6,7 +6,7 @@ Accepted (2026-11-11, product owner)
 ## Context
 CI minimum (`08`): lockfile install, format, lint, typecheck, unit tests, build, dependency check. Release gates need cross-user access tests and AI schema regression tests.
 
-## Options and decision (proposed)
+## Options and decision
 | Concern | Proposal | Alternatives considered |
 |---|---|---|
 | Package manager | npm (Expo's default; fewest workspace quirks) | pnpm (needs hoisting config with Expo), yarn |

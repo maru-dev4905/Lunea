@@ -6,7 +6,7 @@ Accepted (2026-11-11, product owner)
 ## Context
 `05` proposes `apps/mobile`, `backend/` or `supabase/`, and `packages/contracts/`, and allows a simpler structure if deviations are explained.
 
-## Decision (proposed)
+## Decision
 Start with:
 ```text
 lunea/

@@ -4,7 +4,7 @@
 Accepted (2026-11-11, product owner)
 
 ## Context
-D-02 (mobile, iOS + Android) is Accepted. D-04 (React Native + Expo + TypeScript) and D-05 (Expo Router) are Proposed. The team is one human owner plus AI agents, so build/release operations must stay simple.
+D-02 (mobile, iOS + Android) is Accepted. D-04 (React Native + Expo + TypeScript) and D-05 (Expo Router) were Proposed at the time of writing and are accepted by this ADR. The team is one human owner plus AI agents, so build/release operations must stay simple.
 
 ## Options
 1. **Expo (managed workflow, CNG) + React Native + TypeScript + Expo Router** — one codebase, file-based routing, EAS Build for both platforms, no committed `ios/`/`android/` folders.
@@ -13,11 +13,11 @@ D-02 (mobile, iOS + Android) is Accepted. D-04 (React Native + Expo + TypeScript
 4. Native apps (Swift + Kotlin) — two codebases; not proportional for MVP.
 
 ## Decision
-Proposed: option 1.
+Accepted: option 1.
 - Use the latest stable Expo SDK at scaffold time (pin exact versions in the lockfile; do not guess versions in docs).
 - TypeScript `strict: true`.
 - Expo Router for navigation (Today / Collection / Settings tabs as proposed in `03`, not final IA).
-- TanStack Query for server state; Zod for runtime validation (both already Proposed in `05`).
+- TanStack Query for server state; Zod for runtime validation (Proposed in `05`, accepted by this ADR).
 - Reanimated only when a concrete motion need appears, and always behind reduced-motion checks.
 - `expo-secure-store` for auth tokens (PRD: platform-appropriate secure storage).
 

@@ -12,7 +12,7 @@ Accepted (2026-11-11, product owner)
 3. Jotai — atomic state, fine-grained updates.
 
 ## Decision
-Proposed: option 1. Add **one** library (Zustand is the default candidate for its simplicity) only when a concrete cross-screen state problem appears, via a separate ADR update.
+Accepted: option 1. Add **one** library (Zustand is the default candidate for its simplicity) only when a concrete cross-screen state problem appears, via a separate ADR update.
 
 ## Consequences
 - Fewer dependencies; no premature abstraction.
