@@ -7,7 +7,7 @@ Accepted (2026-11-11, product owner)
 `05` says "Jotai or Zustand only if needed; don't install both". Most app state is server state (entries, analysis runs) handled by TanStack Query. Local state: draft text, review edits, UI toggles.
 
 ## Options
-1. **No global state library initially** — TanStack Query + React state/context; drafts persisted with a small storage helper.
+1. **No global state library initially** — TanStack Query + React state/context; drafts kept in memory only (on-device persistence deferred, see Consequences).
 2. Zustand — simple store, good for cross-screen draft/review state.
 3. Jotai — atomic state, fine-grained updates.
 
