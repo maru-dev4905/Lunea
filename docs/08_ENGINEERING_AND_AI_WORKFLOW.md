@@ -4,7 +4,7 @@
 - Human: product owner, final authority.
 - Claude Code: primary developer; repository setup, implementation, tests, docs, PR prep.
 - CodeRabbit: current independent PR reviewer (GitHub App, config in `.coderabbit.yaml`); no merge authority.
-- Codex: deferred independent reviewer; add when a paid ChatGPT plan is adopted (D-21). No merge authority.
+- Codex: deferred independent reviewer; add when feature development (Expo scaffold, FND-02) starts, by adopting a paid ChatGPT plan (Plus or higher) (D-21). No merge authority.
 - GitHub Actions: mechanical quality gate.
 - Orca CLI: optional outer orchestration/worktree tool, only when parallelism is needed.
 

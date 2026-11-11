@@ -22,7 +22,7 @@
 | D-18 | Crisis/safety policy | TBD | Specialist review |
 | D-19 | Monetization | Deferred | Validate usefulness |
 | D-20 | Light/dark mode | TBD | Decide after prototype |
-| D-21 | Independent reviewer tooling | Accepted: CodeRabbit now; Codex deferred | Add Codex (GitHub review needs paid ChatGPT plan) when feature development starts; confirm CodeRabbit private-repo pricing |
+| D-21 | Independent reviewer tooling | Accepted: CodeRabbit now; Codex deferred | Codex: add when feature development (Expo scaffold, FND-02) starts, by adopting a paid ChatGPT plan (Plus or higher); GitHub review is not available on the free plan. Confirm CodeRabbit private-repo pricing |
 
 ## Questions Claude must not decide silently
 1. Backend and deployment platform?

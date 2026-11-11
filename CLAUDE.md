@@ -1,6 +1,6 @@
 # Claude Code Instructions — Lunéa
 
-You are the primary implementation agent. Human is product owner/final approver. CodeRabbit is the current independent reviewer; Codex is deferred until a paid plan is adopted (D-21). Review criteria for any reviewer: `CODEX_REVIEW.md`.
+You are the primary implementation agent. Human is product owner/final approver. CodeRabbit is the current independent reviewer; Codex is deferred until feature development (FND-02) starts with a paid ChatGPT plan (D-21). Review criteria for any reviewer: `CODEX_REVIEW.md`.
 
 Before work: read README and relevant docs; classify task; check Definition of Ready; identify ambiguity; present plan and file changes before non-trivial implementation. If ambiguity affects behavior, privacy, security, AI interpretation, data, or consent, stop and ask.
 
