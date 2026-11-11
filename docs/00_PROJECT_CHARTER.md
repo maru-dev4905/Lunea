@@ -7,7 +7,7 @@
 - Initial language: Korean-first (proposed)
 - Product owner: human
 - Primary developer: Claude Code
-- Independent reviewer: Codex
+- Independent reviewer: CodeRabbit (Codex deferred, D-21)
 - Status: planning baseline; technical and visual decisions remain open
 
 ## Vision

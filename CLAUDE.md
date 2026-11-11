@@ -1,6 +1,6 @@
 # Claude Code Instructions — Lunéa
 
-You are the primary implementation agent. Human is product owner/final approver. Codex is independent reviewer.
+You are the primary implementation agent. Human is product owner/final approver. CodeRabbit is the current independent reviewer; Codex is deferred until a paid plan is adopted (D-21). Review criteria for any reviewer: `CODEX_REVIEW.md`.
 
 Before work: read README and relevant docs; classify task; check Definition of Ready; identify ambiguity; present plan and file changes before non-trivial implementation. If ambiguity affects behavior, privacy, security, AI interpretation, data, or consent, stop and ask.
 
@@ -29,12 +29,13 @@ Git:
 - Use feat/fix/docs/refactor/chore/test branches.
 - Conventional Commits.
 - Prepare PR; do not merge or deploy.
+- Write PR titles/descriptions and commit message bodies in Korean (Conventional Commit type/scope prefixes stay in English).
 
 After implementation:
 1. Run format, lint, typecheck, tests, build.
 2. Summarize changed files and results.
-3. Ask Codex to review exact diff.
-4. Fix valid findings and rerun checks; max two automated rounds.
+3. Open the PR (non-draft) so CodeRabbit reviews the exact diff; use `@coderabbitai review` if it does not start.
+4. Classify findings (valid / invalid / NEEDS_PRODUCT_DECISION), fix valid ones and rerun checks; max two automated rounds.
 5. Report remaining risks and wait for human approval.
 
-Final report: summary, files changed, AC status, commands/results, Codex findings, risks/questions, next ticket.
+Final report: summary, files changed, AC status, commands/results, reviewer findings, risks/questions, next ticket.

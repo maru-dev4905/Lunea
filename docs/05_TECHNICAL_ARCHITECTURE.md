@@ -20,8 +20,8 @@ One mobile codebase; type-safe client/server contracts; server-side AI secrets; 
 | Tests | Unit + React Native Testing Library + Maestro/Detox candidate | Select after scaffold |
 | CI | GitHub Actions | Proposed |
 | Primary developer | Claude Code | Accepted |
-| Reviewer | Codex | Accepted |
-| PR review | CodeRabbit additional layer | Optional |
+| Reviewer | CodeRabbit | Accepted (current) |
+| Additional reviewer | Codex | Deferred (D-21) |
 | Orchestration | Orca CLI only when parallel work is needed | Optional |
 
 ## Logical architecture
