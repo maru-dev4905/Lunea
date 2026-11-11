@@ -19,7 +19,7 @@ Requirements: server-side owner checks/RLS, AI provider calls server-side only, 
 
 ## Decision
 Recommended: **A. Supabase**, conditional on a PoC that proves, before any real data:
-1. RLS denies cross-user read/update/delete on every journal table (automated tests).
+1. RLS denies cross-user insert/read/update/delete on every journal table, including inserts that set another user's `user_id` (automated tests).
 2. Edge Function can call the (mock) AI adapter with the secret never reaching the client.
 3. Session refresh works on device.
 4. Hard deletion of an entry and its derived rows is verifiable.
