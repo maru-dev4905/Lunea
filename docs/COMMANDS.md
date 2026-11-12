@@ -18,7 +18,7 @@ Claude Code(Orca 작업자 포함)에서 쓰는 명령어를 모았습니다. `/
 | 1번이 거의 맞음 → 다듬기 | `/lunea-refine LUN-15 1 "속도만 더 느리게"` |
 | 뭘 원하는지 아직 모르겠음 | `/lunea-back-to-design LUN-15` |
 | 독립 작업 여러 개 동시에 | `/lunea-parallel LUN-20 LUN-21` |
-| PR 독립 검증 | `/lunea-verify 12` (새 세션에서. 순차형은 최종 push 후 사람이 실행, 조율형은 자동) |
+| PR 독립 검증 | `/lunea-verify 12` 또는 `/lunea-verify 12 a1b2c3d` (새 세션에서. 순차형은 최종 push 후 사람이 실행, 조율형은 자동) |
 | 작업 마무리 | `/lunea-finish` |
 | 고민 과정 기록(포트폴리오) | `/lunea-log "주제"` |
 | 실수·이슈 교훈 기록 | `/lunea-lesson "제목"` |
@@ -73,10 +73,10 @@ Claude Code(Orca 작업자 포함)에서 쓰는 명령어를 모았습니다. `/
 구현을 멈추고, 시도한 것과 탈락 이유를 정리한 뒤 디자인 작업(참고 영상·스케치·인터랙션 명세)으로 되돌립니다.
 
 ### `/lunea-parallel LUN-a LUN-b ...`
-서로 파일이 겹치지 않는 작업만 동시에 진행합니다. `package.json`·lockfile, Supabase 마이그레이션, 공통 토큰, `CLAUDE.md`·`.claude/`를 건드리는 작업은 거절하고 순서대로 하자고 알려 줍니다. 구현자가 최종 push의 head SHA를 보고하면 별도 검증자가 그 SHA에 대해 `/lunea-verify`를 실행합니다. 이후 push가 있으면 새 head SHA에 대해 다시 실행합니다.
+서로 파일이 겹치지 않는 작업만 동시에 진행합니다. `package.json`·lockfile, Supabase 마이그레이션, 공통 토큰, `CLAUDE.md`·`.claude/`를 건드리는 작업은 거절하고 순서대로 하자고 알려 줍니다. 구현자가 최종 push의 head SHA를 보고하면 별도 검증자가 그 SHA로 `/lunea-verify PR번호 SHA`를 실행합니다. 이후 push가 있으면 새 head SHA에 대해 다시 실행합니다.
 
-### `/lunea-verify PR번호`
-구현하지 않은 새 세션이 PR을 검증합니다: 검사 재실행, 수용 기준별 충족 여부와 근거, 인터랙션·접근성 체크, 제품 원칙(원문 보존, 사용자 확인 없는 AI 저장 금지, 로그에 일기 원문 금지). 결과는 PR 코멘트로 남기고 직접 수정하지는 않습니다.
+### `/lunea-verify PR번호 [SHA]`
+구현하지 않은 새 세션이 PR을 검증합니다. SHA를 주면 그 커밋을, 생략하면 시작 시점의 PR head를 체크아웃하고, 준 SHA가 PR head와 다르면 멈추고 알립니다. 검증 내용: 검사 재실행, 수용 기준별 충족 여부와 근거, 인터랙션·접근성 체크, 제품 원칙(원문 보존, 사용자 확인 없는 AI 저장 금지, 로그에 일기 원문 금지). 결과는 PR 코멘트로 남기고 직접 수정하지는 않습니다.
 
 ### `/lunea-finish`
 검사 실행 → 국문 PR → "결정이 있었나? 실수가 있었나?" 확인 후 저널·교훈 추가 → `docs/STATUS.md` 갱신. merge는 하지 않습니다.
