@@ -14,7 +14,7 @@ One mobile codebase; type-safe client/server contracts; server-side AI secrets; 
 | Validation | Zod | Accepted (ADR-0001) |
 | Motion | Reanimated | Optional |
 | Styling | React Native StyleSheet + typed theme tokens; Emotion Native deferred | Accepted (ADR-0004) |
-| Database/Auth | Supabase + PostgreSQL | Accepted conditionally (ADR-0002; final after PoC gates) |
+| Database/Auth | Supabase (PostgreSQL-based) | Supabase accepted conditionally (ADR-0002; final after PoC gates). D-07 PostgreSQL stays Proposed until confirmed with the backend |
 | API | Supabase Edge Functions (fallback: Node.js TypeScript API) | Accepted conditionally (ADR-0002) |
 | AI | Server-side adapter, mock provider until D-08 | Accepted (ADR-0006); provider TBD |
 | Tests | Jest (jest-expo) + React Native Testing Library; Maestro for E2E | Accepted (ADR-0005) |

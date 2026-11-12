@@ -5,9 +5,17 @@
       "Read(./.env)",
       "Read(./.env.local)",
       "Read(./.env.*.local)",
+      "Read(./.env.development)",
+      "Read(./.env.staging)",
+      "Read(./.env.production)",
+      "Read(./.env.test)",
       "Edit(./.env)",
       "Edit(./.env.local)",
-      "Edit(./.env.*.local)"
+      "Edit(./.env.*.local)",
+      "Edit(./.env.development)",
+      "Edit(./.env.staging)",
+      "Edit(./.env.production)",
+      "Edit(./.env.test)"
     ],
     "ask": [
       "Bash(git push --force:*)",

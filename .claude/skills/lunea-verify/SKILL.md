@@ -14,4 +14,5 @@ You are the Verifier. Do not trust the PR summary.
 3. Walk each acceptance criterion: met / not met / not verifiable, with evidence (file:line, test name).
 4. Interaction checklist (if UI): reduced motion on/off, long Korean text, large font, screen-reader labels, no meaning by color only.
 5. Product guards: original text preserved, AI output never saved as confirmed without user action, no journal text in logs.
-6. Post findings as one Korean PR comment with severity (Critical/High/Medium/Low). Do not push fixes; the implementer fixes.
+6. Record the verified head commit SHA at the top of the report; if the PR head changed during verification, restart on the new head.
+7. Post findings as one Korean PR comment with severity (Critical/High/Medium/Low). Do not push fixes; the implementer fixes.

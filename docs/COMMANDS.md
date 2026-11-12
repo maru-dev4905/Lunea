@@ -93,7 +93,7 @@ Claude Code(Orca 작업자 포함)에서 쓰는 명령어를 모았습니다. `/
 
 `/lunea-*` 모드 명령은 **사람이 직접 입력**합니다(에이전트는 실행할 수 없음). 가장 간단한 방법은 새 작업자 창에서 바로 `/lunea-seq LUN-12`를 입력하는 것입니다.
 
-명령 대신 문장으로 시작하고 싶다면:
+명령 대신 문장으로 시작하고 싶다면(계획 확인용). **승인 후 구현을 시작하기 전에는 사람이 `/lunea-seq LUN-12`를 입력**해야 Jira 라벨·상태·브랜치 절차가 적용됩니다:
 
 ```
 CLAUDE.md, docs/STATUS.md, docs/lessons/README.md를 먼저 읽어.
@@ -150,5 +150,5 @@ Orca:
 | 세션 시작 | 훅이 `docs/lessons/README.md` 색인을 맥락에 넣음 |
 | PR 생성 | CodeRabbit 국문 리뷰, Jira `검토 중`(자동화 규칙 설정 후) |
 | PR merge | Jira `완료`(자동화 규칙 설정 후), Slack 알림 |
-| `.env` 파일 | 에이전트의 Read·Edit 도구 접근 금지. **셸 명령(`cat` 등)은 이 규칙으로 막히지 않으므로** 셸 명령 승인 시 `.env`가 포함되면 거절 |
+| `.env` 파일 | 에이전트의 Read·Edit 도구 접근 금지 (대상: `.env`, `.env.local`, `.env.*.local`, `.env.development`, `.env.staging`, `.env.production`, `.env.test`; `.env.example`은 변수 이름만 있으므로 허용). 그 밖의 이름으로 비밀 파일을 만들지 말 것. **셸 명령(`cat` 등)은 이 규칙으로 막히지 않으므로** 셸 명령 승인 시 `.env`가 포함되면 거절 |
 | 위험 명령 (`git push --force`, `rm -rf`, `npm install` 등) | 실행 전 사람에게 확인 |
