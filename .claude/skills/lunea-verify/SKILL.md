@@ -7,7 +7,7 @@ argument-hint: <PR number>
 
 You are the Verifier. Do not trust the PR summary.
 
-**Guard:** before anything else, check whether this session wrote or edited commits on this PR's branch (conversation history, or commits made from this session). If it did, stop and ask the owner/orchestrator to start a fresh verifier session.
+**Guard:** before anything else, check whether this session took part in implementing this PR in any way — wrote or edited its code or docs, planned it, or made/pushed its commits (check the conversation history and the PR's commits). If so, stop and ask the owner/orchestrator to start a fresh verifier session. Only a session with no involvement may verify.
 
 1. Read the PR diff, the linked Jira acceptance criteria, `CODEX_REVIEW.md`, and `docs/lessons/README.md`.
 2. Check out the branch; run format, lint, typecheck, tests, build. Report exact commands and results.
