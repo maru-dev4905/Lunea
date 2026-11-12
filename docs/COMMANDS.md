@@ -18,7 +18,7 @@ Claude Code(Orca 작업자 포함)에서 쓰는 명령어를 모았습니다. `/
 | 1번이 거의 맞음 → 다듬기 | `/lunea-refine LUN-15 1 "속도만 더 느리게"` |
 | 뭘 원하는지 아직 모르겠음 | `/lunea-back-to-design LUN-15` |
 | 독립 작업 여러 개 동시에 | `/lunea-parallel LUN-20 LUN-21` |
-| PR 독립 검증 | `/lunea-verify 12` |
+| PR 독립 검증 | `/lunea-verify 12` (새 세션에서) |
 | 작업 마무리 | `/lunea-finish` |
 | 고민 과정 기록(포트폴리오) | `/lunea-log "주제"` |
 | 실수·이슈 교훈 기록 | `/lunea-lesson "제목"` |
@@ -91,18 +91,20 @@ Claude Code(Orca 작업자 포함)에서 쓰는 명령어를 모았습니다. `/
 
 ## 4. Orca 작업자 시작 프롬프트
 
-Orca에서 새 작업자를 띄울 때 붙여 넣습니다.
+`/lunea-*` 모드 명령은 **사람이 직접 입력**합니다(에이전트는 실행할 수 없음). 가장 간단한 방법은 새 작업자 창에서 바로 `/lunea-seq LUN-12`를 입력하는 것입니다.
+
+명령 대신 문장으로 시작하고 싶다면:
 
 ```
 CLAUDE.md, docs/STATUS.md, docs/lessons/README.md를 먼저 읽어.
-그다음 /lunea-seq LUN-12 로 시작하고, 계획을 보여 준 뒤 내 승인을 기다려.
+그다음 LUN-12 작업 계획과 변경 파일 목록을 보여 주고 내 승인을 기다려.
 ```
 
 조율자(메인) 세션:
 
 ```
 너는 Lunéa의 조율자야. docs/11_AGENT_WORKFLOW.md를 따르고,
-/lunea-status 로 현재 상태를 보고한 뒤 다음 작업을 제안해.
+docs/STATUS.md와 Jira LUN 보드를 읽어 현재 상태를 보고한 뒤 다음 작업을 제안해.
 ```
 
 ---
@@ -148,5 +150,5 @@ Orca:
 | 세션 시작 | 훅이 `docs/lessons/README.md` 색인을 맥락에 넣음 |
 | PR 생성 | CodeRabbit 국문 리뷰, Jira `검토 중`(자동화 규칙 설정 후) |
 | PR merge | Jira `완료`(자동화 규칙 설정 후), Slack 알림 |
-| `.env` 파일 | 에이전트의 읽기·수정 금지 |
+| `.env` 파일 | 에이전트의 Read·Edit 도구 접근 금지. **셸 명령(`cat` 등)은 이 규칙으로 막히지 않으므로** 셸 명령 승인 시 `.env`가 포함되면 거절 |
 | 위험 명령 (`git push --force`, `rm -rf`, `npm install` 등) | 실행 전 사람에게 확인 |

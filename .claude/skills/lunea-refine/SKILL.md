@@ -9,4 +9,4 @@ disable-model-invocation: true
 1. Close the other variant's draft PR (comment why).
 2. Set Jira label `mode-seq`; comment the feedback.
 3. Continue on the chosen branch: apply the feedback, keep reduced-motion parity, refresh the preview.
-4. Finish with `/lunea-finish` (mark the PR ready for review when done).
+4. Finish by following `.claude/skills/lunea-finish/SKILL.md` (mark the PR ready for review when done).

@@ -14,5 +14,19 @@ jobs:
         run: |
           tracked=$(git ls-files | grep -E '(^|/)\.env($|\.)' | grep -v '\.env\.example$' || true)
           if [ -n "$tracked" ]; then echo "Committed env files found:"; echo "$tracked"; exit 1; fi
+      - name: ADR status consistency (lesson L-002)
+        run: |
+          fail=0
+          for f in docs/adr/[0-9]*.md; do
+            [ -f "$f" ] || continue
+            status=$(awk '/^## Status/{getline; print; exit}' "$f")
+            case "$status" in
+              Accepted*)
+                if grep -nE '^Proposed:|\(proposed\)' "$f"; then
+                  echo "::error file=$f::Accepted ADR still contains Proposed wording"; fail=1
+                fi;;
+            esac
+          done
+          exit $fail
       - name: Placeholder for stack checks
         run: echo "Add lockfile install, format, lint, typecheck, test, and build after scaffold approval (FND-02/FND-03)."

@@ -13,4 +13,4 @@ Mode A — one implementer, Superpowers flow.
 3. Create/checkout branch `<type>/$ARGUMENTS-<short-desc>` from latest `main`.
 4. Present plan + file list in Korean. Wait for approval if the change touches behavior, privacy, security, AI interpretation, data or consent (CLAUDE.md).
 5. Implement test-first (write failing test → implement → pass).
-6. Finish with `/lunea-finish`.
+6. Finish by following `.claude/skills/lunea-finish/SKILL.md` (checks, PR, records, push, request independent verification).

@@ -3,22 +3,22 @@
 ## Goals
 One mobile codebase; type-safe client/server contracts; server-side AI secrets; isolated user data; replaceable AI provider; simple MVP architecture; no premature microservices.
 
-## Proposed stack (not all final)
+## Stack (see `docs/adr/` for status and conditions)
 | Layer | Proposal | Status |
 |---|---|---|
-| Mobile | React Native + Expo | Proposed |
-| Language | TypeScript | Proposed |
-| Navigation | Expo Router | Proposed |
-| Server state | TanStack Query | Proposed |
-| Client state | Jotai or Zustand only if needed | TBD; don't install both |
-| Validation | Zod | Proposed |
+| Mobile | React Native + Expo | Accepted (ADR-0001) |
+| Language | TypeScript (strict) | Accepted (ADR-0001) |
+| Navigation | Expo Router | Accepted (ADR-0001) |
+| Server state | TanStack Query | Accepted (ADR-0001) |
+| Client state | No global state library initially; add one (Zustand candidate) only via ADR update | Accepted (ADR-0003) |
+| Validation | Zod | Accepted (ADR-0001) |
 | Motion | Reanimated | Optional |
-| Styling | React Native StyleSheet initially; Emotion Native only if justified | TBD |
-| Database/Auth | Supabase + PostgreSQL candidate | TBD after RLS/auth proof |
-| API | Supabase Edge Functions or Node.js TypeScript API | TBD |
-| AI | Provider SDK behind adapter | Proposed |
-| Tests | Unit + React Native Testing Library + Maestro/Detox candidate | Select after scaffold |
-| CI | GitHub Actions | Proposed |
+| Styling | React Native StyleSheet + typed theme tokens; Emotion Native deferred | Accepted (ADR-0004) |
+| Database/Auth | Supabase + PostgreSQL | Accepted conditionally (ADR-0002; final after PoC gates) |
+| API | Supabase Edge Functions (fallback: Node.js TypeScript API) | Accepted conditionally (ADR-0002) |
+| AI | Server-side adapter, mock provider until D-08 | Accepted (ADR-0006); provider TBD |
+| Tests | Jest (jest-expo) + React Native Testing Library; Maestro for E2E | Accepted (ADR-0005) |
+| CI | GitHub Actions | Accepted (in use since FND-01; checks per ADR-0005) |
 | Primary developer | Claude Code | Accepted |
 | Reviewer | CodeRabbit | Accepted (current) |
 | Additional reviewer | Codex | Deferred (D-21) |

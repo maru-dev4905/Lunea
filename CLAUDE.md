@@ -40,10 +40,13 @@ After implementation:
 2. Summarize changed files and results.
 3. Open the PR (non-draft) so CodeRabbit reviews the exact diff; use `@coderabbitai review` if it does not start.
 4. Classify findings (valid / invalid / NEEDS_PRODUCT_DECISION), fix valid ones and rerun checks; max two automated rounds.
-5. Record decisions (`docs/journal/`) and lessons (`docs/lessons/`) when applicable; update `docs/STATUS.md` (`/lunea-finish`).
-6. Report remaining risks and wait for human approval.
+5. Record decisions (`docs/journal/`) and lessons (`docs/lessons/`) when applicable; update `docs/STATUS.md` (not in mode C); commit and push them to the PR branch (`.claude/skills/lunea-finish/SKILL.md`).
+6. Request independent verification by a fresh session (`/lunea-verify`); never verify your own PR.
+7. Report remaining risks and wait for human approval.
 
 Modes: never switch work mode (sequential/compare/parallel) on your own; only the owner's `/lunea-*` commands do. Record the mode as a Jira label (`mode-seq`, `mode-compare`, `mode-parallel`).
+
+Jira lives at `iseung10e.atlassian.net` (project `LUN`); confirm the site with the Atlassian MCP before Jira writes (lesson L-004).
 
 When changing a document's status (e.g. ADR Proposed→Accepted), update its body and the PR description in the same change (lesson L-002).
 
