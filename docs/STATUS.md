@@ -8,19 +8,19 @@ Last updated: 2026-11-12
 Foundation. Planning baseline and tooling are in place; no application code yet.
 
 ## Done
-- FND-01 Repository baseline (PR #1, merged)
+- LUN-8 FND-01 Repository baseline (PR #1, merged)
 - Review pipeline: CodeRabbit as the only external reviewer, Korean reviews (PR #2, merged)
-- FND-03 Stack ADRs 0001–0007 accepted by owner (PR #3)
-- Agent workflow, journal and lessons system (this branch: `chore/agent-workflow-and-journal`)
+- Jira backlog: epics LUN-1~7, tasks LUN-8~34 (`iseung10e.atlassian.net`, project `LUN`)
 
-## In progress
-- Jira backlog in project `LUN` (`iseung10e.atlassian.net`)
+## In review
+- LUN-9 FND-03 Stack ADRs (PR #3)
+- LUN-34 FND-06 Agent workflow, commands, journal, lessons (PR #4, merge after PR #3)
 
 ## Next (in order)
-1. FND-02 Expo scaffold — mode A (sequential). Adds real CI checks, worktree setup script, Stop-hook verification.
-2. FND-04 Supabase PoC — mode A. Owner creates the `lunea-dev` project; PoC gates in ADR-0002.
-3. FND-05 Interaction verification setup (EAS Update preview QR per PR, ADR-0008). Needs an Expo account (owner).
-4. DOC-01 Resolve spec inconsistencies (state names, deletion semantics, clarification flow).
+1. LUN-10 FND-02 Expo scaffold — mode A (sequential). Adds real CI checks, worktree setup script, Stop-hook verification.
+2. LUN-11 FND-04 Supabase PoC — mode A. Owner creates the `lunea-dev` project; PoC gates in ADR-0002.
+3. LUN-12 FND-05 Interaction verification setup (EAS Update preview QR per PR, ADR-0008). Needs an Expo account (owner).
+4. LUN-13 DOC-01 Resolve spec inconsistencies (state names, deletion semantics, clarification flow).
 
 ## Waiting on owner
 - Merge PR #3, then this PR
