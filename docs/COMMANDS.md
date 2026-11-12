@@ -73,7 +73,7 @@ Claude Code(Orca 작업자 포함)에서 쓰는 명령어를 모았습니다. `/
 구현을 멈추고, 시도한 것과 탈락 이유를 정리한 뒤 디자인 작업(참고 영상·스케치·인터랙션 명세)으로 되돌립니다.
 
 ### `/lunea-parallel LUN-a LUN-b ...`
-서로 파일이 겹치지 않는 작업만 동시에 진행합니다. `package.json`·lockfile, Supabase 마이그레이션, 공통 토큰, `CLAUDE.md`·`.claude/`를 건드리는 작업은 거절하고 순서대로 하자고 알려 줍니다. PR이 열리면 별도 검증자가 `/lunea-verify`를 실행합니다.
+서로 파일이 겹치지 않는 작업만 동시에 진행합니다. `package.json`·lockfile, Supabase 마이그레이션, 공통 토큰, `CLAUDE.md`·`.claude/`를 건드리는 작업은 거절하고 순서대로 하자고 알려 줍니다. 구현자가 최종 push의 head SHA를 보고하면 별도 검증자가 그 SHA에 대해 `/lunea-verify`를 실행합니다. 이후 push가 있으면 새 head SHA에 대해 다시 실행합니다.
 
 ### `/lunea-verify PR번호`
 구현하지 않은 새 세션이 PR을 검증합니다: 검사 재실행, 수용 기준별 충족 여부와 근거, 인터랙션·접근성 체크, 제품 원칙(원문 보존, 사용자 확인 없는 AI 저장 금지, 로그에 일기 원문 금지). 결과는 PR 코멘트로 남기고 직접 수정하지는 않습니다.
