@@ -1,0 +1,13 @@
+---
+name: lunea-parallel
+description: Run mode C — orchestrate parallel implementers for independent tasks, then an independent verifier per PR.
+argument-hint: LUN-<a> LUN-<b> [...]
+disable-model-invocation: true
+---
+# /lunea-parallel $ARGUMENTS
+
+1. For each task, read Jira and estimate the files it will touch. Refuse to parallelize tasks that overlap files or touch `package.json`/lockfile, Supabase migrations, theme tokens, `CLAUDE.md`/`.claude/` — serialize those and say so.
+2. Set label `mode-parallel` on each; move to `진행 중`.
+3. Spawn one Orca implementer per task (`orca worktree create …`; confirm syntax with `orca --help`), each told to follow `/lunea-seq` steps 3–6.
+4. When an implementer opens its PR, spawn a fresh verifier worker running `/lunea-verify <PR>`.
+5. Collect results; update `docs/STATUS.md`; report to the owner in Korean.

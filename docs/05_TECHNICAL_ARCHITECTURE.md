@@ -22,7 +22,7 @@ One mobile codebase; type-safe client/server contracts; server-side AI secrets; 
 | Primary developer | Claude Code | Accepted |
 | Reviewer | CodeRabbit | Accepted (current) |
 | Additional reviewer | Codex | Deferred (D-21) |
-| Orchestration | Orca CLI only when parallel work is needed | Optional |
+| Orchestration | Orca (worktree per task) + Superpowers; pstack removed, OMC not used | Accepted (`docs/11`) |
 
 ## Logical architecture
 Mobile app (Expo) → authenticated backend boundary (auth, authorization, validation, journal CRUD, AI orchestration, rate limits) → PostgreSQL and AI provider. Provider secrets never enter mobile client.

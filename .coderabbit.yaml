@@ -28,5 +28,12 @@ reviews:
       instructions: |
         문서 간 상태명·용어 불일치, Accepted/Proposed/TBD 상태의 무단 변경, TBD 항목(Balance, Collection 은유 등)을
         확정한 것처럼 서술하는 부분을 지적한다.
+    - path: "docs/adr/**"
+      instructions: |
+        ADR 상태가 바뀌면 본문(Decision, Context)과 PR 설명의 상태가 일치하는지 확인한다.
+        선택지를 비교한 결정이 있는데 docs/journal/ 항목이 없으면 추가를 제안한다.
+    - path: "docs/lessons/**"
+      instructions: |
+        교훈에 증상, 원인, 해결(근거 링크), 재발 방지, 방어 수준이 있는지, README 색인에 등록됐는지 확인한다.
 chat:
   auto_reply: true
