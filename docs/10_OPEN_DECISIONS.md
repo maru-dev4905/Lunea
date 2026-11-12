@@ -25,6 +25,7 @@
 | D-21 | Independent reviewer tooling | Accepted: CodeRabbit now; Codex deferred | Codex: add when feature development (Expo scaffold, FND-02) starts, by adopting a paid ChatGPT plan (Plus or higher); GitHub review is not available on the free plan. Confirm CodeRabbit private-repo pricing |
 | D-22 | RAG / LangChain / n8n over journal data | Deferred | Decide with D-08/D-17: journal text sent to retrieval/AI services needs privacy review and consent |
 | D-23 | Mode D: label → GitHub Actions Claude → PR | Deferred | Evaluate API cost and scope (small repetitive tasks only) |
+| D-25 | Independent verification trigger | Accepted (2026-11-12): mode A owner runs `/lunea-verify` manually; mode C automatic | Revisit when orchestrator runs routinely |
 | D-24 | Agent tooling | Accepted: Orca + Superpowers; pstack removed; OMC not used | See `docs/11_AGENT_WORKFLOW.md` |
 
 ## Questions Claude must not decide silently

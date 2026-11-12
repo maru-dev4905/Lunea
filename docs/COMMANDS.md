@@ -18,7 +18,7 @@ Claude Code(Orca 작업자 포함)에서 쓰는 명령어를 모았습니다. `/
 | 1번이 거의 맞음 → 다듬기 | `/lunea-refine LUN-15 1 "속도만 더 느리게"` |
 | 뭘 원하는지 아직 모르겠음 | `/lunea-back-to-design LUN-15` |
 | 독립 작업 여러 개 동시에 | `/lunea-parallel LUN-20 LUN-21` |
-| PR 독립 검증 | `/lunea-verify 12` (새 세션에서) |
+| PR 독립 검증 | `/lunea-verify 12` (새 세션에서. 순차형은 최종 push 후 사람이 실행, 조율형은 자동) |
 | 작업 마무리 | `/lunea-finish` |
 | 고민 과정 기록(포트폴리오) | `/lunea-log "주제"` |
 | 실수·이슈 교훈 기록 | `/lunea-lesson "제목"` |

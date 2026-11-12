@@ -104,7 +104,7 @@ A lesson that recurs must move up at least one level.
 3. Integration: RLS cross-user tests, AI output schema tests
 4. Maestro E2E with recording (after core flow exists)
 5. AI evaluation set (AI-05)
-6. Independent Verifier + CodeRabbit (Codex later)
+6. Independent Verifier + CodeRabbit (Codex later). Who starts the Verifier (D-25): mode A — the owner runs `/lunea-verify <PR>` in a fresh session after the final push; mode C — the orchestrator spawns it automatically. Revisit (switch mode A to automatic) once an orchestrator session is used routinely.
 7. Real-device check via preview QR (owner)
 8. Branch protection + human merge
 
