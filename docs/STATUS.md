@@ -14,7 +14,7 @@ Foundation(기반). 기획 문서, 기술 결정(ADR), 에이전트 작업 체�
 - LUN-10 FND-02 Expo 앱 뼈대, 웹·앱 동시 지원(D-27) (PR #7)
 - LUN-34 FND-06 에이전트 작업 체계, 명령어 모음, 저널, 교훈 (PR #4)
 - STATUS.md 국문 전환 (PR #5)
-- 제품 책임자 준비: Supabase `lunea-dev` 프로젝트, Expo 계정, Jira 자동화 규칙, 저장소 공개 전환, 머지 시 브랜치 자동 삭제
+- 제품 책임자 준비: Supabase `lunea` 프로젝트, Expo 계정, Jira 자동화 규칙, 저장소 공개 전환, 머지 시 브랜치 자동 삭제
 - GitHub 설정(2026-11-13): 기본 브랜치 `dev`, Rulesets `main`·`dev`(PR 필수·승인 0명·대화 해결 필수, `baseline` 필수, 삭제·강제 push 금지, `dev` 허용 머지 Squash+Merge)
 - Jira 백로그: 에픽 LUN-1~7, 작업 LUN-8~34 (`iseung10e.atlassian.net`, 프로젝트 `LUN`)
 
@@ -27,9 +27,9 @@ Foundation(기반). 기획 문서, 기술 결정(ADR), 에이전트 작업 체�
 3. 웹 영향 후속: 인증 토큰·초안 저장소(웹에는 `expo-secure-store` 없음, FND-04/D-16), 반응형·웹 접근성(UX-01).
 
 ## 제품 책임자 확인 필요
-- PoC 조건 5: `lunea-dev` 리전과 데이터 처리 약관(DPA) 검토를 `docs/poc/FND-04-supabase.md`에 기록
+- PoC 조건 5: `lunea` 리전과 데이터 처리 약관(DPA) 검토를 `docs/poc/FND-04-supabase.md`에 기록
 - PoC 조건 3: 기기·웹에서 세션 갱신 확인. 앱에 `@supabase/supabase-js`와 저장소 어댑터를 넣는 별도 작업 필요(웹 토큰 저장 방식 D-16·D-27 결정과 함께)
-- PoC 결과 승인 후 원격 `lunea-dev`에 마이그레이션 적용 여부, ADR-0002 확정 여부
+- PoC 결과 승인 후 원격 `lunea`에 마이그레이션 적용 여부, ADR-0002 확정 여부
 - `main` Ruleset의 허용 머지 방식을 **Merge만** 남기기 (현재 Merge·Squash 둘 다 허용. 릴리스 PR이 스쿼시되면 `dev`와 기록이 어긋남)
 - Jira 자동화 "PR 머지 → 완료" 규칙에 대상 브랜치 `dev` 조건 추가 (`main` 머지로 완료되지 않게)
 
