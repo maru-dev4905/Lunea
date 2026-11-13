@@ -77,7 +77,7 @@ The current mode is recorded as a Jira label and in `docs/STATUS.md`, so it surv
 | Branch | Purpose | Created from | Merged into | Merge method | Who merges |
 |---|---|---|---|---|---|
 | `main` | Released code only; each release tagged `vX.Y.Z` | — | — | — | Owner |
-| `dev` | Integration; to become the GitHub default branch (owner setting, pending — until switched, agents must set the PR base to `dev` explicitly) | `main` | `main` via release PR | Merge commit | Owner |
+| `dev` | Integration; GitHub default branch (set 2026-11-13) | `main` | `main` via release PR | Merge commit | Owner |
 | `feat/` `fix/` `docs/` `chore/` `refactor/` `test/` + `LUN-xx-…` | One task | `dev` | `dev` | Squash | Owner |
 | `fix/LUN-xx-…` (hotfix) | Urgent production fix | `main` | `main`, then a sync PR `main` → `dev` | Merge commit (both; the sync PR is the only merge-commit PR into `dev`, so `main` stays an ancestor of `dev`) | Owner |
 

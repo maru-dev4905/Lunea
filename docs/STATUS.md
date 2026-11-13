@@ -14,6 +14,7 @@ Foundation(기반). 기획 문서, 기술 결정(ADR), 에이전트 작업 체�
 - LUN-34 FND-06 에이전트 작업 체계, 명령어 모음, 저널, 교훈 (PR #4)
 - STATUS.md 국문 전환 (PR #5)
 - 제품 책임자 준비: Supabase `lunea-dev` 프로젝트, Expo 계정, Jira 자동화 규칙, 저장소 공개 전환, 머지 시 브랜치 자동 삭제
+- GitHub 설정(2026-11-13): 기본 브랜치 `dev`, Rulesets `main`·`dev`(PR 필수·승인 0명·대화 해결 필수, `baseline` 필수, 삭제·강제 push 금지, `dev` 허용 머지 Squash+Merge)
 - Jira 백로그: 에픽 LUN-1~7, 작업 LUN-8~34 (`iseung10e.atlassian.net`, 프로젝트 `LUN`)
 
 ## 검토 중
@@ -26,16 +27,14 @@ Foundation(기반). 기획 문서, 기술 결정(ADR), 에이전트 작업 체�
 4. LUN-13 DOC-01 명세 불일치 정리 (상태 이름, 삭제 의미, 확인 질문 흐름).
 
 ## 제품 책임자 확인 필요
-- GitHub 기본 브랜치를 `dev`로 변경 (Settings → General → Default branch). 바꾸기 전까지 PR 대상은 직접 `dev`로 지정
+- `main` Ruleset의 허용 머지 방식을 **Merge만** 남기기 (현재 Merge·Squash 둘 다 허용. 릴리스 PR이 스쿼시되면 `dev`와 기록이 어긋남)
 - Jira 자동화 "PR 머지 → 완료" 규칙에 대상 브랜치 `dev` 조건 추가 (`main` 머지로 완료되지 않게)
-- 브랜치 보호(Settings → Rules → Rulesets): `main`·`dev` 모두 PR 필수, CI `baseline` 통과 필수, 강제 push·삭제 금지. 허용 머지 방식은 `dev`=Squash + Merge commit(Merge commit은 긴급 수정 후 `main` → `dev` 동기화 PR 전용), `main`=Merge commit. 저장소가 공개라 무료로 설정 가능. **순서 주의:** 머지 시 브랜치 자동 삭제가 켜져 있어서, 삭제 방지(Restrict deletions)가 설정되기 전에 릴리스 PR(`dev`→`main`)이나 동기화 PR(`main`→`dev`)을 머지하면 head인 `dev`·`main`이 지워질 수 있음. Rulesets 확인 전에는 이 두 종류의 PR을 머지하지 않음
-- 이 PR(Git 흐름)은 `dev`로 머지. 이후 첫 릴리스 때 `dev` → `main` 릴리스 PR로 반영
 
 ## 열린 결정 (docs/10 참고)
 D-08 AI 제공자, D-11 Balance, D-12 Collection 메타포, D-13 감정 분류, D-14 하루 여러 기록, D-16 인증 방식, D-17 보관·삭제, D-18 위기 대응 정책, D-20 라이트/다크, D-22 일기 데이터 RAG, D-23 D 모드(자동 PR) 비용.
 
 ## 환경 정보
-- 저장소: `maru-dev4905/Lunea` (**공개**, 2026-11-13 전환). 기본 브랜치 `dev`(변경 예정), 배포 브랜치 `main`. 공개 저장소이므로 실제 일기 원문·비밀 값은 커밋 금지(기존 규칙 그대로, 위반 시 영향이 더 큼).
+- 저장소: `maru-dev4905/Lunea` (**공개**, 2026-11-13 전환). 기본 브랜치 `dev`, 배포 브랜치 `main`. 공개 저장소이므로 실제 일기 원문·비밀 값은 커밋 금지(기존 규칙 그대로, 위반 시 영향이 더 큼).
 - Git 흐름(D-26): 작업 브랜치는 `dev`에서 만들고 `dev`로 PR(스쿼시). `dev` → `main`은 제품 책임자가 릴리스 PR(머지 커밋)로 반영하고 태그. Jira `완료` = `dev` 머지.
 - Jira: `iseung10e.atlassian.net`, 프로젝트 `LUN`. 상태: 해야 할 일 → 진행 중 → 검토 중 → 완료.
 - Slack: Jira Cloud 앱이 `LUN`에 연결됨. GitHub 앱 구독은 제품 책임자가 관리.
