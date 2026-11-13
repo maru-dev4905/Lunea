@@ -24,7 +24,7 @@ No agent session remembers the project across sessions. Every agent rebuilds con
 | Rules | `CLAUDE.md` | Human approval |
 | Product/technical spec | `docs/00`–`docs/11` | PRs |
 | Decisions | `docs/adr/` | PRs, owner accepts |
-| Current state, next work | `docs/STATUS.md` | Orchestrator / every finishing agent |
+| Current state, next work (written in Korean: the owner checks what the AI understands) | `docs/STATUS.md` | Orchestrator / every finishing agent |
 | Lessons (mistakes → prevention) | `docs/lessons/` | `/lunea-lesson`, finish step |
 | Narrative decision history | `docs/journal/` | `/lunea-log`, finish step |
 | Work items | Jira `LUN` (`iseung10e.atlassian.net`) | Orchestrator, automation |

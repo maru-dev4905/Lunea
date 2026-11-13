@@ -1,39 +1,41 @@
-# Project Status
+# 프로젝트 상태
 
-Agents: read this at session start; update it at session end (`/lunea-finish`). Keep it short and current — history belongs in `docs/journal/`.
+**이 문서는 국문으로 씁니다.** 제품 책임자가 "AI가 지금 프로젝트를 어디까지 이해하고 있는지" 확인하는 문서이기 때문입니다. 에이전트는 세션 시작 시 이 문서를 읽고, 작업을 마칠 때(`/lunea-finish`) 갱신합니다. 짧고 최신으로 유지하고, 지난 기록은 `docs/journal/`에 남깁니다.
 
-Last updated: 2026-11-12
+마지막 갱신: 2026-11-13
 
-## Phase
-Foundation. Planning baseline and tooling are in place; no application code yet.
+## 단계
+Foundation(기반). 기획 문서, 기술 결정(ADR), 에이전트 작업 체계가 갖춰졌습니다. 애플리케이션 코드는 아직 없습니다.
 
-## Done
-- LUN-8 FND-01 Repository baseline (PR #1, merged)
-- Review pipeline: CodeRabbit as the only external reviewer, Korean reviews (PR #2, merged)
-- Jira backlog: epics LUN-1~7, tasks LUN-8~34 (`iseung10e.atlassian.net`, project `LUN`)
+## 완료
+- LUN-8 FND-01 저장소 기본 구성 (PR #1)
+- 리뷰 파이프라인: CodeRabbit 단독, 국문 리뷰 (PR #2)
+- LUN-9 FND-03 기술 스택 ADR 0001~0008 (PR #3)
+- LUN-34 FND-06 에이전트 작업 체계, 명령어 모음, 저널, 교훈 (PR #4)
+- Jira 백로그: 에픽 LUN-1~7, 작업 LUN-8~34 (`iseung10e.atlassian.net`, 프로젝트 `LUN`)
 
-## In review
-- LUN-9 FND-03 Stack ADRs (PR #3)
-- LUN-34 FND-06 Agent workflow, commands, journal, lessons (PR #4, merge after PR #3)
+## 검토 중
+- 없음
 
-## Next (in order)
-1. LUN-10 FND-02 Expo scaffold — mode A (sequential). Adds real CI checks, worktree setup script, Stop-hook verification.
-2. LUN-11 FND-04 Supabase PoC — mode A. Owner creates the `lunea-dev` project; PoC gates in ADR-0002.
-3. LUN-12 FND-05 Interaction verification setup (EAS Update preview QR per PR, ADR-0008). Needs an Expo account (owner).
-4. LUN-13 DOC-01 Resolve spec inconsistencies (state names, deletion semantics, clarification flow).
+## 다음 작업 (순서대로)
+1. LUN-10 FND-02 Expo 앱 뼈대 — 순차형(A). 실제 CI 검사, worktree 설정 스크립트, Stop 훅 검사 추가.
+2. LUN-11 FND-04 Supabase PoC — 순차형(A). 제품 책임자가 `lunea-dev` 프로젝트를 만든 뒤 진행. 통과 조건 6개는 ADR-0002.
+3. LUN-12 FND-05 인터랙션 확인 체계 (PR마다 EAS Update 미리보기 QR, ADR-0008). Expo 계정 필요. 모드 라벨 미정(제품 책임자가 결정).
+4. LUN-13 DOC-01 명세 불일치 정리 (상태 이름, 삭제 의미, 확인 질문 흐름).
 
-## Waiting on owner
-- Merge PR #3, then this PR
-- Supabase `lunea-dev` project (share Project URL only; never paste keys)
-- Expo account (for preview QR)
-- Jira automation rules (PR created → 검토 중, merged → 완료) and GitHub for Jira app
-- `main` branch protection (manual; may require a paid plan for private repos)
+## 제품 책임자 확인 필요
+- Supabase `lunea-dev` 프로젝트 생성 (Project URL만 공유, 키는 붙여넣지 않음)
+- Expo 계정 (미리보기 QR용)
+- Jira 자동화 규칙(PR 생성 → 검토 중, 머지 → 완료)과 GitHub for Jira 앱
+- `main` 브랜치 보호 (수동 설정, 비공개 저장소는 유료 플랜이 필요할 수 있음)
+- GitHub 설정 "Automatically delete head branches" 켜기, 머지가 끝난 원격 브랜치 4개 삭제 (`chore/bootstrap-repository`, `chore/coderabbit-review-setup`, `docs/stack-adrs`, `chore/agent-workflow-and-journal`) — 클라우드 세션에서는 권한이 없음(L-001)
 
-## Open decisions (see docs/10)
-D-08 AI provider, D-11 Balance, D-12 Collection metaphor, D-13 emotion taxonomy, D-14 multiple entries/day, D-16 auth methods, D-17 retention/deletion, D-18 crisis policy, D-20 light/dark, D-22 RAG over journal data, D-23 mode D (auto PR) cost.
+## 열린 결정 (docs/10 참고)
+D-08 AI 제공자, D-11 Balance, D-12 Collection 메타포, D-13 감정 분류, D-14 하루 여러 기록, D-16 인증 방식, D-17 보관·삭제, D-18 위기 대응 정책, D-20 라이트/다크, D-22 일기 데이터 RAG, D-23 D 모드(자동 PR) 비용.
 
-## Environment facts
-- Repo: `maru-dev4905/Lunea` (private). Default branch `main`.
-- Jira: `iseung10e.atlassian.net`, project `LUN`; statuses 해야 할 일 → 진행 중 → 검토 중 → 완료.
-- Slack: Jira Cloud app connected to `LUN`; GitHub app subscription pending/owner-managed.
-- Language: PR titles/descriptions and commit bodies in Korean; docs in English.
+## 환경 정보
+- 저장소: `maru-dev4905/Lunea` (비공개), 기본 브랜치 `main`.
+- Jira: `iseung10e.atlassian.net`, 프로젝트 `LUN`. 상태: 해야 할 일 → 진행 중 → 검토 중 → 완료.
+- Slack: Jira Cloud 앱이 `LUN`에 연결됨. GitHub 앱 구독은 제품 책임자가 관리.
+- 언어: PR 제목·설명, 커밋 본문, `docs/STATUS.md`, `docs/COMMANDS.md`는 국문. 그 밖의 문서(ADR, skills, `CLAUDE.md`, 기획 문서)는 영어(에이전트가 매 세션 읽으므로 토큰·정확도 우선).
+- Atlassian MCP(로컬): V1 주소 사용 중, 2027-03-01 종료 예정. 그 전에 공식 문서로 V2 연결 방법 확인.
