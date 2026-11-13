@@ -1,0 +1,33 @@
+# FND-04 Supabase PoC 결과 (ADR-0002 통과 조건)
+
+- 작업: LUN-11 / 날짜: 2026-11-13 / 환경: **로컬 Supabase 스택**(Docker) — 합성 데이터만 사용, 실제 일기 없음
+- 결론: **6개 중 4개 통과, 1개 부분 통과, 1개 사람 확인 필요.** 전부 확인되기 전에는 ADR-0002를 "확정"으로 바꾸지 않습니다(제품 책임자 결정).
+
+| # | 조건 | 결과 | 근거 |
+|---|---|---|---|
+| 1 | 모든 일기 테이블에서 다른 사용자의 생성·읽기·수정·삭제를 RLS가 거부 (다른 사용자의 `user_id`로 insert 포함) | **통과** | `supabase/tests/database/rls_journal.test.sql` pgTAP 20개. 정책을 일부러 열어 두면 6개가 실패하는 것을 확인(테스트가 실제로 결함을 잡음). 비로그인(anon)은 권한 자체가 없음 |
+| 2 | Edge Function이 (mock) AI 어댑터를 호출하고 비밀 값이 클라이언트에 노출되지 않음 | **통과** | `analyze-entry` 함수가 서버에서만 어댑터 호출. 단위 테스트: 응답·로그에 비밀 값과 일기 원문 없음. 앱 번들(`expo export`)에 `AI_PROVIDER_API_KEY`·`service_role` 문자열 0건 |
+| 3 | 기기에서 세션 갱신 동작 | **부분 통과 / 사람 확인 필요** | 서버 측 refresh token 교환은 통합 테스트로 확인(새 토큰으로 요청 성공). **실제 기기·웹 클라이언트 동작은 미확인** — 앱에 Supabase 클라이언트가 없음 |
+| 4 | 일기와 파생 데이터의 완전 삭제 검증 | **통과** | 일기 삭제 시 `emotion_candidates`가 `ON DELETE CASCADE`로 함께 삭제됨(pgTAP, 통합 테스트 모두) |
+| 5 | 리전·데이터 처리 약관이 허용 가능 | **사람 확인 필요** | `lunea-dev` 리전을 아직 받지 못했고, 약관·DPA 검토는 법적 판단이라 제품 책임자 몫. 확인할 항목은 아래 |
+| 6 | 서버 측 AI 구조화 출력 검증 (잘못된 출력은 확정 저장 없이 거부, 초안 보존) | **통과** | 버전 스키마(`schemaVersion`) 검증. 잘못된 출력·잘못된 버전 → 422, 저장 0건, 원문 불변(단위·통합). PoC 전용 스키마이며 정식 스키마는 AI-01(LUN-22) |
+
+## 만든 것
+- `supabase/migrations/20261113000000_poc_journal_tables.sql`: `journal_entries`(원문 `body` 보존), `emotion_candidates`(파생). RLS: 소유자만, 파생 행은 호출자 소유 일기에만 붙일 수 있음.
+- `supabase/functions/analyze-entry/`: Deno Edge Function (`schema.ts`, `adapter.ts` mock, `handler.ts`, `index.ts`), 웹 지원(D-27)을 위한 CORS 포함.
+- 테스트: pgTAP 20개, Deno 단위 11개, 로컬 스택 통합 1개(6단계).
+- `scripts/check-supabase.sh [--integration]`, CI `supabase` 잡(필수 체크 `baseline`과 분리).
+
+## 진행 중 발견한 점 (결과에 영향)
+- RLS는 이중으로 방어됨: 파생 행 정책이 부모 일기를 `exists`로 확인하는데, 이 조회도 부모 테이블 RLS를 받아 타인 일기는 애초에 보이지 않음.
+- Edge Function에서 `supabase-js`의 `global.headers`에 소문자 `authorization`을 주면 내부 `Authorization`과 합쳐져 인증 서버가 400을 반환함. 대문자 `Authorization` 키로 해결.
+- 로컬 Edge 런타임은 Deno 2.1.4 호환, 로컬 테스트 러너는 Deno 2.9.6. 현재 코드와 `npm:` 의존성은 둘 다에서 동작.
+- Homebrew는 macOS 14에서 Deno 바이너리를 제공하지 않아(소스 빌드) `npx deno@2.9.6`을 사용.
+
+## 사람 확인 필요
+1. **(3) 기기 세션 갱신:** 앱에 `@supabase/supabase-js`와 저장소 어댑터(네이티브는 `expo-secure-store`, 웹은 대안 필요 — D-27, D-16)를 넣고 실제 기기·웹에서 확인해야 합니다. 의존성과 웹 저장 방식 결정이 얽혀 있어 이 PR에는 넣지 않았습니다.
+2. **(5) 리전·약관:** `lunea-dev` 리전, 데이터 처리 약관(DPA), 일기 텍스트의 외부 AI 전송 가능 여부(D-08과 연결), 삭제 보장 범위(D-17), 백업에 남는 데이터 보존 기간을 제품 책임자가 확인해 이 문서에 기록.
+3. **원격 `lunea-dev`에는 아무것도 적용하지 않았습니다.** 마이그레이션 적용(`supabase db push`)은 결과 승인 후 별도 단계입니다.
+
+## 되돌림 기준
+하나라도 실패하면 Node API(ADR-0002 옵션 B) 전환 검토. 현재까지 실패한 조건은 없음.

@@ -31,3 +31,4 @@ Lunéa를 만들며 마주친 문제를 **어떤 선택지 중에서, 어떤 제
 | 2026-11-12 | [고민의 흔적을 남기는 기록 체계 설계](2026-11-12-decision-record-system.md) | docs/journal, docs/lessons |
 | 2026-11-13 | [Git 흐름 정하기: main은 배포, dev는 통합](2026-11-13-git-flow.md) | D-26, docs/11 §5a |
 | 2026-11-13 | [Expo 앱 뼈대(FND-02): 템플릿 산출물과 의존성 충돌 다루기](2026-11-13-expo-scaffold.md) | LUN-10, ADR-0001/0004/0005/0007 |
+| 2026-11-13 | [Supabase PoC(FND-04): 증명 가능한 것과 사람이 확인해야 하는 것 나누기](2026-11-13-supabase-poc.md) | LUN-11, ADR-0002 |

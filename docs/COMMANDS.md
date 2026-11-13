@@ -182,5 +182,6 @@ Orca:
 | `scripts/setup-worktree.sh` | 새 worktree에서 `npm ci` 후 주 체크아웃의 `apps/mobile/.env.local`을 복사 (값은 출력하지 않음) |
 | `cd apps/mobile && npm start` | Expo 개발 서버 |
 | `cd apps/mobile && npm run export` | CI와 같은 번들 빌드 |
+| `scripts/check-supabase.sh [--integration]` | 로컬 Supabase(Docker)에서 RLS(pgTAP)·Edge Function 테스트 실행. `--integration`은 함수를 띄워 실제 사용자로 호출 |
 
 Claude Code `Stop` 훅(`scripts/stop-check.sh`)이 `apps/mobile`·`scripts` 변경이 있고 검사가 실패하면 작업 종료를 막고 실패 내용을 에이전트에게 돌려줍니다.

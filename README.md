@@ -33,3 +33,7 @@ npm start                   # Expo dev server: press w for web, i/a for simulato
 npm run export              # ios + android + web bundle build used by CI
 ```
 The Claude Code `Stop` hook (`scripts/stop-check.sh`) blocks ending a turn while `apps/mobile` changes fail `scripts/check.sh`.
+
+## Supabase (supabase/)
+Local stack needs Docker. PoC checks (RLS tests, Edge Function tests): `scripts/check-supabase.sh [--integration]`. Deno tools run through `npx deno@2.9.6` (no global install). Results and open items: `docs/poc/FND-04-supabase.md`.
+
