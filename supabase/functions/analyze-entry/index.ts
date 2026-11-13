@@ -18,7 +18,8 @@ Deno.serve((req) => {
       return data.user?.id ?? null;
     },
     async loadEntry(id) {
-      const { data } = await db.from("journal_entries").select("id, body").eq("id", id).maybeSingle();
+      const { data, error } = await db.from("journal_entries").select("id, body").eq("id", id).maybeSingle();
+      if (error) throw new Error("load_failed");
       return data;
     },
     async saveCandidates(entryId, candidates) {

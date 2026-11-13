@@ -15,7 +15,7 @@ export const analysisSchema = z.object({
   candidates: z.array(candidateSchema).max(8),
 });
 
-export const requestSchema = z.object({ entryId: z.string().min(1) });
+export const requestSchema = z.object({ entryId: z.uuid() });
 
 export type Candidate = z.infer<typeof candidateSchema>;
 export type Analysis = z.infer<typeof analysisSchema>;

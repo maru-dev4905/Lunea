@@ -40,7 +40,14 @@ export async function handleAnalyze(req: Request, deps: Deps): Promise<Response>
   const request = requestSchema.safeParse(parsedBody);
   if (!request.success) return json(400, { error: "invalid_request" });
 
-  const entry = await deps.loadEntry(request.data.entryId);
+  let entry: { id: string; body: string } | null;
+  try {
+    entry = await deps.loadEntry(request.data.entryId);
+  } catch {
+    // A lookup failure is an outage, not "not found": clients may retry a 5xx.
+    deps.log("load_failed");
+    return json(500, { error: "load_failed" });
+  }
   if (!entry) return json(404, { error: "not_found" });
 
   let raw: unknown;
