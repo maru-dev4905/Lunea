@@ -5,13 +5,13 @@
 | D-01 | Human-final emotion interpretation | Accepted | Preserve |
 | D-02 | Mobile app | Accepted | Confirm supported OS/minimum versions |
 | D-03 | Korean-first | Proposed | Validate |
-| D-04 | React Native + Expo + TS | Proposed | Scaffold PoC |
-| D-05 | Expo Router | Proposed | Validate |
-| D-06 | Supabase vs standalone Node API | TBD | Compare auth/RLS/ops |
+| D-04 | React Native + Expo + TS | Accepted (ADR-0001) | Scaffold (FND-02) |
+| D-05 | Expo Router | Accepted (ADR-0001) | Scaffold (FND-02) |
+| D-06 | Supabase vs standalone Node API | Accepted conditionally: Supabase (ADR-0002) | Pass PoC gates; fallback Node API |
 | D-07 | PostgreSQL | Proposed | Confirm with backend |
 | D-08 | AI provider/model | TBD | Compare quality, cost, latency, privacy |
-| D-09 | Jotai vs Zustand vs none | TBD | Start simple |
-| D-10 | StyleSheet vs Emotion Native | TBD | Prototype first |
+| D-09 | Jotai vs Zustand vs none | Accepted: none initially (ADR-0003) | Add one library only with ADR update |
+| D-10 | StyleSheet vs Emotion Native | Accepted: StyleSheet + tokens (ADR-0004) | Revisit with approved high-fi design |
 | D-11 | Balance definition/formula/MVP scope | TBD | Product workshop; no code yet |
 | D-12 | Collection/receipt visual metaphor | TBD | Low-fi exploration |
 | D-13 | Emotion taxonomy | TBD | Flexible Korean examples |

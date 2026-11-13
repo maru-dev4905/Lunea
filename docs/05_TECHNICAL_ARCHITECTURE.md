@@ -66,3 +66,4 @@ Capture request ID, operation, latency, provider/model, token counts/cost estima
 
 ## ADRs required
 Backend/API, DB/auth, AI provider/model, emotion schema/taxonomy, Balance, retention/deletion, state/styling libraries, E2E test framework.
+Drafts live in `docs/adr/` (index: `docs/adr/README.md`).
