@@ -2,10 +2,10 @@
 
 **이 문서는 국문으로 씁니다.** 제품 책임자가 "AI가 지금 프로젝트를 어디까지 이해하고 있는지" 확인하는 문서이기 때문입니다. 에이전트는 세션 시작 시 이 문서를 읽고, 작업을 마칠 때(`/lunea-finish`) 갱신합니다. 짧고 최신으로 유지하고, 지난 기록은 `docs/journal/`에 남깁니다.
 
-마지막 갱신: 2026-11-13 (Git 흐름 도입)
+마지막 갱신: 2026-11-13 (LUN-10 Expo 앱 뼈대)
 
 ## 단계
-Foundation(기반). 기획 문서, 기술 결정(ADR), 에이전트 작업 체계가 갖춰졌습니다. 애플리케이션 코드는 아직 없습니다.
+Foundation(기반). 기획 문서, 기술 결정(ADR), 에이전트 작업 체계가 갖춰졌고, `apps/mobile`에 Expo 앱 뼈대(탭 3개 placeholder, 테마 토큰)와 실제 CI 검사가 들어갔습니다(검토 중). 기능 코드와 Supabase 연결은 아직 없습니다.
 
 ## 완료
 - LUN-8 FND-01 저장소 기본 구성 (PR #1)
@@ -18,13 +18,12 @@ Foundation(기반). 기획 문서, 기술 결정(ADR), 에이전트 작업 체�
 - Jira 백로그: 에픽 LUN-1~7, 작업 LUN-8~34 (`iseung10e.atlassian.net`, 프로젝트 `LUN`)
 
 ## 검토 중
-- Git 흐름 도입(D-26): `dev` 통합 브랜치, `main`은 배포 전용 (이 PR)
+- LUN-10 FND-02 Expo 앱 뼈대: 앱 구성, 품질 도구, 실제 CI, worktree 스크립트, Stop 훅 (이 PR)
 
 ## 다음 작업 (순서대로)
-1. LUN-10 FND-02 Expo 앱 뼈대 — 순차형(A). 실제 CI 검사, worktree 설정 스크립트, Stop 훅 검사 추가.
-2. LUN-11 FND-04 Supabase PoC — 순차형(A). `lunea-dev` 프로젝트 준비됨(시작 시 Project URL만 공유, 키는 붙여넣지 않음). 통과 조건 6개는 ADR-0002.
-3. LUN-12 FND-05 인터랙션 확인 체계 (PR마다 EAS Update 미리보기 QR, ADR-0008). Expo 계정 준비됨. 모드 라벨 미정(제품 책임자가 결정).
-4. LUN-13 DOC-01 명세 불일치 정리 (상태 이름, 삭제 의미, 확인 질문 흐름).
+1. LUN-11 FND-04 Supabase PoC — 순차형(A). `lunea-dev` 프로젝트 준비됨(시작 시 Project URL만 공유, 키는 붙여넣지 않음). 통과 조건 6개는 ADR-0002.
+2. LUN-12 FND-05 인터랙션 확인 체계 (PR마다 EAS Update 미리보기 QR, ADR-0008). Expo 계정 준비됨. 모드 라벨 미정(제품 책임자가 결정).
+3. LUN-13 DOC-01 명세 불일치 정리 (상태 이름, 삭제 의미, 확인 질문 흐름).
 
 ## 제품 책임자 확인 필요
 - `main` Ruleset의 허용 머지 방식을 **Merge만** 남기기 (현재 Merge·Squash 둘 다 허용. 릴리스 PR이 스쿼시되면 `dev`와 기록이 어긋남)

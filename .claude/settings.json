@@ -38,6 +38,16 @@
     "superpowers@superpowers-marketplace": true
   },
   "hooks": {
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "\"$CLAUDE_PROJECT_DIR\"/scripts/stop-check.sh"
+          }
+        ]
+      }
+    ],
     "SessionStart": [
       {
         "hooks": [

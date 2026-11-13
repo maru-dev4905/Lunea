@@ -171,3 +171,16 @@ Orca:
 | `dev`로 PR 머지 | Jira `완료`(자동화 규칙에 대상 브랜치 `dev` 조건 필요), Slack 알림. `main` 머지(릴리스·긴급 수정)는 Jira를 바꾸지 않음 |
 | `.env` 파일 | 에이전트의 Read·Edit 도구 접근 금지 (대상: `.env`, `.env.local`, `.env.*.local`, `.env.development`, `.env.staging`, `.env.production`, `.env.test`; `.env.example`은 변수 이름만 있으므로 허용). 그 밖의 이름으로 비밀 파일을 만들지 말 것. **셸 명령(`cat` 등)은 이 규칙으로 막히지 않으므로** 셸 명령 승인 시 `.env`가 포함되면 거절 |
 | 위험 명령 (`git push --force`, `rm -rf`, `npm install` 등) | 실행 전 사람에게 확인 |
+
+---
+
+## 개발 스크립트 (FND-02)
+
+| 명령 | 설명 |
+|---|---|
+| `scripts/check.sh` | 포맷·린트·타입·테스트를 CI와 똑같이 실행 |
+| `scripts/setup-worktree.sh` | 새 worktree에서 `npm ci` 후 주 체크아웃의 `apps/mobile/.env.local`을 복사 (값은 출력하지 않음) |
+| `cd apps/mobile && npm start` | Expo 개발 서버 |
+| `cd apps/mobile && npm run export` | CI와 같은 번들 빌드 |
+
+Claude Code `Stop` 훅(`scripts/stop-check.sh`)이 `apps/mobile`·`scripts` 변경이 있고 검사가 실패하면 작업 종료를 막고 실패 내용을 에이전트에게 돌려줍니다.
