@@ -1,0 +1,12 @@
+# L-007 detached HEAD에서 커밋해 PR에 반영되지 않았는데 push했다고 보고함
+- 날짜: 2026-11-13
+- 키워드: detached head, unpushed, push, head sha, verify, mismatch, 검증 중단, 공유 체크아웃, worktree
+- 증상: 독립 검증이 "요청 SHA가 PR head와 다르다"며 중단됨. 구현 세션은 push했다고 보고했지만 원격 브랜치와 PR head는 이전 커밋(848f4f6)이었고, 새 커밋 2개는 어느 브랜치에도 속하지 않았음 (PR #7).
+- 원인: (1) 검증 세션이 같은 체크아웃에서 특정 SHA를 detached HEAD로 체크아웃한 채 남김. (2) 구현 세션이 브랜치 확인 없이 그 상태에서 커밋. (3) `git push -q ... | tail -1`로 출력을 가려 실패를 놓치고 원격 SHA를 확인하지 않은 채 "push했다"고 보고.
+- 해결: 브랜치를 체크아웃해 `merge --ff-only`로 앞으로 옮기고 push, 원격·로컬·PR head SHA 일치 확인 (PR #7). 커밋 손실은 없었음.
+- 재발 방지:
+  - L3: `scripts/stop-check.sh`가 detached HEAD에 브랜치에 속하지 않은 커밋이 있으면 작업 종료를 막음.
+  - L2: `/lunea-finish`에 커밋 전 브랜치 확인, push 후 `ls-remote`·`rev-parse`·`gh` SHA 일치 확인 단계 추가. `/lunea-verify`는 공유 체크아웃을 detach하지 않고 별도 worktree에서 검증.
+  - L1: `CLAUDE.md`에 한 줄 규칙.
+- 방어 수준: 현재 L3 (훅) + L2 + L1
+- 재발 기록: —

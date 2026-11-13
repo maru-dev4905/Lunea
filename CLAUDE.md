@@ -31,6 +31,7 @@ Engineering constraints:
 Git:
 - Git flow (D-26): branch from `dev`, open PRs into `dev` (squash merge). `main` is release-only: the owner merges `dev` → `main` through a release PR (merge commit) and tags it. Hotfix: `fix/*` from `main` → PR into `main`, then merge `main` back into `dev`. Never push directly to `dev` or `main`.
 - Use feat/fix/docs/refactor/chore/test branches.
+- Never commit on a detached HEAD; verify pushes by comparing remote, local and PR head SHAs (L-007).
 - Conventional Commits.
 - Prepare PR; do not merge or deploy.
 - Write PR titles/descriptions and commit message bodies in Korean (Conventional Commit type/scope prefixes stay in English).
