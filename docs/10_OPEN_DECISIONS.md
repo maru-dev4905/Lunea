@@ -42,7 +42,7 @@
 10. Launch region and legal review?
 
 ## Reversible scaffold assumptions
-Public repo (since 2026-11-13); protected `main` and `dev`; PR flow into `dev` (D-26); Expo+TS scaffold; modular feature folders; runtime schema validation; mock AI adapter; synthetic data only; no production credentials; no analytics containing journal text.
+Public repo (since 2026-11-13); `main` and `dev` protection via Rulesets (planned, owner setting pending); PR flow into `dev` (D-26); Expo+TS scaffold; modular feature folders; runtime schema validation; mock AI adapter; synthetic data only; no production credentials; no analytics containing journal text.
 
 ## ADR template
 ```md

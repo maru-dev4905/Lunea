@@ -41,7 +41,7 @@ No agent session remembers the project across sessions. Every agent rebuilds con
 | Automation | GitHub for Jira + Jira automation + Slack apps | Jira transitions and notifications (not an AI) |
 | Owner (human) | — | Approve consequential plans, pick compare variants, real-device check, merge |
 
-Jira transitions are automated, not done by an agent: PR opened → `검토 중`, PR merged → `완료`.
+Jira transitions are automated, not done by an agent: PR opened → `검토 중`, PR merged **into `dev`** → `완료` (merges into `main` — release or hotfix — do not change Jira status).
 
 ## 4. Modes
 
@@ -77,13 +77,14 @@ The current mode is recorded as a Jira label and in `docs/STATUS.md`, so it surv
 | Branch | Purpose | Created from | Merged into | Merge method | Who merges |
 |---|---|---|---|---|---|
 | `main` | Released code only; each release tagged `vX.Y.Z` | — | — | — | Owner |
-| `dev` | Integration; GitHub default branch | `main` | `main` via release PR | Merge commit | Owner |
+| `dev` | Integration; to become the GitHub default branch (owner setting, pending — until switched, agents must set the PR base to `dev` explicitly) | `main` | `main` via release PR | Merge commit | Owner |
 | `feat/` `fix/` `docs/` `chore/` `refactor/` `test/` + `LUN-xx-…` | One task | `dev` | `dev` | Squash | Owner |
-| `fix/LUN-xx-…` (hotfix) | Urgent production fix | `main` | `main`, then `main` → `dev` | Merge commit | Owner |
+| `fix/LUN-xx-…` (hotfix) | Urgent production fix | `main` | `main`, then a sync PR `main` → `dev` | Merge commit (both; the sync PR is the only merge-commit PR into `dev`, so `main` stays an ancestor of `dev`) | Owner |
 
 - Agents never push to `dev` or `main` and never open PRs into `main` except a hotfix the owner asked for.
 - Jira `완료` = merged into `dev`. Release state is tracked by tags/GitHub releases, not Jira.
 - Head branches are deleted automatically on merge (repository setting).
+- Hotfixes do not use `/lunea-seq` (it branches from `dev`): the owner asks for a hotfix explicitly; branch from `main`, PR into `main`, then open the `main` → `dev` sync PR.
 - Release PR (`dev` → `main`): the owner opens it when a set of features is ready; CI and CodeRabbit run on it like any PR.
 
 ## 6. Session protocol (every agent)
@@ -129,4 +130,4 @@ Layers 1–5 become required CI checks progressively from FND-02.
 - Orca desktop app; select Claude Code as the agent; connect GitHub; pair the mobile app for input notifications.
 - Claude Code: trust the repo so `.claude/settings.json` applies; accept the Superpowers plugin install prompt (or run the commands in `docs/COMMANDS.md`).
 - Atlassian MCP for Claude Code (Jira `LUN` access) — see `docs/COMMANDS.md`.
-- Jira automation rules: PR created → `검토 중`; PR merged → `완료` (requires the GitHub for Jira app).
+- Jira automation rules: PR created → `검토 중`; PR merged into `dev` → `완료` (add a target-branch condition; requires the GitHub for Jira app).

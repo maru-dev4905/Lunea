@@ -168,6 +168,6 @@ Orca:
 |---|---|
 | 세션 시작 | 훅이 `docs/lessons/README.md` 색인을 맥락에 넣음 |
 | PR 생성 | CodeRabbit 국문 리뷰, Jira `검토 중`(자동화 규칙 설정 후) |
-| PR merge | Jira `완료`(자동화 규칙 설정 후), Slack 알림 |
+| `dev`로 PR 머지 | Jira `완료`(자동화 규칙에 대상 브랜치 `dev` 조건 필요), Slack 알림. `main` 머지(릴리스·긴급 수정)는 Jira를 바꾸지 않음 |
 | `.env` 파일 | 에이전트의 Read·Edit 도구 접근 금지 (대상: `.env`, `.env.local`, `.env.*.local`, `.env.development`, `.env.staging`, `.env.production`, `.env.test`; `.env.example`은 변수 이름만 있으므로 허용). 그 밖의 이름으로 비밀 파일을 만들지 말 것. **셸 명령(`cat` 등)은 이 규칙으로 막히지 않으므로** 셸 명령 승인 시 `.env`가 포함되면 거절 |
 | 위험 명령 (`git push --force`, `rm -rf`, `npm install` 등) | 실행 전 사람에게 확인 |

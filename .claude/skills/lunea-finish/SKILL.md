@@ -5,7 +5,7 @@ description: Finish a task — run checks, open the Korean PR, capture decisions
 # /lunea-finish
 
 1. Run format, lint, typecheck, tests, build (whatever exists). Do not claim success for checks not run.
-2. Open/refresh a non-draft PR **into `dev`** (never `main`; D-26) in Korean using `.github/pull_request_template.md`, linking the Jira key.
+2. Open/refresh a non-draft PR **into `dev`** (never `main`, except an owner-requested hotfix per `docs/11_AGENT_WORKFLOW.md` §5a; D-26) in Korean using `.github/pull_request_template.md`, linking the Jira key.
 3. Ask yourself, and answer in the PR under "결정 기록 / 교훈":
    - Was there a choice between options? → add/extend a `docs/journal/` entry using the template in `docs/journal/README.md` (the owner may also run `/lunea-log`).
    - Was there a mistake, rollback, or valid reviewer finding caused by an agent? → add a lesson following `.claude/skills/lunea-lesson/SKILL.md`.
