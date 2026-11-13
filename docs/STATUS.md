@@ -2,16 +2,17 @@
 
 **이 문서는 국문으로 씁니다.** 제품 책임자가 "AI가 지금 프로젝트를 어디까지 이해하고 있는지" 확인하는 문서이기 때문입니다. 에이전트는 세션 시작 시 이 문서를 읽고, 작업을 마칠 때(`/lunea-finish`) 갱신합니다. 짧고 최신으로 유지하고, 지난 기록은 `docs/journal/`에 남깁니다.
 
-마지막 갱신: 2026-11-13 (LUN-11 Supabase PoC)
+마지막 갱신: 2026-11-13 (LUN-11 머지 후 정리, 환경 구성 D-28)
 
 ## 단계
-Foundation(기반). 기획 문서, 기술 결정(ADR), 에이전트 작업 체계가 갖춰졌고, `apps/mobile`에 Expo 앱 뼈대(탭 3개 placeholder, 테마 토큰, 웹·앱 지원)와 실제 CI 검사가 `dev`에 들어갔습니다(LUN-10 완료). `supabase/`에 PoC(RLS, Edge Function)가 검토 중입니다(LUN-11). 기능 코드는 아직 없습니다.
+Foundation(기반). 기획 문서, 기술 결정(ADR), 에이전트 작업 체계가 갖춰졌고, `apps/mobile`에 Expo 앱 뼈대(탭 3개 placeholder, 테마 토큰, 웹·앱 지원)와 실제 CI 검사, `supabase/`에 PoC(RLS, Edge Function, 로컬 테스트)가 `dev`에 들어갔습니다. PoC 조건 3·5가 사람 확인 대기라 ADR-0002는 아직 확정되지 않았습니다. 기능 코드는 아직 없습니다.
 
 ## 완료
 - LUN-8 FND-01 저장소 기본 구성 (PR #1)
 - 리뷰 파이프라인: CodeRabbit 단독, 국문 리뷰 (PR #2)
 - LUN-9 FND-03 기술 스택 ADR 0001~0008 (PR #3)
 - LUN-10 FND-02 Expo 앱 뼈대, 웹·앱 동시 지원(D-27) (PR #7)
+- LUN-11 FND-04 Supabase PoC (PR #8): 조건 1·2·4·6 통과, 3(기기 세션 갱신)·5(리전·약관)는 사람 확인 대기. 결과는 `docs/poc/FND-04-supabase.md`. **Jira는 `완료`이지만 ADR-0002는 확정 전**
 - LUN-34 FND-06 에이전트 작업 체계, 명령어 모음, 저널, 교훈 (PR #4)
 - STATUS.md 국문 전환 (PR #5)
 - 제품 책임자 준비: Supabase `lunea` 프로젝트, Expo 계정, Jira 자동화 규칙, 저장소 공개 전환, 머지 시 브랜치 자동 삭제
@@ -19,18 +20,20 @@ Foundation(기반). 기획 문서, 기술 결정(ADR), 에이전트 작업 체�
 - Jira 백로그: 에픽 LUN-1~7, 작업 LUN-8~34 (`iseung10e.atlassian.net`, 프로젝트 `LUN`)
 
 ## 검토 중
-- LUN-11 FND-04 Supabase PoC: 로컬 스택에서 RLS·삭제·Edge Function·스키마 검증 통과, 기기 세션 갱신과 리전·약관은 사람 확인 필요. 결과는 `docs/poc/FND-04-supabase.md` (이 PR)
+- 환경 구성(D-28)과 LUN-10·LUN-11 후속: ADR-0002 환경 표, React 계열 의존성 정확 고정, 문서 정리 (이 PR)
 
 ## 다음 작업 (순서대로)
 1. LUN-12 FND-05 인터랙션 확인 체계 (PR마다 EAS Update 미리보기 QR, ADR-0008). Expo 계정 준비됨. 모드 라벨 미정(제품 책임자가 결정).
 2. LUN-13 DOC-01 명세 불일치 정리 (상태 이름, 삭제 의미, 확인 질문 흐름). 웹 지원(D-27)에 맞춰 PRD의 "모바일" 표현도 함께 정리 제안.
-3. 웹 영향 후속: 인증 토큰·초안 저장소(웹에는 `expo-secure-store` 없음, FND-04/D-16), 반응형·웹 접근성(UX-01).
+3. UX-01 입력: 색 토큰을 확정할 때 대비(WCAG AA 4.5:1) 검사를 정의에 포함. 현재 placeholder의 `textMuted`(#767676)가 `surface`(#F5F5F5) 위에서 약 4.2:1로 미달 (독립 검증 지적).
+4. 웹 영향 후속: 인증 토큰·초안 저장소(웹에는 `expo-secure-store` 없음, FND-04/D-16), 반응형·웹 접근성(UX-01).
 
 ## 제품 책임자 확인 필요
 - PoC 조건 5: `lunea` 리전과 데이터 처리 약관(DPA) 검토를 `docs/poc/FND-04-supabase.md`에 기록
 - PoC 조건 3: 기기·웹에서 세션 갱신 확인. 앱에 `@supabase/supabase-js`와 저장소 어댑터를 넣는 별도 작업 필요(웹 토큰 저장 방식 D-16·D-27 결정과 함께)
 - 후보 수명 정책(결정됨: 구현은 AI-03/AI-04): 확정 후보 제외 여부, 옛 원문 기준 후보 보관 여부, 일기 단위(D-14)는 AI-04에서 결정
-- PoC 결과 승인 후 원격 `lunea`에 마이그레이션 적용 여부, ADR-0002 확정 여부
+- staging·prod Supabase 프로젝트 생성 시점과 이름 (`lunea`가 dev 환경임은 제품 책임자가 확인함)
+- PoC 결과 승인 후 원격 `lunea`(dev)에 마이그레이션 적용 여부, ADR-0002 확정 여부
 - `main` Ruleset의 허용 머지 방식을 **Merge만** 남기기 (현재 Merge·Squash 둘 다 허용. 릴리스 PR이 스쿼시되면 `dev`와 기록이 어긋남)
 - Jira 자동화 "PR 머지 → 완료" 규칙에 대상 브랜치 `dev` 조건 추가 (`main` 머지로 완료되지 않게)
 
@@ -41,6 +44,7 @@ D-08 AI 제공자, D-11 Balance, D-12 Collection 메타포, D-13 감정 분류, 
 - 플랫폼(D-27, 2026-11-13): iOS·Android·웹 모두 지원(하나의 Expo 코드베이스). `npm start` 후 `w`로 웹 접속, CI가 세 번들을 모두 빌드. ADR-0001에 변경 사항 기록.
 - 저장소: `maru-dev4905/Lunea` (**공개**, 2026-11-13 전환). 기본 브랜치 `dev`, 배포 브랜치 `main`. 공개 저장소이므로 실제 일기 원문·비밀 값은 커밋 금지(기존 규칙 그대로, 위반 시 영향이 더 큼).
 - Git 흐름(D-26): 작업 브랜치는 `dev`에서 만들고 `dev`로 PR(스쿼시). `dev` → `main`은 제품 책임자가 릴리스 PR(머지 커밋)로 반영하고 태그. Jira `완료` = `dev` 머지.
+- Supabase 환경(D-28): dev / staging / prod 3개 프로젝트로 분리. dev = 기존 `lunea`. staging·prod는 제품 책임자가 나중에 생성(이름 미정, prod는 PoC 조건 3·5 통과 후). 실제 일기는 prod에만, 스키마 변경은 dev → staging → prod 순서로 사람이 적용(에이전트는 staging·prod에 쓰기 명령 금지).
 - Jira: `iseung10e.atlassian.net`, 프로젝트 `LUN`. 상태: 해야 할 일 → 진행 중 → 검토 중 → 완료.
 - Slack: Jira Cloud 앱이 `LUN`에 연결됨. GitHub 앱 구독은 제품 책임자가 관리.
 - 언어: PR 제목·설명, 커밋 본문, `docs/STATUS.md`, `docs/COMMANDS.md`는 국문. 그 밖의 문서(ADR, skills, `CLAUDE.md`, 기획 문서)는 영어(에이전트가 매 세션 읽으므로 토큰·정확도 우선).
