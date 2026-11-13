@@ -38,4 +38,4 @@ D-08 AI 제공자, D-11 Balance, D-12 Collection 메타포, D-13 감정 분류, 
 - Jira: `iseung10e.atlassian.net`, 프로젝트 `LUN`. 상태: 해야 할 일 → 진행 중 → 검토 중 → 완료.
 - Slack: Jira Cloud 앱이 `LUN`에 연결됨. GitHub 앱 구독은 제품 책임자가 관리.
 - 언어: PR 제목·설명, 커밋 본문, `docs/STATUS.md`, `docs/COMMANDS.md`는 국문. 그 밖의 문서(ADR, skills, `CLAUDE.md`, 기획 문서)는 영어(에이전트가 매 세션 읽으므로 토큰·정확도 우선).
-- Atlassian MCP(로컬): V1 주소 사용 중, 2027-03-01 종료 예정. 그 전에 공식 문서로 V2 연결 방법 확인.
+- Atlassian MCP(로컬): V1 주소(`/v1/mcp`) 사용 중, 정상 동작. 2027-03-01부터 기존 V1 연결은 V2 도구로 자동 전환됨(Atlassian 공식 업그레이드 안내). 전환 후 인증이 실패하면 캐시된 클라이언트 ID·`.well-known` 자격 증명을 지우고 재인증한 뒤 `/mcp`로 Jira 연결 확인. 수동 전환 주소는 `https://mcp.atlassian.com/v2/mcp`(현재 로컬 연결은 실패해 보류).
