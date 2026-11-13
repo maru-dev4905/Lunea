@@ -33,3 +33,4 @@ AI 에이전트와 사람이 겪은 실수·리뷰 지적·CI 실패·하네스 
 | [L-003](L-003-coderabbit-bot-commit.md) | CodeRabbit 테스트 자동 생성이 PR 브랜치에 직접 커밋 | coderabbit, unit test generation, bot commit, finishing_touches, 자동 커밋 | L3 |
 | [L-004](L-004-atlassian-wrong-site.md) | Atlassian 커넥터가 다른 Jira 사이트를 가리킴 | jira, atlassian, cloudId, site, not granted, 프로젝트 안 보임 | L1 |
 | [L-005](L-005-stale-review-replies.md) | 리뷰 봇이 이전 커밋 기준으로 "수정 미확인" 답변 | coderabbit, stale checkout, commit not found, race, 시점 차이 | L0 |
+| [L-006](L-006-doc-command-cwd.md) | 문서의 명령 예시가 작업 디렉터리 이동 뒤 경로를 잘못 가리킴 | readme, command, cwd, working directory, relative path, 문서 명령, 경로 | L0 |

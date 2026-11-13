@@ -25,10 +25,11 @@ Lunéa is not a diagnostic, treatment, crisis-response, or therapy replacement. 
 ## Develop (apps/mobile)
 Expo + React Native + TypeScript app (ADR-0001). Node version: `.nvmrc`; package manager: npm.
 ```bash
-cd apps/mobile && npm ci
-npm start               # Expo dev server (open in simulator / Expo Go)
-scripts/check.sh        # format:check, lint, typecheck, test (same as CI)
-npm run export          # bundle build used by CI
-scripts/setup-worktree.sh   # new worktree: npm ci + copy .env.local from the primary checkout
+# from the repository root
+scripts/setup-worktree.sh   # npm ci (+ copy .env.local from the primary checkout in a new worktree)
+scripts/check.sh            # format:check, lint, typecheck, test (same as CI)
+cd apps/mobile
+npm start                   # Expo dev server (open in simulator / Expo Go)
+npm run export              # bundle build used by CI
 ```
 The Claude Code `Stop` hook (`scripts/stop-check.sh`) blocks ending a turn while `apps/mobile` changes fail `scripts/check.sh`.

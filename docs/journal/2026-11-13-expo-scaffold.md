@@ -21,3 +21,7 @@ ADR에서 정한 스택(Expo + Router, StyleSheet 토큰, Jest + RNTL, npm)을 `
 
 ## 결과
 포맷·린트·타입·테스트·`expo export`가 통과합니다. 시뮬레이터 실행 확인은 제품 책임자 몫으로 남겼습니다.
+
+## 리뷰 대응 (CodeRabbit, 1라운드)
+- 유효: `userInterfaceStyle`을 Android에서 적용하려면 `expo-system-ui`가 필요 → `expo install`로 추가.
+- 유효: README 명령 블록의 `cd` 이후 경로 오류 → 재배치 (교훈 L-006).
