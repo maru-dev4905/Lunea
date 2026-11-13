@@ -3,7 +3,7 @@
 | ID | Topic | Status | Next step |
 |---|---|---|---|
 | D-01 | Human-final emotion interpretation | Accepted | Preserve |
-| D-02 | Mobile app | Accepted | Confirm supported OS/minimum versions |
+| D-02 | Mobile app (extended by D-27 to include web) | Accepted | Confirm supported OS/minimum versions |
 | D-03 | Korean-first | Proposed | Validate |
 | D-04 | React Native + Expo + TS | Accepted (ADR-0001) | Scaffold (FND-02) |
 | D-05 | Expo Router | Accepted (ADR-0001) | Scaffold (FND-02) |
@@ -27,6 +27,7 @@
 | D-23 | Mode D: label → GitHub Actions Claude → PR | Deferred | Evaluate API cost and scope (small repetitive tasks only) |
 | D-25 | Independent verification trigger | Accepted (2026-11-12): mode A owner runs `/lunea-verify` manually; mode C automatic | Revisit when orchestrator runs routinely |
 | D-24 | Agent tooling | Accepted: Orca + Superpowers; pstack removed; OMC not used | See `docs/11_AGENT_WORKFLOW.md` |
+| D-27 | Platforms: iOS, Android and Web | Accepted (2026-11-13, product owner): the app must work both as a native app and on the web from one Expo codebase | See ADR-0001 amendment; web storage for auth tokens and journal drafts is decided in the auth/storage work (D-16, FND-04); revisit if web needs diverge from native |
 | D-26 | Git branching | Accepted (2026-11-13): `dev` default/integration (squash), `main` release-only (merge commit + tag), Jira 완료 on merge to `dev` | See `docs/11_AGENT_WORKFLOW.md` §5a; revisit if multiple release trains are needed |
 
 ## Questions Claude must not decide silently

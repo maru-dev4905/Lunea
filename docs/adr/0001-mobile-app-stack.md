@@ -26,6 +26,13 @@ Accepted: option 1.
 - Native modules outside the Expo ecosystem require config plugins or a dev build.
 - `.gitignore` already excludes generated `ios/` and `android/`.
 
+## Amendment (2026-11-13, product owner): web support
+The product must be usable both as a native app (iOS, Android) and on the web (D-27). The same Expo + Expo Router codebase targets all three platforms through `react-native-web` (with `@expo/metro-runtime`); no separate web codebase.
+- CI builds all three bundles (`expo export` for ios, android, web).
+- Every dependency must be checked for web support before it is added. `expo-secure-store` above has no web implementation: how auth tokens are stored on the web is decided with the auth work (D-16, ADR-0002 PoC), not assumed here.
+- Privacy rules are platform-independent: no raw journal text in logs, and no unreviewed persistence of journal text in browser storage.
+- Responsive layout and web accessibility (keyboard, focus, screen reader) enter the design work (UX-01) and the Definition of Done for UI tickets.
+
 ## Owner
 Product owner (human).
 

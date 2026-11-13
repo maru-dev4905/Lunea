@@ -21,3 +21,15 @@ After the handoff: `docs/STATUS.md` (current state), `docs/11_AGENT_WORKFLOW.md`
 `Accepted` is binding. `Proposed` is a reversible default. `TBD` means Claude must ask, not silently decide. Human is product owner and final approver; Claude Code is primary developer; CodeRabbit is the current independent reviewer (Codex deferred, D-21).
 
 Lunéa is not a diagnostic, treatment, crisis-response, or therapy replacement. AI suggests; the user decides. Original journal text must be preserved. No agent may merge to `main` or deploy production without explicit human approval.
+
+## Develop (apps/mobile)
+Expo + React Native + TypeScript app (ADR-0001). Node version: `.nvmrc`; package manager: npm.
+```bash
+# from the repository root
+scripts/setup-worktree.sh   # npm ci (+ copy .env.local from the primary checkout in a new worktree)
+scripts/check.sh            # format:check, lint, typecheck, test (same as CI)
+cd apps/mobile
+npm start                   # Expo dev server: press w for web, i/a for simulators, or scan the QR in Expo Go
+npm run export              # ios + android + web bundle build used by CI
+```
+The Claude Code `Stop` hook (`scripts/stop-check.sh`) blocks ending a turn while `apps/mobile` changes fail `scripts/check.sh`.
