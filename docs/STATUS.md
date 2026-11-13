@@ -2,31 +2,35 @@
 
 **이 문서는 국문으로 씁니다.** 제품 책임자가 "AI가 지금 프로젝트를 어디까지 이해하고 있는지" 확인하는 문서이기 때문입니다. 에이전트는 세션 시작 시 이 문서를 읽고, 작업을 마칠 때(`/lunea-finish`) 갱신합니다. 짧고 최신으로 유지하고, 지난 기록은 `docs/journal/`에 남깁니다.
 
-마지막 갱신: 2026-11-13 (LUN-10 Expo 앱 뼈대)
+마지막 갱신: 2026-11-13 (LUN-11 Supabase PoC)
 
 ## 단계
-Foundation(기반). 기획 문서, 기술 결정(ADR), 에이전트 작업 체계가 갖춰졌고, `apps/mobile`에 Expo 앱 뼈대(탭 3개 placeholder, 테마 토큰)와 실제 CI 검사가 들어갔습니다(검토 중). 기능 코드와 Supabase 연결은 아직 없습니다.
+Foundation(기반). 기획 문서, 기술 결정(ADR), 에이전트 작업 체계가 갖춰졌고, `apps/mobile`에 Expo 앱 뼈대(탭 3개 placeholder, 테마 토큰, 웹·앱 지원)와 실제 CI 검사가 `dev`에 들어갔습니다(LUN-10 완료). `supabase/`에 PoC(RLS, Edge Function)가 검토 중입니다(LUN-11). 기능 코드는 아직 없습니다.
 
 ## 완료
 - LUN-8 FND-01 저장소 기본 구성 (PR #1)
 - 리뷰 파이프라인: CodeRabbit 단독, 국문 리뷰 (PR #2)
 - LUN-9 FND-03 기술 스택 ADR 0001~0008 (PR #3)
+- LUN-10 FND-02 Expo 앱 뼈대, 웹·앱 동시 지원(D-27) (PR #7)
 - LUN-34 FND-06 에이전트 작업 체계, 명령어 모음, 저널, 교훈 (PR #4)
 - STATUS.md 국문 전환 (PR #5)
-- 제품 책임자 준비: Supabase `lunea-dev` 프로젝트, Expo 계정, Jira 자동화 규칙, 저장소 공개 전환, 머지 시 브랜치 자동 삭제
+- 제품 책임자 준비: Supabase `lunea` 프로젝트, Expo 계정, Jira 자동화 규칙, 저장소 공개 전환, 머지 시 브랜치 자동 삭제
 - GitHub 설정(2026-11-13): 기본 브랜치 `dev`, Rulesets `main`·`dev`(PR 필수·승인 0명·대화 해결 필수, `baseline` 필수, 삭제·강제 push 금지, `dev` 허용 머지 Squash+Merge)
 - Jira 백로그: 에픽 LUN-1~7, 작업 LUN-8~34 (`iseung10e.atlassian.net`, 프로젝트 `LUN`)
 
 ## 검토 중
-- LUN-10 FND-02 Expo 앱 뼈대: 앱 구성, 품질 도구, 실제 CI, worktree 스크립트, Stop 훅 (이 PR)
+- LUN-11 FND-04 Supabase PoC: 로컬 스택에서 RLS·삭제·Edge Function·스키마 검증 통과, 기기 세션 갱신과 리전·약관은 사람 확인 필요. 결과는 `docs/poc/FND-04-supabase.md` (이 PR)
 
 ## 다음 작업 (순서대로)
-1. LUN-11 FND-04 Supabase PoC — 순차형(A). `lunea-dev` 프로젝트 준비됨(시작 시 Project URL만 공유, 키는 붙여넣지 않음). 통과 조건 6개는 ADR-0002.
-2. LUN-12 FND-05 인터랙션 확인 체계 (PR마다 EAS Update 미리보기 QR, ADR-0008). Expo 계정 준비됨. 모드 라벨 미정(제품 책임자가 결정).
-3. LUN-13 DOC-01 명세 불일치 정리 (상태 이름, 삭제 의미, 확인 질문 흐름). 웹 지원(D-27)에 맞춰 PRD의 "모바일" 표현도 함께 정리 제안.
-4. 웹 영향 후속: 인증 토큰·초안 저장소(웹에는 `expo-secure-store` 없음, FND-04/D-16), 반응형·웹 접근성(UX-01).
+1. LUN-12 FND-05 인터랙션 확인 체계 (PR마다 EAS Update 미리보기 QR, ADR-0008). Expo 계정 준비됨. 모드 라벨 미정(제품 책임자가 결정).
+2. LUN-13 DOC-01 명세 불일치 정리 (상태 이름, 삭제 의미, 확인 질문 흐름). 웹 지원(D-27)에 맞춰 PRD의 "모바일" 표현도 함께 정리 제안.
+3. 웹 영향 후속: 인증 토큰·초안 저장소(웹에는 `expo-secure-store` 없음, FND-04/D-16), 반응형·웹 접근성(UX-01).
 
 ## 제품 책임자 확인 필요
+- PoC 조건 5: `lunea` 리전과 데이터 처리 약관(DPA) 검토를 `docs/poc/FND-04-supabase.md`에 기록
+- PoC 조건 3: 기기·웹에서 세션 갱신 확인. 앱에 `@supabase/supabase-js`와 저장소 어댑터를 넣는 별도 작업 필요(웹 토큰 저장 방식 D-16·D-27 결정과 함께)
+- 후보 수명 정책(결정됨: 구현은 AI-03/AI-04): 확정 후보 제외 여부, 옛 원문 기준 후보 보관 여부, 일기 단위(D-14)는 AI-04에서 결정
+- PoC 결과 승인 후 원격 `lunea`에 마이그레이션 적용 여부, ADR-0002 확정 여부
 - `main` Ruleset의 허용 머지 방식을 **Merge만** 남기기 (현재 Merge·Squash 둘 다 허용. 릴리스 PR이 스쿼시되면 `dev`와 기록이 어긋남)
 - Jira 자동화 "PR 머지 → 완료" 규칙에 대상 브랜치 `dev` 조건 추가 (`main` 머지로 완료되지 않게)
 

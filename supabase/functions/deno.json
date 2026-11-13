@@ -1,0 +1,6 @@
+{
+  "tasks": {
+    "test": "deno test --allow-env=AI_PROVIDER_API_KEY analyze-entry/handler.test.ts",
+    "check": "deno check analyze-entry/index.ts analyze-entry/handler.test.ts"
+  }
+}

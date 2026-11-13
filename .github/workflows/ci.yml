@@ -51,3 +51,24 @@ jobs:
       - name: Build (expo export)
         working-directory: apps/mobile
         run: npm run export
+  # FND-04: RLS and Edge Function checks on a local Supabase stack. Kept out of the
+  # required `baseline` check (slow, pulls Docker images); the owner may require it later.
+  supabase:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: supabase/setup-cli@v1
+        with:
+          version: 2.118.0
+      - uses: denoland/setup-deno@v2
+        with:
+          deno-version: 2.9.6
+      - name: RLS tests (pgTAP)
+        run: |
+          supabase start -x studio,imgproxy,vector,logflare,realtime,storage-api,mailpit
+          supabase test db
+      - name: Edge Function checks
+        working-directory: supabase/functions
+        run: |
+          deno task check
+          deno task test
