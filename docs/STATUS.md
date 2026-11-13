@@ -30,7 +30,8 @@ Foundation(기반). 기획 문서, 기술 결정(ADR), 에이전트 작업 체�
 - PoC 조건 5: `lunea` 리전과 데이터 처리 약관(DPA) 검토를 `docs/poc/FND-04-supabase.md`에 기록
 - PoC 조건 3: 기기·웹에서 세션 갱신 확인. 앱에 `@supabase/supabase-js`와 저장소 어댑터를 넣는 별도 작업 필요(웹 토큰 저장 방식 D-16·D-27 결정과 함께)
 - 후보 수명 정책(결정됨: 구현은 AI-03/AI-04): 확정 후보 제외 여부, 옛 원문 기준 후보 보관 여부, 일기 단위(D-14)는 AI-04에서 결정
-- PoC 결과 승인 후 원격 `lunea`에 마이그레이션 적용 여부, ADR-0002 확정 여부
+- staging·prod Supabase 프로젝트 생성 시점과 이름 (`lunea`가 dev 환경임은 제품 책임자가 확인함)
+- PoC 결과 승인 후 원격 `lunea`(dev)에 마이그레이션 적용 여부, ADR-0002 확정 여부
 - `main` Ruleset의 허용 머지 방식을 **Merge만** 남기기 (현재 Merge·Squash 둘 다 허용. 릴리스 PR이 스쿼시되면 `dev`와 기록이 어긋남)
 - Jira 자동화 "PR 머지 → 완료" 규칙에 대상 브랜치 `dev` 조건 추가 (`main` 머지로 완료되지 않게)
 
@@ -41,6 +42,7 @@ D-08 AI 제공자, D-11 Balance, D-12 Collection 메타포, D-13 감정 분류, 
 - 플랫폼(D-27, 2026-11-13): iOS·Android·웹 모두 지원(하나의 Expo 코드베이스). `npm start` 후 `w`로 웹 접속, CI가 세 번들을 모두 빌드. ADR-0001에 변경 사항 기록.
 - 저장소: `maru-dev4905/Lunea` (**공개**, 2026-11-13 전환). 기본 브랜치 `dev`, 배포 브랜치 `main`. 공개 저장소이므로 실제 일기 원문·비밀 값은 커밋 금지(기존 규칙 그대로, 위반 시 영향이 더 큼).
 - Git 흐름(D-26): 작업 브랜치는 `dev`에서 만들고 `dev`로 PR(스쿼시). `dev` → `main`은 제품 책임자가 릴리스 PR(머지 커밋)로 반영하고 태그. Jira `완료` = `dev` 머지.
+- Supabase 환경(D-28): dev / staging / prod 3개 프로젝트로 분리. dev = 기존 `lunea`. staging·prod는 제품 책임자가 나중에 생성(이름 미정, prod는 PoC 조건 3·5 통과 후). 실제 일기는 prod에만, 스키마 변경은 dev → staging → prod 순서로 사람이 적용(에이전트는 staging·prod에 쓰기 명령 금지).
 - Jira: `iseung10e.atlassian.net`, 프로젝트 `LUN`. 상태: 해야 할 일 → 진행 중 → 검토 중 → 완료.
 - Slack: Jira Cloud 앱이 `LUN`에 연결됨. GitHub 앱 구독은 제품 책임자가 관리.
 - 언어: PR 제목·설명, 커밋 본문, `docs/STATUS.md`, `docs/COMMANDS.md`는 국문. 그 밖의 문서(ADR, skills, `CLAUDE.md`, 기획 문서)는 영어(에이전트가 매 세션 읽으므로 토큰·정확도 우선).
