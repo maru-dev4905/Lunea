@@ -27,6 +27,7 @@
 | D-23 | Mode D: label → GitHub Actions Claude → PR | Deferred | Evaluate API cost and scope (small repetitive tasks only) |
 | D-25 | Independent verification trigger | Accepted (2026-11-12): mode A owner runs `/lunea-verify` manually; mode C automatic | Revisit when orchestrator runs routinely |
 | D-24 | Agent tooling | Accepted: Orca + Superpowers; pstack removed; OMC not used | See `docs/11_AGENT_WORKFLOW.md` |
+| D-26 | Git branching | Accepted (2026-11-13): `dev` default/integration (squash), `main` release-only (merge commit + tag), Jira 완료 on merge to `dev` | See `docs/11_AGENT_WORKFLOW.md` §5a; revisit if multiple release trains are needed |
 
 ## Questions Claude must not decide silently
 1. Backend and deployment platform?
@@ -41,7 +42,7 @@
 10. Launch region and legal review?
 
 ## Reversible scaffold assumptions
-Private repo; protected main; PR flow; Expo+TS scaffold; modular feature folders; runtime schema validation; mock AI adapter; synthetic data only; no production credentials; no analytics containing journal text.
+Public repo (since 2026-11-13); protected `main` and `dev`; PR flow into `dev` (D-26); Expo+TS scaffold; modular feature folders; runtime schema validation; mock AI adapter; synthetic data only; no production credentials; no analytics containing journal text.
 
 ## ADR template
 ```md

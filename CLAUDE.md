@@ -29,7 +29,7 @@ Engineering constraints:
 - Update docs with behavior/architecture changes.
 
 Git:
-- No direct push to main for normal work.
+- Git flow (D-26): branch from `dev`, open PRs into `dev` (squash merge). `main` is release-only: the owner merges `dev` → `main` through a release PR (merge commit) and tags it. Hotfix: `fix/*` from `main` → PR into `main`, then merge `main` back into `dev`. Never push directly to `dev` or `main`.
 - Use feat/fix/docs/refactor/chore/test branches.
 - Conventional Commits.
 - Prepare PR; do not merge or deploy.

@@ -67,10 +67,24 @@ The current mode is recorded as a Jira label and in `docs/STATUS.md`, so it surv
 
 ## 5. Parallel safety
 
-1. One task = one worktree = one branch (`feat/LUN-xx-…`) = one PR.
+1. One task = one worktree = one branch (`feat/LUN-xx-…`, from `dev`) = one PR into `dev`.
 2. Never run in parallel: changes to `package.json`/lockfile, Supabase migrations, shared theme tokens, `CLAUDE.md`/`.claude/`. Serialize these.
 3. Parallelize only tasks with disjoint file sets.
 4. Secrets (`.env.local`) are not in git; a worktree setup script (added in FND-02) copies them from the primary checkout.
+
+## 5a. Git flow (D-26)
+
+| Branch | Purpose | Created from | Merged into | Merge method | Who merges |
+|---|---|---|---|---|---|
+| `main` | Released code only; each release tagged `vX.Y.Z` | — | — | — | Owner |
+| `dev` | Integration; GitHub default branch | `main` | `main` via release PR | Merge commit | Owner |
+| `feat/` `fix/` `docs/` `chore/` `refactor/` `test/` + `LUN-xx-…` | One task | `dev` | `dev` | Squash | Owner |
+| `fix/LUN-xx-…` (hotfix) | Urgent production fix | `main` | `main`, then `main` → `dev` | Merge commit | Owner |
+
+- Agents never push to `dev` or `main` and never open PRs into `main` except a hotfix the owner asked for.
+- Jira `완료` = merged into `dev`. Release state is tracked by tags/GitHub releases, not Jira.
+- Head branches are deleted automatically on merge (repository setting).
+- Release PR (`dev` → `main`): the owner opens it when a set of features is ready; CI and CodeRabbit run on it like any PR.
 
 ## 6. Session protocol (every agent)
 
