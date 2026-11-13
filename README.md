@@ -29,7 +29,7 @@ Expo + React Native + TypeScript app (ADR-0001). Node version: `.nvmrc`; package
 scripts/setup-worktree.sh   # npm ci (+ copy .env.local from the primary checkout in a new worktree)
 scripts/check.sh            # format:check, lint, typecheck, test (same as CI)
 cd apps/mobile
-npm start                   # Expo dev server (open in simulator / Expo Go)
-npm run export              # bundle build used by CI
+npm start                   # Expo dev server: press w for web, i/a for simulators, or scan the QR in Expo Go
+npm run export              # ios + android + web bundle build used by CI
 ```
 The Claude Code `Stop` hook (`scripts/stop-check.sh`) blocks ending a turn while `apps/mobile` changes fail `scripts/check.sh`.

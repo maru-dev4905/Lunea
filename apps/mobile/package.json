@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "main": "expo-router/entry",
   "dependencies": {
+    "@expo/metro-runtime": "~58.0.17",
     "expo": "~58.0.25",
     "expo-constants": "~58.0.16",
     "expo-linking": "~58.0.17",
@@ -13,7 +14,8 @@
     "react-dom": "^19.3.0",
     "react-native": "0.88.1",
     "react-native-safe-area-context": "~5.11.1",
-    "react-native-screens": "~4.30.1"
+    "react-native-screens": "~4.30.1",
+    "react-native-web": "^0.21.4"
   },
   "devDependencies": {
     "@testing-library/react-native": "^14.1.0",
@@ -36,7 +38,7 @@
     "lint": "eslint .",
     "typecheck": "tsc --noEmit",
     "test": "jest",
-    "export": "expo export --platform ios --platform android"
+    "export": "expo export --platform ios --platform android --platform web"
   },
   "private": true,
   "jest": {

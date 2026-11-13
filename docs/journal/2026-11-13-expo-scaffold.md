@@ -25,3 +25,7 @@ ADR에서 정한 스택(Expo + Router, StyleSheet 토큰, Jest + RNTL, npm)을 `
 ## 리뷰 대응 (CodeRabbit, 1라운드)
 - 유효: `userInterfaceStyle`을 Android에서 적용하려면 `expo-system-ui`가 필요 → `expo install`로 추가.
 - 유효: README 명령 블록의 `cd` 이후 경로 오류 → 재배치 (교훈 L-006).
+
+## 웹 지원 추가 (제품 책임자 요청)
+검증 중 `npm start` 후 웹 접속이 `react-native-web`을 찾지 못해 실패했습니다. 템플릿의 웹 설정이 남아 있었지만 의존성이 없었던 것입니다. 제품 책임자가 "웹도 지원 가능해야 한다"고 결정해 `react-native-web`, `@expo/metro-runtime`을 `expo install`로 추가하고, `npm run export`와 CI가 웹 번들도 빌드하도록 했습니다. ADR-0001·D-02는 모바일(iOS·Android)을 전제로 하므로, 웹을 정식 지원 대상으로 확정하려면 ADR 갱신이 필요한지 제품 책임자 확인이 필요합니다(이 PR은 ADR을 수정하지 않았습니다).
+
