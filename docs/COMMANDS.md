@@ -89,7 +89,26 @@ Claude Code(Orca 작업자 포함)에서 쓰는 명령어를 모았습니다. `/
 
 ---
 
-## 4. Orca 작업자 시작 프롬프트
+## 4. Git 브랜치 흐름 (D-26)
+
+```
+feat/LUN-10-…  ──(PR, 스쿼시)──▶  dev  ──(릴리스 PR, 머지 커밋 + 태그)──▶  main(배포)
+fix/LUN-xx-…(긴급) ──(PR)──▶ main ──▶ dev에도 반영
+```
+
+| 브랜치 | 용도 | 누가 머지 |
+|---|---|---|
+| `main` | 배포된 코드만. 릴리스마다 `v0.1.0` 같은 태그 | 사람 |
+| `dev` | 작업이 모이는 곳, GitHub 기본 브랜치 | 사람 |
+| `feat/` `fix/` `docs/` `chore/` … | 작업 하나 = 브랜치 하나 = PR 하나 (`dev`에서 만들고 `dev`로 PR) | 사람 |
+
+- Jira는 `dev`에 머지되면 `완료`입니다. 배포 여부는 태그·GitHub 릴리스로 확인합니다.
+- 에이전트는 `dev`·`main`에 직접 push하지 않고, `main`으로 PR을 열지 않습니다(사람이 요청한 긴급 수정만 예외).
+- 릴리스: 기능이 모이면 사람이 GitHub에서 `dev` → `main` PR을 열고, CI·CodeRabbit 확인 후 머지 커밋으로 머지, 태그를 붙입니다.
+
+---
+
+## 5. Orca 작업자 시작 프롬프트
 
 `/lunea-*` 모드 명령은 **사람이 직접 입력**합니다(에이전트는 실행할 수 없음). 가장 간단한 방법은 새 작업자 창에서 바로 `/lunea-seq LUN-12`를 입력하는 것입니다.
 
@@ -109,7 +128,7 @@ docs/STATUS.md와 Jira LUN 보드를 읽어 현재 상태를 보고한 뒤 다�
 
 ---
 
-## 5. 자주 쓰는 Claude Code 기본 명령
+## 6. 자주 쓰는 Claude Code 기본 명령
 
 | 명령 | 용도 |
 |---|---|
@@ -123,7 +142,7 @@ Superpowers 플러그인의 명령(계획 작성, 실행 등)은 설치 후 `/he
 
 ---
 
-## 6. PC 최초 1회 설정
+## 7. PC 최초 1회 설정
 
 Claude Code에서:
 ```
@@ -143,12 +162,12 @@ Orca:
 
 ---
 
-## 7. 자동으로 일어나는 일
+## 8. 자동으로 일어나는 일
 
 | 언제 | 무엇 |
 |---|---|
 | 세션 시작 | 훅이 `docs/lessons/README.md` 색인을 맥락에 넣음 |
 | PR 생성 | CodeRabbit 국문 리뷰, Jira `검토 중`(자동화 규칙 설정 후) |
-| PR merge | Jira `완료`(자동화 규칙 설정 후), Slack 알림 |
+| `dev`로 PR 머지 | Jira `완료`(자동화 규칙에 대상 브랜치 `dev` 조건 필요), Slack 알림. `main` 머지(릴리스·긴급 수정)는 Jira를 바꾸지 않음 |
 | `.env` 파일 | 에이전트의 Read·Edit 도구 접근 금지 (대상: `.env`, `.env.local`, `.env.*.local`, `.env.development`, `.env.staging`, `.env.production`, `.env.test`; `.env.example`은 변수 이름만 있으므로 허용). 그 밖의 이름으로 비밀 파일을 만들지 말 것. **셸 명령(`cat` 등)은 이 규칙으로 막히지 않으므로** 셸 명령 승인 시 `.env`가 포함되면 거절 |
 | 위험 명령 (`git push --force`, `rm -rf`, `npm install` 등) | 실행 전 사람에게 확인 |

@@ -29,3 +29,4 @@ Lunéa를 만들며 마주친 문제를 **어떤 선택지 중에서, 어떤 제
 | 2026-11-12 | [스킬·도구 정리: 겹치는 오케스트레이션 제거](2026-11-12-tooling-consolidation.md) | docs/11 |
 | 2026-11-12 | [에이전트 파이프라인 설계: 기억은 파일에, 모드는 명령어로](2026-11-12-agent-pipeline-design.md) | docs/11, D-23 |
 | 2026-11-12 | [고민의 흔적을 남기는 기록 체계 설계](2026-11-12-decision-record-system.md) | docs/journal, docs/lessons |
+| 2026-11-13 | [Git 흐름 정하기: main은 배포, dev는 통합](2026-11-13-git-flow.md) | D-26, docs/11 §5a |
