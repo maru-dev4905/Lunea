@@ -1,7 +1,7 @@
 # ADR-0002: Backend, auth, and database
 
 ## Status
-Accepted (2026-11-11, product owner) — **conditional**: Supabase is selected for the PoC; it becomes final only when all PoC gates below pass. Owner creates the Supabase project.
+Accepted (2026-11-11, product owner) — **conditional**: Supabase is selected for the PoC; it becomes final only when all PoC gates below pass. Owner creates the Supabase project. Gate 6 added 2026-11-12 (product owner).
 
 ## Context
 Requirements: server-side owner checks/RLS, AI provider calls server-side only, no journal text in logs, separate dev/staging/prod, deletion that can be verified, minimal ops for a very small team. PoC gates in `05`: auth/session refresh, user-scoped CRUD/RLS, server-side AI structured output, secret management, deletion, provider terms.
@@ -24,6 +24,7 @@ Selected: **A. Supabase**, conditional on a PoC that proves, before any real dat
 3. Session refresh works on device.
 4. Hard deletion of an entry and its derived rows is verifiable.
 5. Project region and data-processing terms are acceptable (D-17, launch region question).
+6. Server-side AI structured output: an Edge Function receives the (mock) adapter's result, validates it against the versioned schema (AI-01), and rejects invalid output without saving it as confirmed data while preserving the draft. Real-provider latency/cost checks are deferred until D-08.
 
 If any gate fails, fall back to B.
 

@@ -6,7 +6,7 @@
 - CodeRabbit: current independent PR reviewer (GitHub App, config in `.coderabbit.yaml`); no merge authority.
 - Codex: deferred independent reviewer; add when feature development (Expo scaffold, FND-02) starts, by adopting a paid ChatGPT plan (Plus or higher) (D-21). No merge authority.
 - GitHub Actions: mechanical quality gate.
-- Orca CLI: optional outer orchestration/worktree tool, only when parallelism is needed.
+- Orca: adopted outer orchestration — one git worktree per task; orchestrator/implementer/verifier roles (see `docs/11_AGENT_WORKFLOW.md`).
 
 ## Loop
 Jira issue → requirement clarification/DoR → Claude plan → human approval for consequential work → Claude feature branch implementation → lint/typecheck/tests/build → PR + CI → CodeRabbit review → Claude fixes valid findings → re-run checks → human review → human merge. (When Codex is added: request `@codex review` after checks pass.)
@@ -40,7 +40,7 @@ Applies to CodeRabbit now and Codex later; criteria live in `CODEX_REVIEW.md`. G
 Claude classifies finding as valid/invalid/needs product decision. Fix valid issues, ask human for product decisions, rerun tests. Default max two automated rounds; then surface unresolved items.
 
 ## Tool guidance
-pstack/Superpowers can provide clarification, architecture, TDD, verification playbooks. Avoid overlapping skill packs issuing conflicting instructions. Orca is outer worktree/task orchestration; OMC is optional Claude-internal orchestration. Start with one Claude task and one independent review. Manual approval for shell commands, dependencies, migrations, secrets, destructive operations. n8n and LangChain are not required initially without a concrete need.
+Superpowers (adopted) provides clarification, planning, TDD and verification playbooks. pstack is removed and OMC is not used (both overlap Superpowers/Orca). Orca is the outer worktree/task orchestration. Avoid overlapping skill packs issuing conflicting instructions. Start with one Claude task and one independent review; modes and switching rules are in `docs/11_AGENT_WORKFLOW.md`. Manual approval for shell commands, dependencies, migrations, secrets, destructive operations. n8n and LangChain are deferred to service development (possible RAG, see D-22). Fully automatic label→PR (mode D) is deferred pending cost review (D-23).
 
 ## GitHub setup checklist
 - Create private `lunea` repo (recommend private initially; ask before public).

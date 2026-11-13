@@ -1,0 +1,12 @@
+# L-002 ADR 상태만 바꾸고 본문·PR 설명을 갱신하지 않음
+- 날짜: 2026-11-11
+- 키워드: adr, status, accepted, proposed, pr description, 문서 불일치, 승인 기록
+- 증상: ADR 0001~0007의 Status 줄을 Accepted로 바꿨으나 본문 Decision 제목·문장에 `Proposed`가 남고, PR 설명도 "모든 ADR은 Proposed"로 남음. CodeRabbit이 Minor 3건 + Major 2건 지적 (PR #3).
+- 원인: Status 줄만 일괄 치환하고 (1) 본문 전체 검색, (2) PR 설명 갱신을 하지 않음.
+- 해결: PR #3 커밋 `67e1464`(본문 문구), `8b85d2a`(ADR-0003 선택안 문구), PR 설명에 승인 기록 추가.
+- 재발 방지:
+  - 상태 변경 시 `grep -RniE 'proposed|tbd' docs/adr/ docs/05_TECHNICAL_ARCHITECTURE.md docs/10_OPEN_DECISIONS.md` 로 본문 확인
+  - 범위가 바뀌면 PR 설명도 같은 커밋 시점에 갱신
+  - 승인 기록(날짜, 범위, 조건)을 PR 설명과 ADR Status 줄에 함께 남김
+- 방어 수준: **L3** — CI `adr-status-consistency` 단계가 Accepted ADR 본문의 `Proposed:`/`(proposed)` 문구를 차단 (PR #4)
+- 재발 기록: 2026-11-12 PR #4 — ADR은 Accepted인데 `docs/05` 스택 표가 Proposed/TBD로 남음(CodeRabbit 지적). 표 전체 정렬, 재발 규칙에 따라 L2 → L3 상향. 표 자체(docs/05)는 아직 자동 검사 대상 아님 → grep 명령에 포함
