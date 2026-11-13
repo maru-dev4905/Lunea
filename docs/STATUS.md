@@ -28,7 +28,7 @@ Foundation(기반). 기획 문서, 기술 결정(ADR), 에이전트 작업 체�
 ## 제품 책임자 확인 필요
 - GitHub 기본 브랜치를 `dev`로 변경 (Settings → General → Default branch). 바꾸기 전까지 PR 대상은 직접 `dev`로 지정
 - Jira 자동화 "PR 머지 → 완료" 규칙에 대상 브랜치 `dev` 조건 추가 (`main` 머지로 완료되지 않게)
-- 브랜치 보호(Settings → Rules → Rulesets): `main`·`dev` 모두 PR 필수, CI `baseline` 통과 필수, 강제 push·삭제 금지. 허용 머지 방식은 `dev`=Squash + Merge commit(Merge commit은 긴급 수정 후 `main` → `dev` 동기화 PR 전용), `main`=Merge commit. 저장소가 공개라 무료로 설정 가능
+- 브랜치 보호(Settings → Rules → Rulesets): `main`·`dev` 모두 PR 필수, CI `baseline` 통과 필수, 강제 push·삭제 금지. 허용 머지 방식은 `dev`=Squash + Merge commit(Merge commit은 긴급 수정 후 `main` → `dev` 동기화 PR 전용), `main`=Merge commit. 저장소가 공개라 무료로 설정 가능. **순서 주의:** 머지 시 브랜치 자동 삭제가 켜져 있어서, 삭제 방지(Restrict deletions)가 설정되기 전에 릴리스 PR(`dev`→`main`)이나 동기화 PR(`main`→`dev`)을 머지하면 head인 `dev`·`main`이 지워질 수 있음. Rulesets 확인 전에는 이 두 종류의 PR을 머지하지 않음
 - 이 PR(Git 흐름)은 `dev`로 머지. 이후 첫 릴리스 때 `dev` → `main` 릴리스 PR로 반영
 
 ## 열린 결정 (docs/10 참고)

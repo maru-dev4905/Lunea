@@ -83,7 +83,7 @@ The current mode is recorded as a Jira label and in `docs/STATUS.md`, so it surv
 
 - Agents never push to `dev` or `main` and never open PRs into `main` except a hotfix the owner asked for.
 - Jira `완료` = merged into `dev`. Release state is tracked by tags/GitHub releases, not Jira.
-- Head branches are deleted automatically on merge (repository setting).
+- Head branches are deleted automatically on merge (repository setting). Release (`dev` → `main`) and sync (`main` → `dev`) PRs have `dev`/`main` as their head, so both branches must have "Restrict deletions" in a Ruleset before such a PR is merged.
 - Hotfixes do not use `/lunea-seq` (it branches from `dev`): the owner asks for a hotfix explicitly; branch from `main`, PR into `main`, then open the `main` → `dev` sync PR.
 - Release PR (`dev` → `main`): the owner opens it when a set of features is ready; CI and CodeRabbit run on it like any PR.
 
