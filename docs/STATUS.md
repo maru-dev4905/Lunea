@@ -5,7 +5,7 @@
 마지막 갱신: 2026-11-13 (LUN-11 Supabase PoC)
 
 ## 단계
-Foundation(기반). 기획 문서, 기술 결정(ADR), 에이전트 작업 체계가 갖춰졌고, `apps/mobile`에 Expo 앱 뼈대(탭 3개 placeholder, 테마 토큰)와 실제 CI 검사가 들어갔습니다(검토 중). 기능 코드와 Supabase 연결은 아직 없습니다.
+Foundation(기반). 기획 문서, 기술 결정(ADR), 에이전트 작업 체계가 갖춰졌고, `apps/mobile`에 Expo 앱 뼈대(탭 3개 placeholder, 테마 토큰, 웹·앱 지원)와 실제 CI 검사가 `dev`에 들어갔습니다(LUN-10 완료). `supabase/`에 PoC(RLS, Edge Function)가 검토 중입니다(LUN-11). 기능 코드는 아직 없습니다.
 
 ## 완료
 - LUN-8 FND-01 저장소 기본 구성 (PR #1)

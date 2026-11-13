@@ -108,3 +108,16 @@ Deno.test("CORS preflight succeeds for browser (web) clients", async () => {
   assertEquals(res.status, 204);
   assert(res.headers.get("access-control-allow-headers")?.includes("authorization"));
 });
+
+Deno.test("a failing save becomes an explicit 500 without leaking details", async () => {
+  const { deps, logs } = makeDeps({
+    saveCandidates: () => Promise.reject(new Error("insert failed for synthetic entry text")),
+  });
+  const res = await handleAnalyze(post({ entryId: "entry-1" }), deps);
+  assertEquals(res.status, 500);
+  assertEquals(res.headers.get("access-control-allow-origin"), "*");
+  const text = await res.text();
+  assertEquals(JSON.parse(text), { error: "save_failed" });
+  assertFalse(text.includes("synthetic entry text"));
+  assertFalse(logs.join("\n").includes("synthetic entry text"));
+});

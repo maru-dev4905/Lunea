@@ -59,6 +59,12 @@ export async function handleAnalyze(req: Request, deps: Deps): Promise<Response>
     return json(422, { error: "invalid_ai_output" });
   }
 
-  await deps.saveCandidates(entry.id, analysis.data.candidates);
+  try {
+    await deps.saveCandidates(entry.id, analysis.data.candidates);
+  } catch {
+    // Log a code only: the error may carry journal text. Respond with CORS headers.
+    deps.log("save_failed");
+    return json(500, { error: "save_failed" });
+  }
   return json(200, { schemaVersion: SCHEMA_VERSION, candidates: analysis.data.candidates });
 }

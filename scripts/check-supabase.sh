@@ -6,8 +6,10 @@ set -euo pipefail
 cd "$(dirname "$0")/.."
 DENO="npx --yes deno@2.9.6"
 
+# Never wipes local data: only applies pending migrations. To start from a clean
+# database run `supabase db reset` yourself (it deletes ALL local Supabase data).
 supabase start >/dev/null
-supabase db reset >/dev/null
+supabase migration up --local >/dev/null
 supabase test db                                   # RLS + hard delete (pgTAP)
 (cd supabase/functions && $DENO task check && $DENO task test)   # types + unit tests
 
