@@ -5,7 +5,10 @@ Every user-owned record has an owner; preserve original text; distinguish AI-gen
 
 ## Entities (draft)
 ### JournalEntry
-`id`, `user_id`, `body_original` (never rewritten; how edits are kept is open, D-31: `body_current` or revision history), `status` (`draft|submitted|saved`; `deleted` exists only if D-30 keeps soft delete), `entry_date` (user-local date), `timezone`, `created_at`, `updated_at`.
+`id`, `user_id`, `body_original` (never rewritten; edits are kept as revisions, D-31), `status` (`draft|submitted|saved`; hard delete, so there is no `deleted` status, D-30), `entry_date` (user-local date), `timezone`, `created_at`, `updated_at`.
+
+### JournalEntryRevision
+`id`, `entry_id`, `user_id`, `body`, `created_at`. The current text is the latest revision; `body_original` is never changed (D-31).
 
 ### AnalysisRun
 `id`, `entry_id`, `user_id`, `status` (`pending|succeeded|failed|cancelled`), `provider`, `model`, `prompt_version`, `schema_version`, timestamps, safe `error_code`, token counts, estimated cost.
@@ -17,7 +20,7 @@ Every user-owned record has an owner; preserve original text; distinguish AI-gen
 `id`, `analysis_run_id`, optional `event_candidate_id`, `label`, optional `taxonomy_key`, optional description, `evidence_text`, optional `intensity`, optional `uncertainty`, `origin` (`ai|user`), `review_status` (`proposed|accepted|edited|rejected`), `sort_order`.
 
 ### ConfirmedRecord
-May be a saved state on JournalEntry or separate aggregate; choose one source of truth. Fields may include `entry_id`, `user_id`, `confirmed_at`, optional `user_summary`. `balance_value` is prohibited until Balance formula is approved.
+May be a saved state on JournalEntry or separate aggregate; choose one source of truth. Fields may include `entry_id`, `user_id`, `confirmed_at`, the revision it was confirmed against, optional `user_summary`. When the text changes after confirmation the user must re-confirm (D-31). `balance_value` is prohibited until Balance formula is approved.
 
 ### EmotionLabel
 Optional taxonomy: `key`, `display_name`, `parent_key`, `locale`, `is_active`, `taxonomy_version`. User-authored labels must remain possible.
@@ -51,7 +54,7 @@ Paths:
 - `POST /v1/journal-entries/{id}/confirm` explicitly save user-reviewed interpretation.
 - `GET /v1/journal-entries?from=&to=&cursor=` list own records with pagination.
 - `PATCH /v1/journal-entries/{id}` edit own record.
-- `DELETE /v1/journal-entries/{id}` delete own record.
+- `DELETE /v1/journal-entries/{id}` delete own record: hard delete from active tables (D-30); report completion only after the backend confirms it.
 
 Request/response schemas must be versioned and runtime-validated. Treat client ownership fields as untrusted. Do not reveal whether another user's record exists.
 
@@ -70,4 +73,4 @@ Request/response schemas must be versioned and runtime-validated. Treat client o
 Illustrative only; not a fixed taxonomy or authoritative interpretation. `followUpQuestion` is reserved and ignored until D-15 (clarification in the MVP) is decided; no state or endpoint exists for it yet.
 
 ## Validation and privacy
-Bound string lengths/array sizes; reject unknown enum values; validate evidence against source by similarity matching (D-33, provisional; algorithm and threshold are defined in AI-01/AI-03); allow empty arrays; validate owner from auth context; store prompt/schema versions. Define retention, raw provider payload policy (default: do not retain raw sensitive payload logs), deletion propagation, export, and account deletion semantics before production.
+Bound string lengths/array sizes; reject unknown enum values; validate evidence against source by similarity matching (D-33, provisional; algorithm and threshold are defined in AI-01/AI-03) and show the matched span of the user's own text, never the model's rewording, as the quote; allow empty arrays; validate owner from auth context; store prompt/schema versions. Define retention, raw provider payload policy (default: do not retain raw sensitive payload logs), deletion propagation, export, and account deletion semantics before production.

@@ -22,14 +22,23 @@ check "no user_review / user_reviewed as a state name (review is a UI step, not 
 sm=$(section docs/02_MVP_PRD.md "## State model")
 # (Direct tests: the section text contains backticks, so it must not go through `bash -c`.)
 if grep -qwE 'skipped|discarded' <<<"$sm"; then bad "docs/02 state model does not use skipped/discarded as states"; else ok "docs/02 state model does not use skipped/discarded as states"; fi
+# Every state in a backticked path (words between arrows or bars) must be defined in docs/06.
+# Plain words such as `archived` count too; `retry` is an action, not a state.
+states=$(grep -o '`[^`]*`' <<<"$sm" | tr -d '`' | awk '{gsub(/→/,"\n"); gsub(/\|/,"\n"); print}' \
+  | sed -E 's/^ +//; s/ +$//' | grep -E '^[a-z_]+$' | grep -vx retry | sort -u)
+count=$(grep -c . <<<"$states")
+if [ "$count" -ge 7 ]; then ok "docs/02 state model yields $count state names (guard against an empty extraction)"; else bad "docs/02 state model yields only $count state names (extraction broke)"; fi
 missing=0
-for t in $(grep -oE '[a-z]+(_[a-z]+)+|\b(draft|submitted|saved)\b' <<<"$sm" | sort -u); do
-  section docs/06_DATA_MODEL_AND_API.md "## State transitions" | grep -qw "$t" || { echo "       not defined in docs/06 State transitions: $t"; missing=1; }
+transitions=$(section docs/06_DATA_MODEL_AND_API.md "## State transitions")
+for t in $states; do
+  grep -qw "$t" <<<"$transitions" || { echo "       not defined in docs/06 State transitions: $t"; missing=1; }
 done
 [ $missing = 0 ] && ok "every state named in docs/02 is defined in docs/06" || bad "every state named in docs/02 is defined in docs/06"
 
 # 3. Plain save without AI is a documented path (D-32).
-if grep -qE 'draft.*saved' <<<"$sm" && grep -q 'D-32' <<<"$sm"; then ok "docs/02 state model has the plain-save path (draft to saved, D-32)"; else bad "docs/02 state model has the plain-save path (draft to saved, D-32)"; fi
+# The direct path is a path of its own (`draft → saved`), not a prefix of the main path.
+if grep -qF '`draft → saved`' <<<"$sm" && grep -q 'D-32' <<<"$sm"; then ok "docs/02 has the direct plain-save path (draft to saved, D-32)"; else bad "docs/02 has the direct plain-save path (draft to saved, D-32)"; fi
+if grep -qF '`draft → saved`' <<<"$transitions" && grep -q 'D-32' <<<"$transitions"; then ok "docs/06 has the direct plain-save path (draft to saved, D-32)"; else bad "docs/06 has the direct plain-save path (draft to saved, D-32)"; fi
 check "JRN-02 no longer says 'if approved'" bash -c "! grep -n 'JRN-02' docs/09_MVP_BACKLOG.md | grep -qi 'if approved'"
 
 # 4. Open product questions are registered in docs/10 and referenced where they matter.
