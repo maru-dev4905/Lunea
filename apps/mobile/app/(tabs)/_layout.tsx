@@ -1,18 +1,12 @@
 import { Tabs } from 'expo-router';
 
-import { useTheme } from '@/theme';
+import { SlidingTabBar } from '@/navigation/SlidingTabBar';
 
 // Today / Collection / Settings follow docs/03 as a proposal, not the final IA.
+// The tab bar is the sliding-pill bar of the visual direction (D-34).
 export default function TabsLayout() {
-  const theme = useTheme();
   return (
-    <Tabs
-      screenOptions={{
-        tabBarActiveTintColor: theme.color.accent,
-        tabBarInactiveTintColor: theme.color.textMuted,
-        tabBarStyle: { backgroundColor: theme.color.surface },
-      }}
-    >
+    <Tabs tabBar={(props) => <SlidingTabBar {...props} />}>
       <Tabs.Screen name="index" options={{ title: 'Today' }} />
       <Tabs.Screen name="collection" options={{ title: 'Collection' }} />
       <Tabs.Screen name="settings" options={{ title: 'Settings' }} />

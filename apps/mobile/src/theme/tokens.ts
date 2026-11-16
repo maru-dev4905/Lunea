@@ -1,20 +1,33 @@
 // Semantic theme tokens (ADR-0004, docs/04_VISUAL_DESIGN_SPEC.md).
-// Palette, fonts and light/dark (D-20) are TBD: the values below are neutral
-// placeholders, not a design decision. Components must read tokens via useTheme().
+// Visual direction D-34 (owner, 2026-11-16): bright warm white, one black ink as the only
+// accent, hairline strokes, calm motion. Dark mode (D-20) and fonts are still undecided.
+// Components must read tokens via useTheme().
 export const tokens = {
   color: {
-    background: '#FFFFFF',
-    surface: '#F5F5F5',
+    background: '#FAF9F6',
+    surface: '#F1F0EC',
     surfaceElevated: '#FFFFFF',
-    textPrimary: '#1A1A1A',
-    textSecondary: '#4D4D4D',
-    textMuted: '#767676',
-    borderSubtle: '#E0E0E0',
-    accent: '#5B5BD6',
-    accentSoft: '#ECECFB',
+    textPrimary: '#151515',
+    textSecondary: '#4A4A47',
+    textMuted: '#6B6B67',
+    borderSubtle: '#E4E2DD',
+    accent: '#151515',
+    accentSoft: '#ECEBE8',
+    onAccent: '#FAF9F6',
     success: '#2E7D32',
-    warning: '#B26A00',
+    warning: '#8F5400',
     danger: '#C62828',
+  },
+  space: { xs: 4, sm: 8, md: 12, lg: 16, xl: 24 },
+  radius: { sm: 8, md: 12, pill: 999 },
+  // Subtle and short (docs/04). Every animation must also work with reduced motion.
+  motion: {
+    duration: { fast: 150, base: 250, slow: 400 },
+    // The tab indicator stretches: its leading edge springs quickly, the trailing edge follows.
+    spring: {
+      leading: { stiffness: 260, damping: 19, mass: 1 },
+      trailing: { stiffness: 110, damping: 16, mass: 1 },
+    },
   },
 } as const;
 
