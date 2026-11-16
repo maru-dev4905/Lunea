@@ -73,6 +73,12 @@ const cases = [
   { kind: 'spec', name: 'docs/06 loses the "not used in the MVP" note', file: 'docs/06_DATA_MODEL_AND_API.md', find: 'not used in the MVP (D-15 deferred)', replace: 'ignored', expect: 'docs/06 marks followUpQuestion' },
   { kind: 'spec', name: 'docs/07 loses the null-return rule', file: 'docs/07_AI_BEHAVIOR_AND_SAFETY.md', find: 'and returns `followUpQuestion` as null.', replace: 'and may return `followUpQuestion`.', expect: 'docs/07 asks none' },
   { kind: 'spec', name: 'docs/07 loses the prompt-contract note', file: 'docs/07_AI_BEHAVIOR_AND_SAFETY.md', find: 'no clarification question in the MVP (D-15 deferred);', replace: 'ask one question only if useful;', expect: 'docs/07 asks none' },
+  // Decision ids must match as whole ids: D-330 is not D-33 (found by review of PR #14).
+  { kind: 'spec', name: 'D-33 reference replaced by D-330 in docs/06', file: 'docs/06_DATA_MODEL_AND_API.md', find: 'D-33, provisional;', replace: 'D-330, provisional;', expect: 'docs/06 evidence validation references D-33' },
+  { kind: 'spec', name: 'D-32 reference replaced by D-320 in docs/02', file: 'docs/02_MVP_PRD.md', find: '`draft → saved` (D-32, accepted)', replace: '`draft → saved` (D-320, accepted)', expect: 'docs/02 has the direct plain-save path' },
+  { kind: 'spec', name: 'D-32 reference replaced by D-320 in docs/06', file: 'docs/06_DATA_MODEL_AND_API.md', find: '(D-32, accepted): `draft → saved`.', replace: '(D-320, accepted): `draft → saved`.', expect: 'docs/06 has the direct plain-save path' },
+  { kind: 'spec', name: 'D-30 reference replaced by D-300 in the docs/06 JournalEntry', file: 'docs/06_DATA_MODEL_AND_API.md', find: 'there is no `deleted` status, D-30)', replace: 'there is no `deleted` status, D-300)', expect: 'docs/06 JournalEntry references D-30' },
+  { kind: 'spec', name: 'D-15 reference replaced by D-150 on the followUpQuestion note', file: 'docs/06_DATA_MODEL_AND_API.md', find: 'not used in the MVP (D-15 deferred)', replace: 'not used in the MVP (D-150 deferred)', expect: 'docs/06 marks followUpQuestion' },
 ];
 
 const sh = (script, cwd, env = {}) =>
