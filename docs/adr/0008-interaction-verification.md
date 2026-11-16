@@ -35,10 +35,12 @@ Chosen option: **A** (becomes binding when this ADR is Accepted).
 - **Checked on a real device (2026-11-16):** CodeRabbit pointed out that Expo's docs say updates published with `runtimeVersion` cannot be loaded in Expo Go. The first real run (`runtimeVersion` policy `appVersion`, runtime 0.1.0, platforms android and ios) posted the QR comment and the owner opened the app in Expo Go on a phone, so the preview works with the current configuration. If a later Expo Go or SDK change breaks this, the Review trigger below applies and the fallback is option D (`expo-dev-client`).
 - Previews depend on the Expo service. If it is down, fall back to option C.
 - The token needs rotation if it leaks; Actions secrets are the only place it lives.
+- Trust model: `eas update` bundles the PR branch (`app.json`, Metro and Babel config, plugins), so code from a same-repository PR runs while the token is available. Fork PRs are excluded and the token belongs to a minimum-role robot user, so only people with write access (or a hijacked account) can reach it. If collaborators are added, put the job behind an Actions `environment` with required approval. `eas-cli` is pinned to an exact version in the workflow because it runs with the token.
+- Published preview bundles are effectively public: the project id is in this public repository and branch names (`pr-<N>`) are predictable. Today they contain no `EXPO_PUBLIC_*` values; unreleased designs and copy shown in a preview can be seen by anyone with the URL, and the policy check rejects `EXPO_PUBLIC_*` and Supabase values in the workflow.
 - Without `EXPO_TOKEN` the job skips with a notice. The token belongs to a robot user of the `lunea-team` organization with the lowest role that can publish updates.
 
 ## Owner
 Product owner (human).
 
 ## Review trigger
-A native module Expo Go cannot load, Expo service pricing or availability problems, or a decision to ship OTA updates to production.
+A native module Expo Go cannot load, Expo service pricing or availability problems, or a decision to ship OTA updates to production. Before the first EAS Build, decide `updates.checkAutomatically` (for example `NEVER`) together with the channel mapping: `expo-updates` plus `updates.url` otherwise lets store builds check for updates at launch, and "no production OTA" is not enforced by code today.

@@ -15,6 +15,11 @@ has()  { grep -Eq "$1" "$f"; }
 hasnt() { ! grep -Eq "$1" "$f"; }
 
 [ -f "$f" ] || { echo "FAIL - $f does not exist"; exit 1; }
+# Full-line comments must not satisfy a check: test a copy without them.
+src=$f
+f=$(mktemp)
+trap 'rm -f "$f"' EXIT
+sed -E '/^[[:space:]]*#/d' "$src" > "$f"
 
 check "triggers on pull_request"                              bash -c "grep -Eq '^on:' '$f' && grep -Eq '^  pull_request:' '$f'"
 check "never uses pull_request_target (would expose secrets to forks)" hasnt 'pull_request_target'
@@ -31,6 +36,9 @@ check "every third-party action is pinned to a full commit SHA" bash -c "! grep 
 check "job has a timeout"                                     has 'timeout-minutes:'
 check "superseded runs are cancelled"                         has 'cancel-in-progress: true'
 check "never prints secrets or enables shell tracing"         hasnt 'set -x|echo .*secrets'
+check "eas-cli (holds the token) is pinned to an exact version"  bash -c "grep -Eq 'eas-version: *[0-9]+\\.[0-9]+\\.[0-9]+' '$f' && ! grep -Eq 'eas-version: *(latest|[~^])' '$f'"
+check "no untrusted event text is interpolated (title, body, label, comments)" hasnt 'github\.event\.(pull_request\.(title|body)|pull_request\.head\.label|comment|issue|review|head_commit)|head\.label'
+check "previews carry no EXPO_PUBLIC values or extra env (dev-only rule, D-28)" hasnt 'EXPO_PUBLIC_|SUPABASE'
 check "QR opens in Expo Go"                                   has 'qr-target: expo-go'
 
 exit $fail

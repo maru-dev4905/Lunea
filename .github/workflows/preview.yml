@@ -46,7 +46,8 @@ jobs:
       - if: steps.token.outputs.present == 'true'
         uses: expo/expo-github-action@5273c2136bd09c2a341fe3340d3e767ce5a13015 # 9.0.2
         with:
-          eas-version: latest
+          # Pinned: this CLI runs with the token. Bump deliberately (ADR-0008).
+          eas-version: 27.10.0
           packager: npm
           token: ${{ secrets.EXPO_TOKEN }}
       # The branch name comes from the PR number only: PR branch names are external input.

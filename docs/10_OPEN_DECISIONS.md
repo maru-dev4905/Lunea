@@ -29,8 +29,8 @@
 | D-24 | Agent tooling | Accepted: Orca + Superpowers; pstack removed; OMC not used | See `docs/11_AGENT_WORKFLOW.md` |
 | D-27 | Platforms: iOS, Android and Web | Accepted (2026-11-13, product owner): the app must work both as a native app and on the web from one Expo codebase | See ADR-0001 amendment; web storage for auth tokens and journal drafts is decided in the auth/storage work (D-16, FND-04); revisit if web needs diverge from native |
 | D-28 | Supabase environments | Accepted (2026-11-13, product owner): separate dev / staging / prod projects; dev = existing project `lunea`; staging and prod created later by the owner | See ADR-0002 "Environments"; prod only after PoC gates 3 and 5 pass; names of staging/prod TBD |
-| D-29 | Interaction verification | Proposed (2026-11-16, ADR-0008): per-PR device preview with EAS Update + Expo Go; `expo-updates` added deliberately; no production OTA | Owner accepts ADR-0008 in the LUN-12 PR; add `EXPO_TOKEN` secret |
 | D-26 | Git branching | Accepted (2026-11-13): `dev` default/integration (squash), `main` release-only (merge commit + tag), Jira 완료 on merge to `dev` | See `docs/11_AGENT_WORKFLOW.md` §5a; revisit if multiple release trains are needed |
+| D-29 | Interaction verification | Proposed (2026-11-16, ADR-0008): per-PR device preview with EAS Update + Expo Go; `expo-updates` added deliberately; no production OTA | Owner accepts ADR-0008 in the LUN-12 PR; add `EXPO_TOKEN` secret |
 
 ## Questions Claude must not decide silently
 1. Backend and deployment platform?
