@@ -24,4 +24,4 @@ A. 가장 중요한 근거는 두 가지였습니다. (1) `eas update`는 `expo-
 - 액션 버전은 문서 예시가 v8이었지만 최신은 9.0.2(Node 24 런타임 변경만)여서 9.0.2를 커밋 SHA로 고정했습니다.
 
 ## 결과
-정책 검사 16개, 앱 검사, `expo export`가 통과합니다. 실제 QR 확인은 `EXPO_TOKEN` 시크릿과 Expo Go가 준비된 뒤 제품 책임자가 합니다.
+정책 검사 16개, 앱 검사, `expo export`가 통과합니다. 제품 책임자가 `EXPO_TOKEN`(조직 로봇 유저 토큰)을 저장하고 `Preview`를 다시 실행하자 PR에 QR 코멘트(android·ios, 런타임 0.1.0)가 달렸고 폰의 Expo Go에서 앱이 열렸습니다. CodeRabbit이 문서를 근거로 지적한 `runtimeVersion`과 Expo Go의 비호환 우려는 현재 구성에서는 해당하지 않음이 확인됐습니다. 재실행을 `Preview`가 아닌 `CI`에서 눌러 한 번 헛돈 것은 단순 조작 착오였습니다.

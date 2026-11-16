@@ -20,7 +20,7 @@ Foundation(기반). 기획 문서, 기술 결정(ADR), 에이전트 작업 체�
 - Jira 백로그: 에픽 LUN-1~7, 작업 LUN-8~34 (`iseung10e.atlassian.net`, 프로젝트 `LUN`)
 
 ## 검토 중
-- LUN-12 FND-05 인터랙션 확인 체계: PR마다 EAS Update 미리보기 QR(Expo Go), ADR-0008(Proposed), 워크플로 보안 정책 검사. `EXPO_TOKEN` 시크릿이 있어야 실제 QR이 달립니다 (이 PR)
+- LUN-12 FND-05 인터랙션 확인 체계: PR마다 EAS Update 미리보기 QR(Expo Go), ADR-0008(Proposed), 워크플로 보안 정책 검사. 첫 실행에서 QR 코멘트 생성과 Expo Go 실행을 폰으로 확인함(2026-11-16) (이 PR)
 
 ## 다음 작업 (순서대로)
 1. LUN-13 DOC-01 명세 불일치 정리 (상태 이름, 삭제 의미, 확인 질문 흐름). 웹 지원(D-27)에 맞춰 PRD의 "모바일" 표현도 함께 정리 제안.
@@ -28,7 +28,7 @@ Foundation(기반). 기획 문서, 기술 결정(ADR), 에이전트 작업 체�
 3. 웹 영향 후속: 인증 토큰·초안 저장소(웹에는 `expo-secure-store` 없음, FND-04/D-16), 반응형·웹 접근성(UX-01).
 
 ## 제품 책임자 확인 필요
-- LUN-12: GitHub 저장소 Secrets에 `EXPO_TOKEN` 저장(채팅에 붙여넣지 않기), 폰에 Expo Go 설치·로그인, ADR-0008을 Accepted로 올릴지 결정, 첫 PR에서 QR이 달리고 실행되는지 확인(수용 기준)
+- LUN-12: ADR-0008을 Accepted로 올릴지 결정(`EXPO_TOKEN` 저장, QR 생성, 폰 실행은 확인 완료). 토큰은 `lunea-team` 로봇 유저 발급분이며 유출 시 expo.dev에서 폐기 후 재발급
 - LUN-12 후속: 웹 PR 미리보기(호스팅)는 이번 범위 밖. 운영 빌드의 OTA 업데이트는 별도 결정 전까지 사용하지 않음
 - PoC 조건 5: `lunea` 리전과 데이터 처리 약관(DPA) 검토를 `docs/poc/FND-04-supabase.md`에 기록
 - PoC 조건 3: 기기·웹에서 세션 갱신 확인. 앱에 `@supabase/supabase-js`와 저장소 어댑터를 넣는 별도 작업 필요(웹 토큰 저장 방식 D-16·D-27 결정과 함께)

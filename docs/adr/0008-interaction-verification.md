@@ -27,15 +27,15 @@ Chosen option: **A** (becomes binding when this ADR is Accepted).
 - Preview bundles contain `EXPO_PUBLIC_*` values, so previews must only use the dev environment (synthetic data, D-28). staging and prod values never go into a preview.
 - Over-the-air updates for production builds are **not** enabled by this ADR. Shipping code outside store review needs its own decision.
 - Compare mode: every variant is its own PR, so each gets its own `pr-<N>` branch and its own QR.
-- Web is not covered by EAS Update. Web is checked locally with `npm start` and `w`; a hosted web preview is a follow-up.
+- Web is not covered by EAS Update (the first run published android and ios only). Web is checked locally with `npm start` and `w`; a hosted web preview is a follow-up.
 
 ## Consequences
 - `expo-updates` becomes part of the app and of future native builds.
 - Expo Go cannot load custom native modules; the first need for one is the trigger to move to option D.
-- **Unverified risk (CodeRabbit, 2026-11-16):** Expo's docs state that updates published with `runtimeVersion` cannot be loaded in Expo Go, while the `preview` action offers `qr-target: expo-go`; `eas update` also writes a runtime version on its own, so removing it from `app.json` is not an option. This could not be checked without a real publish. The first run with `EXPO_TOKEN` decides it: if Expo Go refuses the update, the Review trigger below applies and the fallback is option D (`expo-dev-client`), which changes the QR target and the install steps for the owner.
+- **Checked on a real device (2026-11-16):** CodeRabbit pointed out that Expo's docs say updates published with `runtimeVersion` cannot be loaded in Expo Go. The first real run (`runtimeVersion` policy `appVersion`, runtime 0.1.0, platforms android and ios) posted the QR comment and the owner opened the app in Expo Go on a phone, so the preview works with the current configuration. If a later Expo Go or SDK change breaks this, the Review trigger below applies and the fallback is option D (`expo-dev-client`).
 - Previews depend on the Expo service. If it is down, fall back to option C.
 - The token needs rotation if it leaks; Actions secrets are the only place it lives.
-- The first real run needs the owner to add `EXPO_TOKEN`; until then the job skips with a notice.
+- Without `EXPO_TOKEN` the job skips with a notice. The token belongs to a robot user of the `lunea-team` organization with the lowest role that can publish updates.
 
 ## Owner
 Product owner (human).
