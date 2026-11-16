@@ -79,6 +79,12 @@ const cases = [
   { kind: 'spec', name: 'D-32 reference replaced by D-320 in docs/06', file: 'docs/06_DATA_MODEL_AND_API.md', find: '(D-32, accepted): `draft → saved`.', replace: '(D-320, accepted): `draft → saved`.', expect: 'docs/06 has the direct plain-save path' },
   { kind: 'spec', name: 'D-30 reference replaced by D-300 in the docs/06 JournalEntry', file: 'docs/06_DATA_MODEL_AND_API.md', find: 'there is no `deleted` status, D-30)', replace: 'there is no `deleted` status, D-300)', expect: 'docs/06 JournalEntry references D-30' },
   { kind: 'spec', name: 'D-15 reference replaced by D-150 on the followUpQuestion note', file: 'docs/06_DATA_MODEL_AND_API.md', find: 'not used in the MVP (D-15 deferred)', replace: 'not used in the MVP (D-150 deferred)', expect: 'docs/06 marks followUpQuestion' },
+  // A correct id elsewhere must not hide a wrong id where it matters (found by review of PR #14).
+  { kind: 'spec', name: 'wrong D-32 on the docs/02 direct path while D-32 appears elsewhere', file: 'docs/02_MVP_PRD.md', find: '`draft → saved` (D-32, accepted)', replace: '`draft → saved` (D-320, accepted)', also: [{ file: 'docs/02_MVP_PRD.md', find: 'removing a draft is deletion (D-30), not a state.', replace: 'removing a draft is deletion (D-30), not a state; see D-32.' }], expect: 'docs/02 has the direct plain-save path' },
+  { kind: 'spec', name: 'wrong D-32 on the docs/06 direct path while D-32 appears elsewhere', file: 'docs/06_DATA_MODEL_AND_API.md', find: '(D-32, accepted): `draft → saved`.', replace: '(D-320, accepted): `draft → saved`.', also: [{ file: 'docs/06_DATA_MODEL_AND_API.md', find: '- AI success alone never confirms.', replace: '- AI success alone never confirms (see D-32).' }], expect: 'docs/06 has the direct plain-save path' },
+  { kind: 'spec', name: 'wrong D-31 in the docs/06 JournalEntry while D-31 appears on another body_original line', file: 'docs/06_DATA_MODEL_AND_API.md', find: 'edits are kept as revisions, D-31)', replace: 'edits are kept as revisions, D-310)', expect: 'docs/06 JournalEntry references D-30' },
+  { kind: 'spec', name: 'wrong D-15 on the followUpQuestion note while the JSON example mentions D-15', file: 'docs/06_DATA_MODEL_AND_API.md', find: 'not used in the MVP (D-15 deferred)', replace: 'not used in the MVP (D-150 deferred)', also: [{ file: 'docs/06_DATA_MODEL_AND_API.md', find: '"followUpQuestion": null', replace: '"followUpQuestion": null, "_": "D-15"' }], expect: 'docs/06 marks followUpQuestion' },
+  { kind: 'spec', name: 'wrong D-33 on the docs/06 validation line while another evidence line mentions D-33', file: 'docs/06_DATA_MODEL_AND_API.md', find: 'D-33, provisional;', replace: 'D-330, provisional;', also: [{ file: 'docs/06_DATA_MODEL_AND_API.md', find: '`evidence_text` or source span, `sort_order`.', replace: '`evidence_text` or source span (D-33), `sort_order`.' }], expect: 'docs/06 evidence validation references D-33' },
 ];
 
 const sh = (script, cwd, env = {}) =>
@@ -107,22 +113,37 @@ try {
   report(baseSpec.status === 0, 'baseline: the real docs pass check-spec-consistency.sh', failedChecks(baseSpec.stdout));
 
   cases.forEach((c, i) => {
-    const original = readFileSync(join(root, c.file), 'utf8');
-    if (!original.includes(c.find)) {
-      report(false, `${c.name}: stale case, text not found in ${c.file}`, JSON.stringify(c.find));
+    // `also` lets a case plant a correct reference elsewhere (for example on another line of
+    // the same section) so a check that searches too widely cannot pass by accident.
+    const edits = [{ file: c.file, find: c.find, replace: c.replace }, ...(c.also ?? [])];
+    const originals = new Map(); // file -> untouched content
+    const mutated = new Map(); // file -> content with the edits applied one after another
+    let stale = null;
+    for (const e of edits) {
+      if (!originals.has(e.file)) {
+        const text = readFileSync(join(root, e.file), 'utf8');
+        originals.set(e.file, text);
+        mutated.set(e.file, text);
+      }
+      if (!mutated.get(e.file).includes(e.find)) {
+        stale = e;
+        break;
+      }
+      mutated.set(e.file, mutated.get(e.file).replace(e.find, e.replace));
+    }
+    if (stale) {
+      report(false, `${c.name}: stale case, text not found in ${stale.file}`, JSON.stringify(stale.find));
       return;
     }
-    const mutated = original.replace(c.find, c.replace);
     let result;
     if (c.kind === 'workflows') {
       const file = join(work, `case-${i}.yml`);
-      writeFileSync(file, mutated);
+      writeFileSync(file, mutated.get(c.file));
       result = sh(workflowsCheck, root, { WORKFLOW_FILE: file });
     } else {
-      const target = join(specRoot, c.file);
-      writeFileSync(target, mutated);
+      for (const [file, text] of mutated) writeFileSync(join(specRoot, file), text);
       result = sh(specScript, specRoot);
-      writeFileSync(target, original); // restore the sandbox copy for the next case
+      for (const [file, text] of originals) writeFileSync(join(specRoot, file), text); // restore the sandbox copies
     }
     if (c.pass) {
       report(result.status === 0, `${c.name} (must pass)`, failedChecks(result.stdout));
