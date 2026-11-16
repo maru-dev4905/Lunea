@@ -16,7 +16,7 @@
 | D-12 | Collection/receipt visual metaphor | TBD | Low-fi exploration |
 | D-13 | Emotion taxonomy | TBD | Flexible Korean examples |
 | D-14 | Multiple entries per day | TBD | UX decision |
-| D-15 | Clarification chat in MVP | Proposed optional | Decide in or out of the MVP. In: add a clarification state and an answer endpoint to docs/06. Out: remove step 6 from docs/03 and the charter. Until then `followUpQuestion` is reserved and ignored (LUN-13) |
+| D-15 | Clarification chat in MVP | Deferred (2026-11-16, owner): not in the MVP, revisit later | Revisit once the MVP is usable and an eval set can check that questions neither lead nor invent details (docs/07). If added: a clarification state and an answer endpoint in docs/06. `followUpQuestion` stays reserved (null) until then |
 | D-16 | Auth methods | TBD | Select |
 | D-17 | Retention/export/deletion policy | TBD | Provider/legal review |
 | D-18 | Crisis/safety policy | TBD | Specialist review |
