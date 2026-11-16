@@ -39,6 +39,17 @@ export default function TodayScreen() {
           </Text>
         </Pressable>
       </FadeIn>
+      <FadeIn delay={270}>
+        <Pressable
+          accessibilityRole="link"
+          onPress={() => router.push('/receipt/sample')}
+          style={({ pressed }) => [styles.link, pressed && { opacity: 0.6 }]}
+        >
+          <Text style={[styles.linkLabel, { color: theme.color.textSecondary }]}>
+            영수증 예시 보기
+          </Text>
+        </Pressable>
+      </FadeIn>
     </View>
   );
 }
@@ -49,4 +60,6 @@ const styles = StyleSheet.create({
   lead: { fontSize: 16, lineHeight: 24, textAlign: 'center' },
   button: { minHeight: 48, paddingHorizontal: 24, borderRadius: 999, justifyContent: 'center' },
   buttonLabel: { fontSize: 16, fontWeight: '500' },
+  link: { minHeight: 44, justifyContent: 'center' },
+  linkLabel: { fontSize: 14, letterSpacing: 0.5 },
 });

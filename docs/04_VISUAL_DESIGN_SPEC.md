@@ -25,8 +25,13 @@ Tokens (`tokens.motion`): durations 150/250/400 ms; the tab indicator uses a fas
 
 Optional opacity/position transitions and subtle focus/save feedback. Respect OS reduced-motion; avoid continuous battery-draining animation; no motion that implies the user's emotion; all interactions must work with animation disabled.
 
-## Unresolved metaphor
-Receipt-like record and Collection have been explored but are not final. Do not implement thermal-paper textures, perforated edges, currency/transaction language, collectible rewards, or generated daily keepsake objects without approval. Keep record detail modular.
+## Receipt (provisional, D-12 and D-35)
+The owner accepted a receipt-like look as the shareable view of a saved record (2026-11-16). It lives in `src/receipt` and `app/receipt`, so it can be changed or removed. It uses hairlines and the user's own quotes; it has no prices, scores or streaks.
+
+Still not approved: thermal-paper textures, perforated edges, currency/transaction language, collectible rewards, generated daily keepsake objects. Keep record detail modular.
+
+### Water-like motion
+Lines draw themselves from left to right, top to bottom, and the words settle in under each one. Touching the paper sends thin rings out from the finger, like a ripple on still water. Both are one-shot (no looping), use the `calm` easing and the `draw` / `ripple` durations, are hidden from screen readers, and are replaced by an instant, static view when the system asks for reduced motion. Tokens live in `tokens.motion`; the number of live rings is capped.
 
 ## Initial component inventory
 `AppScreen`, `AppHeader`, `PrimaryButton`, `SecondaryButton`, `TextField`, `JournalComposer`, `MessageBubble` (if conversation retained), `EmotionChip`, `EmotionCandidate`, `EvidenceText`, `RecordPreview`, `RecordDate`, `EmptyState`, `LoadingState`, `ErrorState`, `ConfirmDialog`, `BottomNavigation`.

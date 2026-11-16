@@ -13,7 +13,7 @@
 | D-09 | Jotai vs Zustand vs none | Accepted: none initially (ADR-0003) | Add one library only with ADR update |
 | D-10 | StyleSheet vs Emotion Native | Accepted: StyleSheet + tokens (ADR-0004) | Revisit with approved high-fi design |
 | D-11 | Balance definition/formula/MVP scope | TBD | Product workshop; no code yet |
-| D-12 | Collection/receipt visual metaphor | TBD | Low-fi exploration |
+| D-12 | Collection/receipt visual metaphor | Accepted provisionally (2026-11-16, owner): a receipt-like look is the shareable view of a saved record; prototype on synthetic data (LUN-35) | Keep it inside `src/receipt` and `app/receipt`, never hard-coded elsewhere. No prices, scores or streaks in it (D-11 is TBD). Thermal-paper textures, perforated edges, currency language and collectible rewards are still not approved. Revisit after real users have seen it |
 | D-13 | Emotion taxonomy | TBD | Flexible Korean examples |
 | D-14 | Multiple entries per day | TBD | UX decision |
 | D-15 | Clarification chat in MVP | Deferred (2026-11-16, owner): not in the MVP, revisit later | Revisit once the MVP is usable and an eval set can check that questions neither lead nor invent details (docs/07). If added: a clarification state and an answer endpoint in docs/06. `followUpQuestion` stays reserved (null) until then |
@@ -36,6 +36,7 @@
 | D-32 | Save without AI | Accepted (2026-11-16, owner) | Saving a record without AI is allowed and a record may have zero emotions. Applied in docs/02, docs/03, docs/09 (JRN-02). AI disclosure (PRIV-02) still applies before the first analysis |
 | D-33 | Evidence verification | Accepted provisionally (2026-11-16, owner) | A similarity match against the original text is allowed instead of an exact match. Define the algorithm and threshold in AI-01/AI-03 with synthetic Korean cases (typos, spacing, particles) and review once the eval set exists. Guardrail (owner adopted, from docs/07 "fabricated quote" release blocker): show the matched span of the user's own text, never the model's rewording as a quote |
 | D-34 | Visual direction | Accepted (2026-11-16, owner) | Bright warm white `#FAF9F6`, black ink `#151515` as the only accent, hairline strokes, calm motion, sliding-pill tab bar (variant 1 of a public tab-bar motion sample; inspiration only, no paid content copied). Applied in `tokens.ts`, tab bar and screen entrances (LUN-15). Revisit when the high-fi core flow is designed. Dark mode (D-20), fonts and the other five tab-bar variants stay open. All motion needs a reduced-motion fallback |
+| D-35 | Product direction | Accepted (2026-11-16, owner): direction A. Keep the single-user journal; the receipt is a shareable output of a saved record. Couples (sign-up, pairing, shared records) are deferred until the receipt is validated | The owner will give the service to acquaintances, and may later use the accumulated data in a portfolio. Before real users: consent and privacy notice, retention and deletion (D-17), AI disclosure (PRIV-02), PoC conditions 3 and 5, staging/prod Supabase. Using user data in a portfolio needs explicit consent and anonymization (not decided). Points/streak policy is for the owner to think over; until then the original rule applies (docs/03: none) |
 
 ## Questions Claude must not decide silently
 1. Backend and deployment platform?

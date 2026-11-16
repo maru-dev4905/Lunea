@@ -20,9 +20,14 @@ export const tokens = {
   },
   space: { xs: 4, sm: 8, md: 12, lg: 16, xl: 24 },
   radius: { sm: 8, md: 12, pill: 999 },
-  // Subtle and short (docs/04). Every animation must also work with reduced motion.
+  // Subtle and bounded (docs/04). Every animation must also work with reduced motion.
   motion: {
-    duration: { fast: 150, base: 250, slow: 400 },
+    // fast/base/slow: UI motion. draw/ripple: the slow, water-like motion of lines that draw
+    // themselves and rings that spread from a touch (one-shot, never looping).
+    duration: { fast: 150, base: 250, slow: 400, draw: 900, ripple: 1800 },
+    stagger: 140,
+    // cubic-bezier control points. calm: quick start, very long soft landing, like a ripple.
+    easing: { calm: [0.22, 1, 0.36, 1], fade: [0.4, 0, 0.2, 1] },
     // The tab indicator stretches: its leading edge springs quickly, the trailing edge follows.
     spring: {
       leading: { stiffness: 260, damping: 19, mass: 1 },

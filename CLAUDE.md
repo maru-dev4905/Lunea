@@ -13,7 +13,7 @@ Product constraints:
 - Preserve original journal text.
 - Multiple/conflicting emotions may coexist.
 - Balance formula is TBD; do not implement.
-- Collection/receipt metaphor is TBD; do not hard-code.
+- Collection/receipt metaphor is provisional (D-12, D-35): keep it inside `src/receipt` and `app/receipt`, never hard-coded elsewhere; no prices, scores or streaks (D-11 is TBD).
 - Not diagnosis or therapy replacement.
 
 Engineering constraints:

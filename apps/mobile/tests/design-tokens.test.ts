@@ -58,6 +58,26 @@ describe('motion tokens', () => {
     expect(duration.slow).toBeLessThanOrEqual(500);
   });
 
+  // LUN-35: lines that draw themselves and ripples that spread like touched still water are
+  // slower than the UI motion above, but still one-shot and bounded.
+  it('keeps the slow, water-like motion bounded', () => {
+    const { duration, stagger } = tokens.motion;
+    expect(duration.draw).toBeGreaterThan(duration.slow);
+    expect(duration.draw).toBeLessThanOrEqual(1200);
+    expect(duration.ripple).toBeGreaterThan(duration.draw);
+    expect(duration.ripple).toBeLessThanOrEqual(2400);
+    expect(stagger).toBeGreaterThan(0);
+  });
+
+  it.each(['calm', 'fade'] as const)('defines a valid cubic-bezier for the %s easing', (name) => {
+    const [x1, y1, x2, y2] = tokens.motion.easing[name];
+    [x1, x2].forEach((x) => {
+      expect(x).toBeGreaterThanOrEqual(0);
+      expect(x).toBeLessThanOrEqual(1);
+    });
+    [y1, y2].forEach((y) => expect(Number.isFinite(y)).toBe(true));
+  });
+
   it('defines springs for the leading and trailing edge of the tab indicator', () => {
     const { leading, trailing } = tokens.motion.spring;
     expect(leading.stiffness).toBeGreaterThan(trailing.stiffness);
