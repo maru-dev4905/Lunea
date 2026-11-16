@@ -28,6 +28,7 @@
 | D-25 | Independent verification trigger | Accepted (2026-11-12): mode A owner runs `/lunea-verify` manually; mode C automatic | Revisit when orchestrator runs routinely |
 | D-24 | Agent tooling | Accepted: Orca + Superpowers; pstack removed; OMC not used | See `docs/11_AGENT_WORKFLOW.md` |
 | D-27 | Platforms: iOS, Android and Web | Accepted (2026-11-13, product owner): the app must work both as a native app and on the web from one Expo codebase | See ADR-0001 amendment; web storage for auth tokens and journal drafts is decided in the auth/storage work (D-16, FND-04); revisit if web needs diverge from native |
+| D-28 | Supabase environments | Accepted (2026-11-13, product owner): separate dev / staging / prod projects; dev = existing project `lunea`; staging and prod created later by the owner | See ADR-0002 "Environments"; prod only after PoC gates 3 and 5 pass; names of staging/prod TBD |
 | D-26 | Git branching | Accepted (2026-11-13): `dev` default/integration (squash), `main` release-only (merge commit + tag), Jira 완료 on merge to `dev` | See `docs/11_AGENT_WORKFLOW.md` §5a; revisit if multiple release trains are needed |
 
 ## Questions Claude must not decide silently

@@ -35,6 +35,23 @@ Not decided here: auth methods (D-16), retention/deletion promises (D-17), regio
 - Schema changes go through migrations reviewed in PRs.
 - Shared Zod schemas must be importable from both Expo (Node tooling) and Edge Functions (Deno) — see ADR-0007.
 
+## Environments (2026-11-13, product owner): dev / staging / prod
+Three separate Supabase projects, as the Context already requires. Each environment has its own keys, secrets and AI provider key; nothing is shared.
+
+| Environment | Supabase project | `APP_ENV` | Data | Created by |
+|---|---|---|---|---|
+| local | Supabase CLI stack (Docker) | `development` | Synthetic only, disposable | any developer |
+| dev | `lunea` (existing) | `development` | Synthetic only | product owner (done) |
+| staging | name TBD | `staging` | Synthetic only | product owner (not yet created) |
+| prod | name TBD | `production` | Real user data | product owner, only after PoC gates 3 and 5 pass |
+
+Rules:
+- Real journal text exists only in prod. dev and staging never receive real entries, including copies of prod data.
+- Schema changes are migrations in PRs. They are applied in order dev, then staging, then prod, by the product owner (or a CI job the owner approved). Agents do not run `supabase db push`, `supabase link` or any write command against staging or prod.
+- Local tests (`scripts/check-supabase.sh`) never touch a remote project.
+- The client app only receives the project URL and publishable key of its own environment. Service-role keys and the AI provider key exist only in server-side secrets of that environment.
+- Region and data-processing terms (gate 5) are decided per project before prod is created.
+
 ## Owner
 Product owner (human). Must explicitly approve before a Supabase account/project is created.
 
