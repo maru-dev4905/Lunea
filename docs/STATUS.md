@@ -20,7 +20,7 @@ Foundation(기반). 기획 문서, 기술 결정(ADR), 에이전트 작업 체�
 - Jira 백로그: 에픽 LUN-1~7, 작업 LUN-8~34 (`iseung10e.atlassian.net`, 프로젝트 `LUN`)
 
 ## 검토 중
-- LUN-12 FND-05 인터랙션 확인 체계: PR마다 EAS Update 미리보기 QR(Expo Go), ADR-0008(Proposed), 워크플로 보안 정책 검사. 첫 실행에서 QR 코멘트 생성과 Expo Go 실행을 폰으로 확인함(2026-11-16) (이 PR)
+- LUN-12 FND-05 인터랙션 확인 체계: PR마다 EAS Update 미리보기 QR(Expo Go), ADR-0008(Accepted), 워크플로 보안 정책 검사. 첫 실행에서 QR 코멘트 생성과 Expo Go 실행을 폰으로 확인함(2026-11-16) (이 PR)
 
 ## 다음 작업 (순서대로)
 1. LUN-13 DOC-01 명세 불일치 정리 (상태 이름, 삭제 의미, 확인 질문 흐름). 웹 지원(D-27)에 맞춰 PRD의 "모바일" 표현도 함께 정리 제안.
@@ -28,7 +28,7 @@ Foundation(기반). 기획 문서, 기술 결정(ADR), 에이전트 작업 체�
 3. 웹 영향 후속: 인증 토큰·초안 저장소(웹에는 `expo-secure-store` 없음, FND-04/D-16), 반응형·웹 접근성(UX-01).
 
 ## 제품 책임자 확인 필요
-- LUN-12: ADR-0008을 Accepted로 올릴지 결정(`EXPO_TOKEN` 저장, QR 생성, 폰 실행은 확인 완료). 토큰은 `lunea-team` 로봇 유저 발급분이며 유출 시 expo.dev에서 폐기 후 재발급
+- LUN-12 후속: 첫 EAS Build 전에 `updates.checkAutomatically`·채널 매핑 결정(ADR-0008 검토 조건), `actionlint` CI 도입 여부. 토큰(`EXPO_TOKEN`)은 `lunea-team` 로봇 유저 발급분이며 유출 시 expo.dev에서 폐기 후 재발급
 - LUN-12 후속: 웹 PR 미리보기(호스팅)는 이번 범위 밖. 운영 빌드의 OTA 업데이트는 별도 결정 전까지 사용하지 않음
 - PoC 조건 5: `lunea` 리전과 데이터 처리 약관(DPA) 검토를 `docs/poc/FND-04-supabase.md`에 기록
 - PoC 조건 3: 기기·웹에서 세션 갱신 확인. 앱에 `@supabase/supabase-js`와 저장소 어댑터를 넣는 별도 작업 필요(웹 토큰 저장 방식 D-16·D-27 결정과 함께)
@@ -42,7 +42,7 @@ Foundation(기반). 기획 문서, 기술 결정(ADR), 에이전트 작업 체�
 D-08 AI 제공자, D-11 Balance, D-12 Collection 메타포, D-13 감정 분류, D-14 하루 여러 기록, D-16 인증 방식, D-17 보관·삭제, D-18 위기 대응 정책, D-20 라이트/다크, D-22 일기 데이터 RAG, D-23 D 모드(자동 PR) 비용.
 
 ## 환경 정보
-- 미리보기(ADR-0008, Proposed): EAS 프로젝트 `@lunea-team/lunea`(Expo 계정 `lunea-team`). 미리보기에는 dev 환경 값만 사용.
+- 미리보기(ADR-0008, Accepted 2026-11-16): EAS 프로젝트 `@lunea-team/lunea`(Expo 계정 `lunea-team`). 미리보기에는 dev 환경 값만 사용.
 - 플랫폼(D-27, 2026-11-13): iOS·Android·웹 모두 지원(하나의 Expo 코드베이스). `npm start` 후 `w`로 웹 접속, CI가 세 번들을 모두 빌드. ADR-0001에 변경 사항 기록.
 - 저장소: `maru-dev4905/Lunea` (**공개**, 2026-11-13 전환). 기본 브랜치 `dev`, 배포 브랜치 `main`. 공개 저장소이므로 실제 일기 원문·비밀 값은 커밋 금지(기존 규칙 그대로, 위반 시 영향이 더 큼).
 - Git 흐름(D-26): 작업 브랜치는 `dev`에서 만들고 `dev`로 PR(스쿼시). `dev` → `main`은 제품 책임자가 릴리스 PR(머지 커밋)로 반영하고 태그. Jira `완료` = `dev` 머지.

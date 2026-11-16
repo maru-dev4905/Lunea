@@ -1,7 +1,7 @@
 # ADR-0008: Interaction verification (per-PR device preview)
 
 ## Status
-Proposed (2026-11-16) — becomes Accepted when the product owner accepts it in the LUN-12 PR.
+Accepted (2026-11-16, accepted by the product owner in the LUN-12 PR).
 
 ## Context
 Interaction (motion, timing, feel) is a core property of Lunéa, and `docs/11` §8 layer 7 requires a real-device check for every UI PR. The owner works alone with AI agents, so the check must cost one QR scan, not a manual build. Compare mode (`/lunea-compare`) needs one preview per variant PR.
@@ -18,7 +18,7 @@ Measured for option A by installing the package in an isolated copy of `apps/mob
 | E | Self-hosted Expo Updates protocol server | Many | Possible | Server operations; not proportional |
 
 ## Decision
-Chosen option: **A** (becomes binding when this ADR is Accepted).
+Chosen option: **A**.
 - Each pull request that changes `apps/mobile` publishes to EAS Update on the branch `pr-<PR number>`; the branch name is derived from the PR number only, never from the PR branch name (external input).
 - `expo/expo-github-action` 9.0.2 and its `preview` action comment a QR code (`qr-target: expo-go`) on the PR. The owner scans it with Expo Go signed in to the same Expo account.
 - EAS project: `@lunea-team/lunea` (the `projectId` and `updates.url` in `app.json` are not secrets). `runtimeVersion` policy is `appVersion`.
