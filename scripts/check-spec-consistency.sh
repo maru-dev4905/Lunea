@@ -50,8 +50,11 @@ check "docs/06 JournalEntry references D-30 (deletion) and D-31 (original text)"
 check "D-15 is recorded as Deferred in docs/10"              bash -c "grep '^| D-15 |' docs/10_OPEN_DECISIONS.md | grep -q 'Deferred'"
 check "docs/00 charter no longer promises a clarification question" bash -c "! grep -qi 'clarification question' docs/00_PROJECT_CHARTER.md"
 flow=$(section docs/03_UX_AND_USER_FLOWS.md "## Primary flow")
+deferred_step='6. Clarification question: Deferred (D-15). The MVP asks none; the flow goes from the progress state (step 5) straight to the candidates (step 7).'
 qlines=$(grep -ci 'question' <<<"$flow")
-if [ "$qlines" = 1 ] && grep -i 'question' <<<"$flow" | grep -q 'Deferred (D-15)'; then ok "docs/03 primary flow mentions a question only in the Deferred (D-15) step"; else bad "docs/03 primary flow mentions a question only in the Deferred (D-15) step (found $qlines lines)"; fi
+# The step must be the exact deferred sentence (any other wording, such as "asks one", fails)
+# and no other line of the primary flow may mention a question.
+if [ "$qlines" = 1 ] && grep -qFx "$deferred_step" <<<"$flow"; then ok "docs/03 primary flow: the question step is the exact Deferred (D-15) sentence and the only one"; else bad "docs/03 primary flow: the question step is the exact Deferred (D-15) sentence and the only one (question lines: $qlines)"; fi
 check "docs/06 marks followUpQuestion as not used in the MVP (D-15)" bash -c "grep 'followUpQuestion' docs/06_DATA_MODEL_AND_API.md | grep -q 'not used in the MVP' && grep 'followUpQuestion' docs/06_DATA_MODEL_AND_API.md | grep -q 'D-15'"
 check "docs/06 example keeps followUpQuestion as null"       bash -c "grep -qE '\"followUpQuestion\": null' docs/06_DATA_MODEL_AND_API.md && ! grep -E '\"followUpQuestion\":' docs/06_DATA_MODEL_AND_API.md | grep -qv null"
 check "docs/07 asks none in the MVP and returns followUpQuestion as null (D-15)" bash -c "grep -q 'The MVP asks none (D-15 deferred)' docs/07_AI_BEHAVIOR_AND_SAFETY.md && grep -q 'returns \`followUpQuestion\` as null' docs/07_AI_BEHAVIOR_AND_SAFETY.md && grep -q 'no clarification question in the MVP (D-15 deferred)' docs/07_AI_BEHAVIOR_AND_SAFETY.md"
