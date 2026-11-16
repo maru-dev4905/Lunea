@@ -1,5 +1,5 @@
 import { useEffect, useState, type ReactNode } from 'react';
-import { Animated, type StyleProp, type ViewStyle } from 'react-native';
+import { Animated, Easing, type StyleProp, type ViewStyle } from 'react-native';
 
 import { useTheme } from '@/theme';
 
@@ -20,6 +20,7 @@ export function FadeIn({
   const { motion } = useTheme();
   const reduced = useReducedMotion();
   const [progress] = useState(() => new Animated.Value(0));
+  const [x1, y1, x2, y2] = motion.easing.fade;
 
   useEffect(() => {
     // Wait for the system's answer: until then nothing moves and the content stays hidden.
@@ -33,11 +34,12 @@ export function FadeIn({
       toValue: 1,
       duration: motion.duration.base,
       delay,
+      easing: Easing.bezier(x1, y1, x2, y2),
       useNativeDriver: true,
     });
     animation.start();
     return () => animation.stop();
-  }, [reduced, delay, motion.duration.base, progress]);
+  }, [reduced, delay, motion.duration.base, x1, y1, x2, y2, progress]);
 
   // One wrapper type for every state, so changing the setting never remounts the children
   // (a focused text input inside would lose its focus and selection).

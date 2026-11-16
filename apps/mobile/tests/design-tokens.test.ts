@@ -50,22 +50,21 @@ describe('spacing and radius tokens', () => {
   });
 });
 
+// Owner (2026-11-16): motion must be as soft as a ripple spreading on still water. That means
+// long, gentle durations, long soft landings and no bounce. One-shot, never looping.
 describe('motion tokens', () => {
-  it('keeps durations short', () => {
+  it('uses unhurried durations that still stay bounded', () => {
     const { duration } = tokens.motion;
     expect(duration.fast).toBeLessThan(duration.base);
     expect(duration.base).toBeLessThan(duration.slow);
-    expect(duration.slow).toBeLessThanOrEqual(500);
+    expect(duration.base).toBeGreaterThanOrEqual(400);
+    expect(duration.slow).toBeLessThanOrEqual(900);
   });
 
-  // LUN-35: lines that draw themselves and ripples that spread like touched still water are
-  // slower than the UI motion above, but still one-shot and bounded.
-  it('keeps the slow, water-like motion bounded', () => {
+  it('draws lines slower than ordinary transitions, within a calm limit', () => {
     const { duration, stagger } = tokens.motion;
-    expect(duration.draw).toBeGreaterThan(duration.slow);
-    expect(duration.draw).toBeLessThanOrEqual(1200);
-    expect(duration.ripple).toBeGreaterThan(duration.draw);
-    expect(duration.ripple).toBeLessThanOrEqual(2400);
+    expect(duration.draw).toBeGreaterThanOrEqual(duration.slow);
+    expect(duration.draw).toBeLessThanOrEqual(1400);
     expect(stagger).toBeGreaterThan(0);
   });
 
@@ -78,8 +77,22 @@ describe('motion tokens', () => {
     [y1, y2].forEach((y) => expect(Number.isFinite(y)).toBe(true));
   });
 
-  it('defines springs for the leading and trailing edge of the tab indicator', () => {
+  it('lets the tab indicator stretch: the leading edge is quicker than the trailing edge', () => {
     const { leading, trailing } = tokens.motion.spring;
     expect(leading.stiffness).toBeGreaterThan(trailing.stiffness);
+  });
+
+  // Damping ratio = damping / (2 * sqrt(stiffness * mass)). At 0.9 or more a spring settles
+  // without a visible overshoot, so nothing bounces.
+  it.each(['leading', 'trailing'] as const)(
+    'does not bounce: the %s spring is not under-damped',
+    (edge) => {
+      const { stiffness, damping, mass } = tokens.motion.spring[edge];
+      expect(damping / (2 * Math.sqrt(stiffness * mass))).toBeGreaterThanOrEqual(0.9);
+    },
+  );
+
+  it('has no ripple duration any more (the ripple effect was a misreading and was removed)', () => {
+    expect(Object.keys(tokens.motion.duration)).not.toContain('ripple');
   });
 });

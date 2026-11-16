@@ -20,18 +20,21 @@ export const tokens = {
   },
   space: { xs: 4, sm: 8, md: 12, lg: 16, xl: 24 },
   radius: { sm: 8, md: 12, pill: 999 },
-  // Subtle and bounded (docs/04). Every animation must also work with reduced motion.
+  // As soft as a ripple spreading on still water (owner, 2026-11-16): unhurried durations,
+  // long soft landings, no bounce, one-shot and never looping. Every animation must also work
+  // with reduced motion.
   motion: {
-    // fast/base/slow: UI motion. draw/ripple: the slow, water-like motion of lines that draw
-    // themselves and rings that spread from a touch (one-shot, never looping).
-    duration: { fast: 150, base: 250, slow: 400, draw: 900, ripple: 1800 },
-    stagger: 140,
-    // cubic-bezier control points. calm: quick start, very long soft landing, like a ripple.
-    easing: { calm: [0.22, 1, 0.36, 1], fade: [0.4, 0, 0.2, 1] },
-    // The tab indicator stretches: its leading edge springs quickly, the trailing edge follows.
+    // fast/base/slow: ordinary transitions. draw: a line drawing itself.
+    duration: { fast: 220, base: 520, slow: 800, draw: 1100 },
+    stagger: 120,
+    // cubic-bezier control points. calm: quick start and a very long soft landing.
+    // fade: gentle in and out.
+    easing: { calm: [0.16, 1, 0.3, 1], fade: [0.37, 0, 0.63, 1] },
+    // The tab indicator stretches: its leading edge glides ahead, the trailing edge follows.
+    // Both are damped enough (ratio about 0.9 or more) not to overshoot.
     spring: {
-      leading: { stiffness: 260, damping: 19, mass: 1 },
-      trailing: { stiffness: 110, damping: 16, mass: 1 },
+      leading: { stiffness: 120, damping: 20, mass: 1 },
+      trailing: { stiffness: 55, damping: 14, mass: 1 },
     },
   },
 } as const;

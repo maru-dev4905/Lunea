@@ -2,9 +2,7 @@ import { useRouter } from 'expo-router';
 import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-import { FadeIn } from '@/motion/FadeIn';
 import { Receipt } from '@/receipt/Receipt';
-import { receiptSchedule } from '@/receipt/schedule';
 import { SAMPLE_RECEIPT } from '@/receipt/sample';
 import { useTheme } from '@/theme';
 
@@ -14,7 +12,6 @@ export default function ReceiptSampleScreen() {
   const router = useRouter();
   // On the web this can be the first screen, so there may be nothing to go back to.
   const close = () => (router.canGoBack() ? router.back() : router.replace('/'));
-  const hintAt = receiptSchedule(SAMPLE_RECEIPT.items.length).footer + 400;
 
   return (
     <SafeAreaView style={[styles.container, { backgroundColor: theme.color.background }]}>
@@ -29,11 +26,6 @@ export default function ReceiptSampleScreen() {
       </View>
       <ScrollView contentContainerStyle={styles.content}>
         <Receipt data={SAMPLE_RECEIPT} />
-        <FadeIn delay={hintAt}>
-          <Text style={[styles.hint, { color: theme.color.textSecondary }]}>
-            영수증을 살짝 건드려 보세요.
-          </Text>
-        </FadeIn>
       </ScrollView>
     </SafeAreaView>
   );
@@ -44,6 +36,5 @@ const styles = StyleSheet.create({
   header: { flexDirection: 'row', justifyContent: 'flex-end', paddingHorizontal: 16 },
   close: { minHeight: 44, minWidth: 44, justifyContent: 'center', alignItems: 'center' },
   closeLabel: { fontSize: 16 },
-  content: { padding: 24, gap: 24 },
-  hint: { fontSize: 14, textAlign: 'center' },
+  content: { padding: 24, paddingBottom: 48 },
 });
