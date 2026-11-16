@@ -14,6 +14,8 @@ jobs:
         run: |
           tracked=$(git ls-files | grep -E '(^|/)\.env($|\.)' | grep -v '\.env\.example$' || true)
           if [ -n "$tracked" ]; then echo "Committed env files found:"; echo "$tracked"; exit 1; fi
+      - name: Workflow security policy (ADR-0008)
+        run: scripts/check-workflows.sh
       - name: ADR status consistency (lesson L-002)
         run: |
           fail=0

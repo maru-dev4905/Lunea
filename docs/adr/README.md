@@ -12,3 +12,4 @@ Only the product owner moves an ADR to Accepted. Claude must not implement a Pro
 | [0005](0005-testing-and-quality-tooling.md) | Testing and quality tooling | Accepted | FND-03 |
 | [0006](0006-ai-provider-adapter.md) | AI provider adapter and mock-first policy | Accepted (provider TBD) | D-08 |
 | [0007](0007-repository-structure.md) | Repository structure | Accepted | 05 §Proposed repository structure |
+| [0008](0008-interaction-verification.md) | Interaction verification (per-PR device preview) | Accepted | D-29 |
