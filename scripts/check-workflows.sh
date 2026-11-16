@@ -16,7 +16,7 @@ hasnt() { ! grep -Eq "$1" "$f"; }
 
 [ -f "$f" ] || { echo "FAIL - $f does not exist"; exit 1; }
 
-check "triggers on pull_request"                              has '^on:|^  pull_request:'
+check "triggers on pull_request"                              bash -c "grep -Eq '^on:' '$f' && grep -Eq '^  pull_request:' '$f'"
 check "never uses pull_request_target (would expose secrets to forks)" hasnt 'pull_request_target'
 check "permissions: contents read"                            has 'contents: read'
 check "permissions: pull-requests write (for the QR comment)" has 'pull-requests: write'

@@ -32,6 +32,7 @@ Chosen option: **A** (becomes binding when this ADR is Accepted).
 ## Consequences
 - `expo-updates` becomes part of the app and of future native builds.
 - Expo Go cannot load custom native modules; the first need for one is the trigger to move to option D.
+- **Unverified risk (CodeRabbit, 2026-11-16):** Expo's docs state that updates published with `runtimeVersion` cannot be loaded in Expo Go, while the `preview` action offers `qr-target: expo-go`; `eas update` also writes a runtime version on its own, so removing it from `app.json` is not an option. This could not be checked without a real publish. The first run with `EXPO_TOKEN` decides it: if Expo Go refuses the update, the Review trigger below applies and the fallback is option D (`expo-dev-client`), which changes the QR target and the install steps for the owner.
 - Previews depend on the Expo service. If it is down, fall back to option C.
 - The token needs rotation if it leaks; Actions secrets are the only place it lives.
 - The first real run needs the owner to add `EXPO_TOKEN`; until then the job skips with a notice.
