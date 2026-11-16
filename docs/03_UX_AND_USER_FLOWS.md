@@ -15,7 +15,7 @@ This is a proposal, not final IA. No stats/social/AI-chat tabs in MVP without ap
 3. Write freely.
 4. Explicitly request AI assistance (optional: the user may save without AI, D-32).
 5. Show calm progress state.
-6. Optionally ask one clarification question; user may skip. (Pending D-15: not part of the MVP flow until accepted.)
+6. Clarification question: Deferred (D-15). The MVP asks none; the flow goes from the progress state (step 5) straight to the candidates (step 7).
 7. Show event/emotion candidates with evidence.
 8. User accepts, edits, removes, or adds labels.
 9. Show what will be saved.
@@ -29,7 +29,9 @@ Clear entry point, no mandatory daily completion, no streaks, no mood score, no 
 ### Journal editor
 Comfortable long-form input; no mandatory emotion selection; preserve draft on transient errors; disclose AI processing before sending text.
 
-### Clarification
+### Clarification (Deferred, D-15)
+Not part of the MVP. Kept below as the reference for a later revisit.
+
 One question at a time, grounded in user words, never leading or inventing details. Skip is always available.
 
 ### Emotion review
@@ -45,7 +47,7 @@ Date-ordered list with short preview; pagination. Original writing remains acces
 Account/session, AI/privacy explanation, data export/delete entry points when implemented.
 
 ## Edge cases
-Short/ambiguous entry; no explicit emotion words; multiple events; conflicting feelings; all suggestions rejected; zero candidates; skipped clarification; network failure; app closed during analysis; duplicate save; edits during analysis; deletion with pending analysis.
+Short/ambiguous entry; no explicit emotion words; multiple events; conflicting feelings; all suggestions rejected; zero candidates; network failure; app closed during analysis; duplicate save; edits during analysis; deletion with pending analysis.
 
 ## Copy examples
 Preferred: “이런 감정도 있었을까?”, “내가 이해한 내용이 맞는지 확인해 줘.”, “다른 표현으로 바꿔도 괜찮아.”, “지금은 잘 모르겠다면 넘어가도 좋아.”

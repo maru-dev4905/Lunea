@@ -70,7 +70,7 @@ Request/response schemas must be versioned and runtime-validated. Treat client o
   "followUpQuestion": null
 }
 ```
-Illustrative only; not a fixed taxonomy or authoritative interpretation. `followUpQuestion` is reserved and ignored until D-15 (clarification in the MVP) is decided; no state or endpoint exists for it yet.
+Illustrative only; not a fixed taxonomy or authoritative interpretation. `followUpQuestion` is reserved and not used in the MVP (D-15 deferred): the model returns null, and no state or endpoint exists for it.
 
 ## Validation and privacy
 Bound string lengths/array sizes; reject unknown enum values; validate evidence against source by similarity matching (D-33, provisional; algorithm and threshold are defined in AI-01/AI-03) and show the matched span of the user's own text, never the model's rewording, as the quote; allow empty arrays; validate owner from auth context; store prompt/schema versions. Define retention, raw provider payload policy (default: do not retain raw sensitive payload logs), deletion propagation, export, and account deletion semantics before production.

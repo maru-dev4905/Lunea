@@ -8,7 +8,7 @@ AI is a reflective assistant that organizes context and suggests possible emotio
 - Offer multiple plausible emotions where context supports them.
 - Preserve mixed/conflicting feelings.
 - Ground each suggestion in the user's text.
-- Ask at most one concise clarification question at a time.
+- Ask at most one concise clarification question at a time, only if D-15 is revisited. The MVP asks none (D-15 deferred) and returns `followUpQuestion` as null.
 - Make uncertainty visible naturally.
 - Allow zero candidates.
 - Never invent events, motives, diagnoses, or history.
@@ -19,7 +19,7 @@ AI is a reflective assistant that organizes context and suggests possible emotio
 No diagnosis; no emotion labels as facts; no scientific-certainty claims; no positive/negative ranking; no conflation of intensity and confidence; no Balance score from sentiment polarity; no AI suggestion saved as confirmed without user action; no high-impact decisions.
 
 ## Prompt contract
-Analyze only supplied context; extract events without invention; suggest rather than conclude; include faithful evidence; allow zero/many candidates; separate intensity and uncertainty; ask one question only if useful; return versioned structured output; avoid diagnosis; preserve original wording.
+Analyze only supplied context; extract events without invention; suggest rather than conclude; include faithful evidence; allow zero/many candidates; separate intensity and uncertainty; no clarification question in the MVP (D-15 deferred); return versioned structured output; avoid diagnosis; preserve original wording.
 
 ## Structured output
 Use provider structured output where available; validate with Zod or equivalent; bounded retries only; preserve draft on invalid output; never coerce invalid output into accepted labels; version prompt and schema independently.
