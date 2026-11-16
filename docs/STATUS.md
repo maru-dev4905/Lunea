@@ -2,7 +2,7 @@
 
 **이 문서는 국문으로 씁니다.** 제품 책임자가 "AI가 지금 프로젝트를 어디까지 이해하고 있는지" 확인하는 문서이기 때문입니다. 에이전트는 세션 시작 시 이 문서를 읽고, 작업을 마칠 때(`/lunea-finish`) 갱신합니다. 짧고 최신으로 유지하고, 지난 기록은 `docs/journal/`에 남깁니다.
 
-마지막 갱신: 2026-11-16 (LUN-12 PR 미리보기)
+마지막 갱신: 2026-11-16 (LUN-13 명세 불일치 정리)
 
 ## 단계
 Foundation(기반). 기획 문서, 기술 결정(ADR), 에이전트 작업 체계가 갖춰졌고, `apps/mobile`에 Expo 앱 뼈대(탭 3개 placeholder, 테마 토큰, 웹·앱 지원)와 실제 CI 검사, `supabase/`에 PoC(RLS, Edge Function, 로컬 테스트)가 `dev`에 들어갔습니다. PoC 조건 3·5가 사람 확인 대기라 ADR-0002는 아직 확정되지 않았습니다. 기능 코드는 아직 없습니다.
@@ -14,20 +14,22 @@ Foundation(기반). 기획 문서, 기술 결정(ADR), 에이전트 작업 체�
 - LUN-10 FND-02 Expo 앱 뼈대, 웹·앱 동시 지원(D-27) (PR #7)
 - LUN-11 FND-04 Supabase PoC (PR #8): 조건 1·2·4·6 통과, 3(기기 세션 갱신)·5(리전·약관)는 사람 확인 대기. 결과는 `docs/poc/FND-04-supabase.md`. **Jira는 `완료`이지만 ADR-0002는 확정 전**
 - LUN-34 FND-06 에이전트 작업 체계, 명령어 모음, 저널, 교훈 (PR #4)
+- LUN-12 FND-05 PR 실기기 미리보기: EAS Update + Expo Go QR, ADR-0008 Accepted, 폰 실행 확인 (PR #10)
 - STATUS.md 국문 전환 (PR #5)
 - 제품 책임자 준비: Supabase `lunea` 프로젝트, Expo 계정, Jira 자동화 규칙, 저장소 공개 전환, 머지 시 브랜치 자동 삭제
 - GitHub 설정(2026-11-13): 기본 브랜치 `dev`, Rulesets `main`·`dev`(PR 필수·승인 0명·대화 해결 필수, `baseline` 필수, 삭제·강제 push 금지, `dev` 허용 머지 Squash+Merge)
 - Jira 백로그: 에픽 LUN-1~7, 작업 LUN-8~34 (`iseung10e.atlassian.net`, 프로젝트 `LUN`)
 
 ## 검토 중
-- LUN-12 FND-05 인터랙션 확인 체계: PR마다 EAS Update 미리보기 QR(Expo Go), ADR-0008(Accepted), 워크플로 보안 정책 검사. 첫 실행에서 QR 코멘트 생성과 Expo Go 실행을 폰으로 확인함(2026-11-16) (이 PR)
+- LUN-13 DOC-01 명세 불일치 정리: 상태 이름을 `docs/06` 기준 세 층으로 정리하고, AI 없이 저장(D-32)·근거 유사 일치(D-33, 임시)를 반영했으며, 삭제(D-30, 완전 삭제)·원문과 수정(D-31, 이력 + 재확인)은 권고안대로 확정, 확인 질문(D-15)은 질문으로 등록. 일관성 검사 `scripts/check-spec-consistency.sh`를 CI에 연결 (이 PR)
 
 ## 다음 작업 (순서대로)
-1. LUN-13 DOC-01 명세 불일치 정리 (상태 이름, 삭제 의미, 확인 질문 흐름). 웹 지원(D-27)에 맞춰 PRD의 "모바일" 표현도 함께 정리 제안.
+1. 데이터 모델 작업(PRIV-01, COL-01): D-15 결정 뒤에 시작(D-30·D-31은 확정). 웹 지원(D-27)에 맞춰 PRD의 "모바일" 표현 정리도 제안(이번 범위 밖).
 2. UX-01 입력: 색 토큰을 확정할 때 대비(WCAG AA 4.5:1) 검사를 정의에 포함. 현재 placeholder의 `textMuted`(#767676)가 `surface`(#F5F5F5) 위에서 약 4.2:1로 미달 (독립 검증 지적).
 3. 웹 영향 후속: 인증 토큰·초안 저장소(웹에는 `expo-secure-store` 없음, FND-04/D-16), 반응형·웹 접근성(UX-01).
 
 ## 제품 책임자 확인 필요
+- LUN-13(데이터 모델 작업 전): D-15 확인 질문의 MVP 포함 여부(넣으면 상태·API 추가, 빼면 `docs/03`·헌장에서 제외). D-33(유사 일치)은 임시 적용이라 알고리즘·임계값을 AI-01/AI-03에서 정할 때 다시 확인
 - LUN-12 후속: 첫 EAS Build 전에 `updates.checkAutomatically`·채널 매핑 결정(ADR-0008 검토 조건), `actionlint` CI 도입 여부. 토큰(`EXPO_TOKEN`)은 `lunea-team` 로봇 유저 발급분이며 유출 시 expo.dev에서 폐기 후 재발급
 - LUN-12 후속: 웹 PR 미리보기(호스팅)는 이번 범위 밖. 운영 빌드의 OTA 업데이트는 별도 결정 전까지 사용하지 않음
 - PoC 조건 5: `lunea` 리전과 데이터 처리 약관(DPA) 검토를 `docs/poc/FND-04-supabase.md`에 기록
