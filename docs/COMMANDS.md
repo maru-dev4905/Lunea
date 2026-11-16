@@ -193,7 +193,7 @@ Claude Code `Stop` 훅(`scripts/stop-check.sh`)이 `apps/mobile`·`scripts` 변�
 `apps/mobile`을 바꾸는 PR을 열면 `Preview` 워크플로가 EAS Update로 게시하고 PR 코멘트에 **QR 코드**를 답니다.
 
 1. 폰에 **Expo Go**를 설치하고 Expo 계정(`lunea-team`에 접근 가능한 계정)으로 로그인합니다.
-2. PR 코멘트의 QR을 스캔합니다. iPhone은 기본 카메라, Android는 Expo Go의 `Scan QR code`를 씁니다.
+2. PR 코멘트의 QR을 스캔하기 전에, Actions의 `Preview` 실행이 PR의 **최신 커밋**에서 성공했는지 확인합니다(이후 게시가 건너뛰어지거나 실패해도 예전 QR 코멘트는 남습니다). iPhone은 기본 카메라, Android는 Expo Go의 `Scan QR code`를 씁니다.
 3. 비교형(`/lunea-compare`)은 시안마다 PR이 따로라서 QR도 시안별로 달립니다.
 4. QR이 안 달리는 경우: PR이 `apps/mobile`(또는 워크플로 파일)을 바꾸지 않았거나, 포크 PR(보안상 항상 건너뜀)이거나, `EXPO_TOKEN` 시크릿이 없거나(Actions 로그에 `EXPO_TOKEN not set` 알림), 게시 단계가 실패한 경우입니다. Actions의 `Preview` 실행에서 건너뛴 단계와 실패한 단계를 확인하세요.
 5. 웹은 이 방식이 아니라 `cd apps/mobile && npm start` 후 `w`로 확인합니다.

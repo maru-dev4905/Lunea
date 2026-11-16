@@ -120,7 +120,7 @@ A lesson that recurs must move up at least one level.
 4. Maestro E2E with recording (after core flow exists)
 5. AI evaluation set (AI-05)
 6. Independent Verifier + CodeRabbit (Codex later). Who starts the Verifier (D-25): mode A — the owner runs `/lunea-verify <PR> [head SHA]` in a fresh session after the final push; mode C — the orchestrator spawns it automatically. In both modes verification checks out the final pushed head SHA (passed as the second argument, or the PR head at start when omitted; a mismatch with the PR head stops verification) and records it in the report; any later push requires re-verification on the new head. Revisit (switch mode A to automatic) once an orchestrator session is used routinely.
-7. Real-device check via preview QR (owner): the `Preview` workflow comments a QR on every PR that changes `apps/mobile`; scan it with Expo Go (ADR-0008). No QR means the PR did not touch `apps/mobile`, came from a fork, `EXPO_TOKEN` is missing, or the publish step failed: check the `Preview` run in Actions, and record the check as not done instead of passing it
+7. Real-device check via preview QR (owner): the `Preview` workflow comments a QR on every PR that changes `apps/mobile`; before scanning, check that the latest `Preview` run succeeded for the PR's latest commit, because an older QR comment stays when a later publish is skipped or fails; scan it with Expo Go (ADR-0008). No QR means the PR did not touch `apps/mobile`, came from a fork, `EXPO_TOKEN` is missing, or the publish step failed: check the `Preview` run in Actions, and record the check as not done instead of passing it
 8. Branch protection + human merge
 
 Layers 1–5 become required CI checks progressively from FND-02.
