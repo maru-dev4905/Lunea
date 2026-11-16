@@ -22,6 +22,9 @@ export default function JournalEditorScreen() {
   const [notice, setNotice] = useState<string | null>(null);
   const canSave = isSubmittable(draft);
 
+  // On the web the editor can be the first screen, so there may be nothing to go back to.
+  const close = () => (router.canGoBack() ? router.back() : router.replace('/'));
+
   return (
     <SafeAreaView style={[styles.container, { backgroundColor: theme.color.background }]}>
       <KeyboardAvoidingView
@@ -29,7 +32,7 @@ export default function JournalEditorScreen() {
         behavior={Platform.OS === 'ios' ? 'padding' : undefined}
       >
         <View style={styles.header}>
-          <Pressable accessibilityRole="button" onPress={() => router.back()} style={styles.close}>
+          <Pressable accessibilityRole="button" onPress={close} style={styles.close}>
             <Text style={[styles.closeLabel, { color: theme.color.textSecondary }]}>닫기</Text>
           </Pressable>
         </View>

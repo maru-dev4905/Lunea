@@ -83,4 +83,14 @@ describe('Journal editor', () => {
     await closeEditor();
     expect(await screen.findByRole('button', { name: '오늘 기록 시작' })).toBeOnTheScreen();
   });
+
+  // Web: the editor can be the first screen (a bookmarked or reloaded URL), with nothing
+  // underneath it to go back to. Found by review of PR #15.
+  it('closes to Today even when the editor was opened directly by URL', async () => {
+    await renderRouter('./app', { initialUrl: '/journal/new' });
+    await screen.findByLabelText('일기 입력');
+    await fireEvent.press(screen.getByRole('button', { name: '닫기' }));
+    expect(await screen.findByRole('header', { name: 'Today' })).toBeOnTheScreen();
+    expect(screen).toHavePathname('/');
+  });
 });
