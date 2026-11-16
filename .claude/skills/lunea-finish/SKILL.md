@@ -4,7 +4,7 @@ description: Finish a task — run checks, open the Korean PR, capture decisions
 ---
 # /lunea-finish
 
-1. Run format, lint, typecheck, tests, build (whatever exists). Do not claim success for checks not run. If you added or changed a check script (`scripts/check-*.sh`), first run it against a copy with a defect injected and confirm it fails (lesson L-008); a check that passes on a defective input is not finished. Compare whole values or sentences, guard against an empty extraction, and put the cases in the PR.
+1. Run format, lint, typecheck, tests, build (whatever exists). Do not claim success for checks not run. If you added or changed a check script (`scripts/check-*.sh`), first run it against a copy with a defect injected and confirm it fails (lesson L-008); a check that passes on a defective input is not finished. Compare whole values or sentences, guard against an empty extraction, add each case to `scripts/test-checks.mjs` (CI runs it) and put the cases in the PR.
 2. Open/refresh a non-draft PR **into `dev`** (never `main`, except an owner-requested hotfix per `docs/11_AGENT_WORKFLOW.md` §5a; D-26) in Korean using `.github/pull_request_template.md`, linking the Jira key.
 3. Ask yourself, and answer in the PR under "결정 기록 / 교훈":
    - Was there a choice between options? → add/extend a `docs/journal/` entry using the template in `docs/journal/README.md` (the owner may also run `/lunea-log`).

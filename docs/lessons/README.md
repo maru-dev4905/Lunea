@@ -35,4 +35,4 @@ AI 에이전트와 사람이 겪은 실수·리뷰 지적·CI 실패·하네스 
 | [L-005](L-005-stale-review-replies.md) | 리뷰 봇이 이전 커밋 기준으로 "수정 미확인" 답변 | coderabbit, stale checkout, commit not found, race, 시점 차이 | L0 |
 | [L-006](L-006-doc-command-cwd.md) | 문서의 명령 예시가 작업 디렉터리 이동 뒤 경로를 잘못 가리킴 | readme, command, cwd, working directory, relative path, 문서 명령, 경로 | L0 |
 | [L-007](L-007-detached-head-unpushed-commits.md) | detached HEAD에서 커밋해 PR에 반영되지 않았는데 push했다고 보고함 | detached head, unpushed, push, head sha, verify, mismatch, 공유 체크아웃, worktree | L3 |
-| [L-008](L-008-check-passes-without-checking.md) | 검사 스크립트가 결함이 있어도 통과함 (일부만 보거나 비어서 통과) | check script, false negative, vacuous pass, mutation, regex, grep, head -1, bash -c, backtick, 검사 허점, 비어서 통과, 변형 검사, 일관성 검사 | L2 |
+| [L-008](L-008-check-passes-without-checking.md) | 검사 스크립트가 결함이 있어도 통과함 (일부만 보거나 비어서 통과) | check script, false negative, vacuous pass, mutation, regex, grep, head -1, bash -c, backtick, 검사 허점, 비어서 통과, 변형 검사, 일관성 검사 | L3 |

@@ -56,6 +56,7 @@ qlines=$(grep -ci 'question' <<<"$flow")
 # and no other line of the primary flow may mention a question.
 if [ "$qlines" = 1 ] && grep -qFx "$deferred_step" <<<"$flow"; then ok "docs/03 primary flow: the question step is the exact Deferred (D-15) sentence and the only one"; else bad "docs/03 primary flow: the question step is the exact Deferred (D-15) sentence and the only one (question lines: $qlines)"; fi
 check "docs/06 marks followUpQuestion as not used in the MVP (D-15)" bash -c "grep 'followUpQuestion' docs/06_DATA_MODEL_AND_API.md | grep -q 'not used in the MVP' && grep 'followUpQuestion' docs/06_DATA_MODEL_AND_API.md | grep -q 'D-15'"
+check "docs/06 evidence validation references D-33"          bash -c "grep -E 'evidence' docs/06_DATA_MODEL_AND_API.md | grep -q 'D-33'"
 check "docs/06 example keeps followUpQuestion as null"       bash -c "grep -qE '\"followUpQuestion\": null' docs/06_DATA_MODEL_AND_API.md && ! grep -E '\"followUpQuestion\":' docs/06_DATA_MODEL_AND_API.md | grep -qv null"
 check "docs/07 asks none in the MVP and returns followUpQuestion as null (D-15)" bash -c "grep -q 'The MVP asks none (D-15 deferred)' docs/07_AI_BEHAVIOR_AND_SAFETY.md && grep -q 'returns \`followUpQuestion\` as null' docs/07_AI_BEHAVIOR_AND_SAFETY.md && grep -q 'no clarification question in the MVP (D-15 deferred)' docs/07_AI_BEHAVIOR_AND_SAFETY.md"
 

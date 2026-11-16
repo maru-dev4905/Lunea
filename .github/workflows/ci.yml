@@ -37,6 +37,8 @@ jobs:
           node-version-file: .nvmrc
           cache: npm
           cache-dependency-path: apps/mobile/package-lock.json
+      - name: Check-script regression tests (lesson L-008)
+        run: node scripts/test-checks.mjs
       - name: Install (lockfile)
         working-directory: apps/mobile
         run: npm ci
