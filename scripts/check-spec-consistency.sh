@@ -37,15 +37,16 @@ done
 
 # 3. Plain save without AI is a documented path (D-32).
 # The direct path is a path of its own (`draft → saved`), not a prefix of the main path.
-if grep -qF '`draft → saved`' <<<"$sm" && grep -q 'D-32' <<<"$sm"; then ok "docs/02 has the direct plain-save path (draft to saved, D-32)"; else bad "docs/02 has the direct plain-save path (draft to saved, D-32)"; fi
-if grep -qF '`draft → saved`' <<<"$transitions" && grep -q 'D-32' <<<"$transitions"; then ok "docs/06 has the direct plain-save path (draft to saved, D-32)"; else bad "docs/06 has the direct plain-save path (draft to saved, D-32)"; fi
+# The id must sit next to the path it documents, not merely somewhere in the same section.
+if grep -qF '`draft → saved` (D-32, accepted)' <<<"$sm"; then ok "docs/02 has the direct plain-save path (draft to saved, D-32)"; else bad "docs/02 has the direct plain-save path (draft to saved, D-32)"; fi
+if grep -qFx -- '- Plain save without AI (D-32, accepted): `draft → saved`.' <<<"$transitions"; then ok "docs/06 has the direct plain-save path (draft to saved, D-32)"; else bad "docs/06 has the direct plain-save path (draft to saved, D-32)"; fi
 check "JRN-02 no longer says 'if approved'" bash -c "! grep -n 'JRN-02' docs/09_MVP_BACKLOG.md | grep -qi 'if approved'"
 
 # 4. Open product questions are registered in docs/10 and referenced where they matter.
 for d in D-30 D-31 D-32 D-33; do
   check "$d is registered in docs/10" bash -c "grep -q '^| $d |' docs/10_OPEN_DECISIONS.md"
 done
-check "docs/06 JournalEntry references D-30 (deletion) and D-31 (original text)" bash -c "grep -E '^\`id\`, \`user_id\`, \`body_original\`' docs/06_DATA_MODEL_AND_API.md | grep -q 'D-30' && grep -E 'body_original' docs/06_DATA_MODEL_AND_API.md | grep -q 'D-31'"
+check "docs/06 JournalEntry references D-30 (deletion) and D-31 (original text) on its own line" bash -c "entry=\$(grep -E '^\`id\`, \`user_id\`, \`body_original\`' docs/06_DATA_MODEL_AND_API.md); grep -Eq 'D-30([^0-9]|\$)' <<<\"\$entry\" && grep -Eq 'D-31([^0-9]|\$)' <<<\"\$entry\""
 # D-15 is deferred: the clarification question is not part of the MVP, and no document may promise it.
 check "D-15 is recorded as Deferred in docs/10"              bash -c "grep '^| D-15 |' docs/10_OPEN_DECISIONS.md | grep -q 'Deferred'"
 check "docs/00 charter no longer promises a clarification question" bash -c "! grep -qi 'clarification question' docs/00_PROJECT_CHARTER.md"
@@ -55,7 +56,8 @@ qlines=$(grep -ci 'question' <<<"$flow")
 # The step must be the exact deferred sentence (any other wording, such as "asks one", fails)
 # and no other line of the primary flow may mention a question.
 if [ "$qlines" = 1 ] && grep -qFx "$deferred_step" <<<"$flow"; then ok "docs/03 primary flow: the question step is the exact Deferred (D-15) sentence and the only one"; else bad "docs/03 primary flow: the question step is the exact Deferred (D-15) sentence and the only one (question lines: $qlines)"; fi
-check "docs/06 marks followUpQuestion as not used in the MVP (D-15)" bash -c "grep 'followUpQuestion' docs/06_DATA_MODEL_AND_API.md | grep -q 'not used in the MVP' && grep 'followUpQuestion' docs/06_DATA_MODEL_AND_API.md | grep -q 'D-15'"
+check "docs/06 marks followUpQuestion as not used in the MVP, with D-15 on that same line" bash -c "grep 'followUpQuestion' docs/06_DATA_MODEL_AND_API.md | grep 'not used in the MVP' | grep -Eq 'D-15([^0-9]|\$)'"
+check "docs/06 evidence validation references D-33"           bash -c "grep 'validate evidence against source' docs/06_DATA_MODEL_AND_API.md | grep -Eq 'D-33([^0-9]|\$)'"
 check "docs/06 example keeps followUpQuestion as null"       bash -c "grep -qE '\"followUpQuestion\": null' docs/06_DATA_MODEL_AND_API.md && ! grep -E '\"followUpQuestion\":' docs/06_DATA_MODEL_AND_API.md | grep -qv null"
 check "docs/07 asks none in the MVP and returns followUpQuestion as null (D-15)" bash -c "grep -q 'The MVP asks none (D-15 deferred)' docs/07_AI_BEHAVIOR_AND_SAFETY.md && grep -q 'returns \`followUpQuestion\` as null' docs/07_AI_BEHAVIOR_AND_SAFETY.md && grep -q 'no clarification question in the MVP (D-15 deferred)' docs/07_AI_BEHAVIOR_AND_SAFETY.md"
 
