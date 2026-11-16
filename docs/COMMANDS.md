@@ -185,3 +185,18 @@ Orca:
 | `scripts/check-supabase.sh [--integration]` | 로컬 Supabase(Docker)에서 RLS(pgTAP)·Edge Function 테스트 실행. 로컬 데이터를 지우지 않음(미적용 마이그레이션만 적용). 깨끗한 DB가 필요하면 `supabase db reset`을 직접 실행(**로컬 데이터 전부 삭제**). `--integration`은 함수를 띄워 실제 사용자로 호출 |
 
 Claude Code `Stop` 훅(`scripts/stop-check.sh`)이 `apps/mobile`·`scripts` 변경이 있고 검사가 실패하면 작업 종료를 막고 실패 내용을 에이전트에게 돌려줍니다.
+
+---
+
+## PR 미리보기 (FND-05, ADR-0008)
+
+`apps/mobile`을 바꾸는 PR을 열면 `Preview` 워크플로가 EAS Update로 게시하고 PR 코멘트에 **QR 코드**를 답니다.
+
+1. 폰에 **Expo Go**를 설치하고 Expo 계정(`lunea-team`에 접근 가능한 계정)으로 로그인합니다.
+2. PR 코멘트의 QR을 스캔합니다. iPhone은 기본 카메라, Android는 Expo Go의 `Scan QR code`를 씁니다.
+3. 비교형(`/lunea-compare`)은 시안마다 PR이 따로라서 QR도 시안별로 달립니다.
+4. QR이 안 달리면 `EXPO_TOKEN` 시크릿이 없는 것입니다(Actions 로그에 `EXPO_TOKEN not set` 알림). 포크 PR은 보안상 항상 건너뜁니다.
+5. 웹은 이 방식이 아니라 `cd apps/mobile && npm start` 후 `w`로 확인합니다.
+
+미리보기에는 dev 환경 값(합성 데이터)만 씁니다. staging·prod 값은 넣지 않습니다(D-28).
+
