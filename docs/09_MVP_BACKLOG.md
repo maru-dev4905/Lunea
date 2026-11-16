@@ -19,7 +19,7 @@ IDs below are local labels, not Jira issue keys. Create actual Jira IDs only aft
 
 ## Journal
 **JRN-01 Draft composer (P0):** create/edit draft; recover after transient failure.
-**JRN-02 Plain save (P0):** allow saving without AI if approved; retrieve record.
+**JRN-02 Plain save (P0):** saving without AI is allowed (D-32); retrieve record.
 
 ## AI
 **AI-01 Emotion schema (P0):** versioned Zod schema; valid/invalid/empty/mixed tests.

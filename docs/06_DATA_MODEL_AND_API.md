@@ -5,7 +5,7 @@ Every user-owned record has an owner; preserve original text; distinguish AI-gen
 
 ## Entities (draft)
 ### JournalEntry
-`id`, `user_id`, `body_original`, `body_current` or revision history, `status` (`draft|submitted|saved|deleted`), `entry_date` (user-local date), `timezone`, `created_at`, `updated_at`.
+`id`, `user_id`, `body_original` (never rewritten; how edits are kept is open, D-31: `body_current` or revision history), `status` (`draft|submitted|saved`; `deleted` exists only if D-30 keeps soft delete), `entry_date` (user-local date), `timezone`, `created_at`, `updated_at`.
 
 ### AnalysisRun
 `id`, `entry_id`, `user_id`, `status` (`pending|succeeded|failed|cancelled`), `provider`, `model`, `prompt_version`, `schema_version`, timestamps, safe `error_code`, token counts, estimated cost.
@@ -23,8 +23,26 @@ May be a saved state on JournalEntry or separate aggregate; choose one source of
 Optional taxonomy: `key`, `display_name`, `parent_key`, `locale`, `is_active`, `taxonomy_version`. User-authored labels must remain possible.
 
 ## State transitions
-`draft → submitted → analysis_pending → analysis_ready → user_reviewed → saved`
-Alternative branches: analysis failure → retry or save without analysis; user skip → save. AI success alone never confirms.
+Source of truth for state names; `docs/02` and `docs/03` follow this section. Three layers are stored separately, and the review step is not a stored state.
+
+| Stage in the user flow (docs/02) | Stored on | Value |
+|---|---|---|
+| `draft` | `JournalEntry.status` | `draft` |
+| `submitted` (the user asked for AI) | `JournalEntry.status` | `submitted` |
+| `analysis_pending` | `AnalysisRun.status` | `pending` |
+| `analysis_ready` | `AnalysisRun.status` | `succeeded` |
+| `analysis_failed` | `AnalysisRun.status` | `failed` |
+| reviewing candidates (screen step, not stored) | `EmotionCandidate.review_status` | `proposed`, then `accepted`, `edited` or `rejected` |
+| `saved` | `JournalEntry.status` | `saved` |
+| `save_without_analysis` | `JournalEntry.status` | `saved` with no successful `AnalysisRun` |
+
+Paths:
+- Main: `draft → submitted → analysis_pending → analysis_ready →` (user reviews candidates) `→ saved`.
+- Plain save without AI (D-32, accepted): `draft → saved`.
+- Analysis failure: `analysis_failed →` retry (a new `AnalysisRun`) or `save_without_analysis`.
+- Rejecting or skipping every candidate is allowed; the user confirms with zero accepted candidates.
+- Removing a draft is deletion (D-30), not a state.
+- AI success alone never confirms.
 
 ## Illustrative API
 - `POST /v1/journal-entries` create draft.
@@ -49,7 +67,7 @@ Request/response schemas must be versioned and runtime-validated. Treat client o
   "followUpQuestion": null
 }
 ```
-Illustrative only; not a fixed taxonomy or authoritative interpretation.
+Illustrative only; not a fixed taxonomy or authoritative interpretation. `followUpQuestion` is reserved and ignored until D-15 (clarification in the MVP) is decided; no state or endpoint exists for it yet.
 
 ## Validation and privacy
-Bound string lengths/array sizes; reject unknown enum values; validate evidence against source; allow empty arrays; validate owner from auth context; store prompt/schema versions. Define retention, raw provider payload policy (default: do not retain raw sensitive payload logs), deletion propagation, export, and account deletion semantics before production.
+Bound string lengths/array sizes; reject unknown enum values; validate evidence against source by similarity matching (D-33, provisional; algorithm and threshold are defined in AI-01/AI-03); allow empty arrays; validate owner from auth context; store prompt/schema versions. Define retention, raw provider payload policy (default: do not retain raw sensitive payload logs), deletion propagation, export, and account deletion semantics before production.

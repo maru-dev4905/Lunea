@@ -44,8 +44,10 @@ Deliver private mobile journaling with free-form writing, AI-assisted emotion ex
 - Do not claim deletion is complete until backend confirms completion.
 
 ## State model
-`draft → submitted → analysis_pending → analysis_ready → user_review → saved`
-Alternative: `analysis_failed → retry | save_without_analysis`; `analysis_ready → skipped → saved`; `draft → discarded`.
+State names are defined in `docs/06` (State transitions), which is the source of truth. Three layers are stored separately: the entry (`draft → submitted → saved`), the AI analysis run (`analysis_pending → analysis_ready | analysis_failed`), and each candidate's review result. Reviewing candidates is a screen step, not a stored state.
+
+Main path: `draft → submitted → analysis_pending → analysis_ready → saved` (the user reviews candidates, then confirms explicitly).
+Alternatives: `analysis_failed → retry | save_without_analysis`; plain save without AI: `draft → saved` (D-32, accepted); the user may reject or skip every candidate and still confirm; removing a draft is deletion (D-30), not a state.
 
 Forbidden: AI success directly producing user-confirmed state without explicit user confirmation.
 

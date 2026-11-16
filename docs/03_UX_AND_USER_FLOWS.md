@@ -13,9 +13,9 @@ This is a proposal, not final IA. No stats/social/AI-chat tabs in MVP without ap
 1. Open Today.
 2. Start a record.
 3. Write freely.
-4. Explicitly request AI assistance.
+4. Explicitly request AI assistance (optional: the user may save without AI, D-32).
 5. Show calm progress state.
-6. Optionally ask one clarification question; user may skip.
+6. Optionally ask one clarification question; user may skip. (Pending D-15: not part of the MVP flow until accepted.)
 7. Show event/emotion candidates with evidence.
 8. User accepts, edits, removes, or adds labels.
 9. Show what will be saved.

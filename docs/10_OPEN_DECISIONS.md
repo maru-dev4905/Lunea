@@ -16,7 +16,7 @@
 | D-12 | Collection/receipt visual metaphor | TBD | Low-fi exploration |
 | D-13 | Emotion taxonomy | TBD | Flexible Korean examples |
 | D-14 | Multiple entries per day | TBD | UX decision |
-| D-15 | Clarification chat in MVP | Proposed optional | Validate value/complexity |
+| D-15 | Clarification chat in MVP | Proposed optional | Decide in or out of the MVP. In: add a clarification state and an answer endpoint to docs/06. Out: remove step 6 from docs/03 and the charter. Until then `followUpQuestion` is reserved and ignored (LUN-13) |
 | D-16 | Auth methods | TBD | Select |
 | D-17 | Retention/export/deletion policy | TBD | Provider/legal review |
 | D-18 | Crisis/safety policy | TBD | Specialist review |
@@ -31,6 +31,10 @@
 | D-28 | Supabase environments | Accepted (2026-11-13, product owner): separate dev / staging / prod projects; dev = existing project `lunea`; staging and prod created later by the owner | See ADR-0002 "Environments"; prod only after PoC gates 3 and 5 pass; names of staging/prod TBD |
 | D-26 | Git branching | Accepted (2026-11-13): `dev` default/integration (squash), `main` release-only (merge commit + tag), Jira 완료 on merge to `dev` | See `docs/11_AGENT_WORKFLOW.md` §5a; revisit if multiple release trains are needed |
 | D-29 | Interaction verification | Accepted (2026-11-16, ADR-0008): per-PR device preview with EAS Update + Expo Go; `expo-updates` added deliberately; no production OTA | Before the first EAS Build, decide `updates.checkAutomatically`; staging/prod values never go into previews |
+| D-30 | Deletion semantics | Proposed (LUN-13) | Soft delete (`deleted` status) vs hard delete, and the "deletion complete" promise (docs/02). Claude's recommendation (not decided): hard delete from active tables on user request (validated in FND-04), UI copy separates "deleting" from "deleted" and says complete only after the backend confirms, no `deleted` status. Backup retention follows D-17 and PoC condition 5 |
+| D-31 | Original text vs edits | Proposed (LUN-13) | `body_original` is never rewritten. Decide how edits are kept (`body_current` or revision history) and what happens to an already confirmed interpretation when the text is edited later. Claude's recommendation (not decided): keep edits as revisions and require re-confirmation when the text changes |
+| D-32 | Save without AI | Accepted (2026-11-16, owner) | Saving a record without AI is allowed and a record may have zero emotions. Applied in docs/02, docs/03, docs/09 (JRN-02). AI disclosure (PRIV-02) still applies before the first analysis |
+| D-33 | Evidence verification | Accepted provisionally (2026-11-16, owner) | A similarity match against the original text is allowed instead of an exact match. Define the algorithm and threshold in AI-01/AI-03 with synthetic Korean cases (typos, spacing, particles) and review once the eval set exists. Proposed guardrail from docs/07 ("fabricated quote" is a release blocker; not yet confirmed by the owner): show the matched span of the user's own text, never the model's rewording as a quote |
 
 ## Questions Claude must not decide silently
 1. Backend and deployment platform?
