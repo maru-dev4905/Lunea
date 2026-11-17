@@ -46,7 +46,8 @@ export function PillIndicator({
     const right = left + width;
     const all: Edges[] = [main, ...trails];
 
-    if (reduced || !placed.current) {
+    // Until the setting is known the pill is simply placed, never animated.
+    if (reduced !== false || !placed.current) {
       all.forEach((edges) => {
         edges.left.setValue(left);
         edges.right.setValue(right);
@@ -80,12 +81,13 @@ export function PillIndicator({
     return () => running.stop();
   }, [index, count, barWidth, reduced, motion.spring, main, trails]);
 
-  const layers = reduced
-    ? [{ edges: main, opacity: 1 }]
-    : [
-        ...trails.map((edges, k) => ({ edges, opacity: TRAILS[k].opacity })).reverse(),
-        { edges: main, opacity: 1 },
-      ];
+  const layers =
+    reduced !== false
+      ? [{ edges: main, opacity: 1 }]
+      : [
+          ...trails.map((edges, k) => ({ edges, opacity: TRAILS[k].opacity })).reverse(),
+          { edges: main, opacity: 1 },
+        ];
 
   return (
     <View pointerEvents="none" style={StyleSheet.absoluteFill}>

@@ -1,6 +1,7 @@
 import { useRouter } from 'expo-router';
 import { useState } from 'react';
 import {
+  AccessibilityInfo,
   KeyboardAvoidingView,
   Platform,
   Pressable,
@@ -81,7 +82,12 @@ export default function JournalEditorScreen() {
           <Pressable
             accessibilityRole="button"
             disabled={!canSave}
-            onPress={() => setNotice('저장 기능은 다음 업데이트에서 추가돼요.')}
+            onPress={() => {
+              const message = '저장 기능은 다음 업데이트에서 추가돼요.';
+              setNotice(message);
+              // accessibilityLiveRegion is Android only; this reaches VoiceOver on iOS as well.
+              AccessibilityInfo.announceForAccessibility(message);
+            }}
             style={({ pressed }) => [
               styles.save,
               {

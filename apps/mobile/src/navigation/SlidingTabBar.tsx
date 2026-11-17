@@ -1,5 +1,5 @@
 import type { BottomTabBarProps } from 'expo-router/js-tabs';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { Platform, Pressable, StyleSheet, Text, View, type LayoutChangeEvent } from 'react-native';
 
 import { PillIndicator } from '@/motion/PillIndicator';
@@ -18,6 +18,8 @@ export function SlidingTabBar({
   const theme = useTheme();
   const [barWidth, setBarWidth] = useState(0);
   const count = state.routes.length;
+  const tabRefs = useRef<({ focus?: () => void } | null)[]>([]);
+  const isWeb = Platform.OS === 'web';
 
   return (
     <View
@@ -60,9 +62,36 @@ export function SlidingTabBar({
             });
             if (!focused && !event.defaultPrevented) navigateToTab(route.key);
           };
+          // Web keyboard support (react-native-web only activates a tab with Enter): Space selects
+          // and the arrow keys move to the neighbouring tab, wrapping at the ends.
+          const onKeyDown = (event: {
+            nativeEvent: { key: string };
+            preventDefault?: () => void;
+          }) => {
+            const key = event.nativeEvent.key;
+            const target =
+              key === ' '
+                ? i
+                : key === 'ArrowRight'
+                  ? (i + 1) % count
+                  : key === 'ArrowLeft'
+                    ? (i - 1 + count) % count
+                    : null;
+            if (target === null) return;
+            event.preventDefault?.();
+            if (target === i) {
+              onPress();
+              return;
+            }
+            navigateToTab(state.routes[target].key);
+            tabRefs.current[target]?.focus?.();
+          };
           return (
             <Pressable
               key={route.key}
+              ref={(node) => {
+                tabRefs.current[i] = node;
+              }}
               accessibilityRole="tab"
               // iOS does not announce the position by itself; the others do through the role.
               accessibilityLabel={
@@ -70,6 +99,7 @@ export function SlidingTabBar({
               }
               accessibilityState={{ selected: focused }}
               onPress={onPress}
+              {...(isWeb ? { onKeyDown, tabIndex: focused ? 0 : -1 } : null)}
               onLongPress={() => emitter.emit({ type: 'tabLongPress', target: route.key })}
               style={({ pressed }) => [styles.tab, pressed && { opacity: 0.6 }]}
             >

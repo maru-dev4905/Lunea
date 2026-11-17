@@ -6,6 +6,13 @@ import { useReducedMotion } from '@/motion/useReducedMotion';
 describe('useReducedMotion', () => {
   afterEach(() => jest.restoreAllMocks());
 
+  // Until the system has answered we do not know, and motion must not start on a guess.
+  it('is unknown until the system has answered', async () => {
+    jest.spyOn(AccessibilityInfo, 'isReduceMotionEnabled').mockReturnValue(new Promise(() => {}));
+    const { result } = await renderHook(() => useReducedMotion());
+    expect(result.current).toBeUndefined();
+  });
+
   it('is true when the system asks for reduced motion', async () => {
     jest.spyOn(AccessibilityInfo, 'isReduceMotionEnabled').mockResolvedValue(true);
     const { result } = await renderHook(() => useReducedMotion());

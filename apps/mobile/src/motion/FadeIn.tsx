@@ -1,5 +1,5 @@
 import { useEffect, useState, type ReactNode } from 'react';
-import { Animated, View, type StyleProp, type ViewStyle } from 'react-native';
+import { Animated, type StyleProp, type ViewStyle } from 'react-native';
 
 import { useTheme } from '@/theme';
 
@@ -22,6 +22,8 @@ export function FadeIn({
   const [progress] = useState(() => new Animated.Value(0));
 
   useEffect(() => {
+    // Wait for the system's answer: until then nothing moves and the content stays hidden.
+    if (reduced === undefined) return;
     if (reduced) {
       progress.setValue(1);
       return;
@@ -37,14 +39,8 @@ export function FadeIn({
     return () => animation.stop();
   }, [reduced, delay, motion.duration.base, progress]);
 
-  if (reduced) {
-    return (
-      <View testID={testID} style={[style, { opacity: 1 }]}>
-        {children}
-      </View>
-    );
-  }
-
+  // One wrapper type for every state, so changing the setting never remounts the children
+  // (a focused text input inside would lose its focus and selection).
   return (
     <Animated.View
       testID={testID}
