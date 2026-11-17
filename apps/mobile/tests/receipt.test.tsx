@@ -19,6 +19,14 @@ describe('Receipt sample', () => {
     expect(screen).toHavePathname('/receipt/sample');
   });
 
+  // Large fonts: the receipt number and the date share a row, so each may shrink and wrap
+  // instead of pushing the other out of the screen.
+  it('lets the receipt number and the date shrink on large fonts', async () => {
+    await openReceipt();
+    expect(screen.getByText(SAMPLE_RECEIPT.receiptNo)).toHaveStyle({ flexShrink: 1 });
+    expect(screen.getByText(SAMPLE_RECEIPT.dateTime)).toHaveStyle({ flexShrink: 1 });
+  });
+
   it('lists each feeling with its price on the same row', async () => {
     await openReceipt();
     SAMPLE_RECEIPT.items.forEach((item) => {

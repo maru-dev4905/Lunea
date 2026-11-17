@@ -119,7 +119,8 @@ const styles = StyleSheet.create({
     alignSelf: 'stretch',
     marginTop: 12,
   },
-  meta: { fontSize: 11, letterSpacing: 0.5, fontVariant: ['tabular-nums'] },
+  // Each can shrink and wrap on large fonts instead of pushing the other out of the row.
+  meta: { flexShrink: 1, fontSize: 11, letterSpacing: 0.5, fontVariant: ['tabular-nums'] },
   gap: { marginHorizontal: 24 },
   row: {
     flexDirection: 'row',

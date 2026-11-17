@@ -30,6 +30,8 @@ export function DrawLine({
   const [x1, y1, x2, y2] = motion.easing.calm;
 
   useEffect(() => {
+    // Wait for the system's answer; never start on a guess.
+    if (reduced === undefined) return;
     if (reduced) {
       progress.setValue(1);
       return;

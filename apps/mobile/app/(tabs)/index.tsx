@@ -3,6 +3,7 @@ import { Pressable, StyleSheet, Text, View } from 'react-native';
 
 import { isSubmittable, useDraft } from '@/journal';
 import { FadeIn } from '@/motion/FadeIn';
+import { ReceiptLink } from '@/receipt/ReceiptLink';
 import { useTheme } from '@/theme';
 
 // docs/03 Today: a clear way in, nothing mandatory, no streaks, scores or guilt copy.
@@ -40,15 +41,7 @@ export default function TodayScreen() {
         </Pressable>
       </FadeIn>
       <FadeIn delay={theme.motion.stagger * 3}>
-        <Pressable
-          accessibilityRole="link"
-          onPress={() => router.push('/receipt/sample')}
-          style={({ pressed }) => [styles.link, pressed && { opacity: 0.6 }]}
-        >
-          <Text style={[styles.linkLabel, { color: theme.color.textSecondary }]}>
-            영수증 예시 보기
-          </Text>
-        </Pressable>
+        <ReceiptLink />
       </FadeIn>
     </View>
   );
@@ -67,6 +60,4 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   buttonLabel: { fontSize: 16, fontWeight: '500' },
-  link: { minHeight: 44, justifyContent: 'center' },
-  linkLabel: { fontSize: 14, letterSpacing: 0.5 },
 });

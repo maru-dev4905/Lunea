@@ -4,6 +4,7 @@ import {
   render,
   screen,
 } from '@testing-library/react-native';
+import { Animated } from 'react-native';
 
 import { DrawLine } from '@/motion/DrawLine';
 import { useReducedMotion } from '@/motion/useReducedMotion';
@@ -48,5 +49,16 @@ describe('DrawLine', () => {
     await render(<DrawLine testID="line" variant="dashed" />);
     await fireEvent(screen.getByTestId('line', hidden), 'layout', layout(80));
     expect(screen.getAllByTestId('dash', hidden).length).toBeGreaterThan(0);
+  });
+
+  // The system setting is unknown for a moment after mount. A line must not start drawing on a
+  // guess, even when its width is measured before the answer arrives.
+  it('does not start drawing until the reduced-motion setting is known', async () => {
+    const timing = jest.spyOn(Animated, 'timing');
+    jest.mocked(useReducedMotion).mockReturnValue(undefined);
+    await render(<DrawLine testID="line" />);
+    await fireEvent(screen.getByTestId('line', hidden), 'layout', layout(80));
+    expect(timing).not.toHaveBeenCalled();
+    timing.mockRestore();
   });
 });
