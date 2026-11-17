@@ -54,14 +54,20 @@ export function SlidingTabBar({
         {state.routes.map((route, i) => {
           const focused = state.index === i;
           const label = descriptors[route.key]?.options.title ?? route.name;
-          const onPress = () => {
+          // The one selection step for pointer, Space and the arrow keys: emit `tabPress` and
+          // navigate only when no listener cancelled it.
+          const select = (targetIndex: number) => {
+            const target = state.routes[targetIndex];
             const event = emitter.emit({
               type: 'tabPress',
-              target: route.key,
+              target: target.key,
               canPreventDefault: true,
             });
-            if (!focused && !event.defaultPrevented) navigateToTab(route.key);
+            if (event.defaultPrevented) return false;
+            if (targetIndex !== state.index) navigateToTab(target.key);
+            return true;
           };
+          const onPress = () => select(i);
           // Web keyboard support (react-native-web only activates a tab with Enter): Space selects
           // and the arrow keys move to the neighbouring tab, wrapping at the ends.
           const onKeyDown = (event: {
@@ -79,12 +85,8 @@ export function SlidingTabBar({
                     : null;
             if (target === null) return;
             event.preventDefault?.();
-            if (target === i) {
-              onPress();
-              return;
-            }
-            navigateToTab(state.routes[target].key);
-            tabRefs.current[target]?.focus?.();
+            // Focus follows the selection, but not when a listener cancelled it.
+            if (select(target)) tabRefs.current[target]?.focus?.();
           };
           return (
             <Pressable
