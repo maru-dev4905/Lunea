@@ -47,7 +47,7 @@ export default function JournalEditorScreen() {
           <Text
             style={[
               styles.notice,
-              { color: theme.color.textSecondary, backgroundColor: theme.color.surface },
+              { color: theme.color.textSecondary, borderColor: theme.color.borderSubtle },
             ]}
           >
             지금은 임시 저장이라 앱을 끄면 사라져요. 실제 일기는 아직 쓰지 마세요.
@@ -91,15 +91,15 @@ export default function JournalEditorScreen() {
             style={({ pressed }) => [
               styles.save,
               {
-                backgroundColor: canSave ? theme.color.accent : theme.color.borderSubtle,
-                opacity: pressed ? 0.85 : 1,
+                borderColor: canSave ? theme.color.accent : theme.color.borderSubtle,
+                opacity: pressed ? 0.6 : 1,
               },
             ]}
           >
             <Text
               style={[
                 styles.saveLabel,
-                { color: canSave ? theme.color.onAccent : theme.color.textSecondary },
+                { color: canSave ? theme.color.accent : theme.color.textMuted },
               ]}
             >
               저장
@@ -118,9 +118,22 @@ const styles = StyleSheet.create({
   header: { flexDirection: 'row', justifyContent: 'flex-end' },
   close: { minHeight: 44, minWidth: 44, justifyContent: 'center', alignItems: 'center' },
   closeLabel: { fontSize: 16 },
-  notice: { fontSize: 14, lineHeight: 20, padding: 12, borderRadius: 8 },
+  // Lines, not fills (D-36): the notice and the save button are drawn with a hairline.
+  notice: {
+    fontSize: 14,
+    lineHeight: 20,
+    padding: 12,
+    borderRadius: 8,
+    borderWidth: StyleSheet.hairlineWidth,
+  },
   input: { flex: 1, borderWidth: 1, borderRadius: 12, padding: 16, fontSize: 17, lineHeight: 26 },
   feedback: { fontSize: 14, lineHeight: 20 },
-  save: { minHeight: 48, borderRadius: 999, justifyContent: 'center', alignItems: 'center' },
+  save: {
+    minHeight: 48,
+    borderRadius: 999,
+    borderWidth: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
   saveLabel: { fontSize: 16, fontWeight: '600' },
 });

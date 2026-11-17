@@ -25,8 +25,18 @@ Tokens (`tokens.motion`): durations 150/250/400 ms; the tab indicator uses a fas
 
 Optional opacity/position transitions and subtle focus/save feedback. Respect OS reduced-motion; avoid continuous battery-draining animation; no motion that implies the user's emotion; all interactions must work with animation disabled.
 
-## Unresolved metaphor
-Receipt-like record and Collection have been explored but are not final. Do not implement thermal-paper textures, perforated edges, currency/transaction language, collectible rewards, or generated daily keepsake objects without approval. Keep record detail modular.
+## No background fills (D-36)
+The UI has no background colors. Shapes are told apart by lines, shadows and motion only. The one fill is the screen canvas (`color.background`). Buttons and notices are outlined; the receipt paper is a hairline with a soft outset shadow. Thin bars that are lines in practice (hairlines, dashes, the tab indicator, barcode bars) may be drawn filled. `tests/no-fills.test.ts` enforces this.
+
+## Receipt (provisional, D-12, D-35, D-37)
+A receipt-like look is the shareable view of a saved record, laid out like a real one: brand, title, the event, receipt number and date; a dashed line; one row per feeling with its price on the right and a quote of the user's own words under it (D-33); a dashed line; the total; today's deposit and the running balance; the streak; a barcode; a thank-you and a note that the numbers are made up. It lives in `src/receipt` and `app/receipt`, so it can be changed or removed.
+
+Prices, balance and streak are synthetic. How a feeling gets a price is undecided (D-11), so nothing computes one; the receipt only adds up what it is given. Feelings sit side by side and are never ranked, and no copy shames a missed day.
+
+Still not approved: thermal-paper textures, perforated edges, generated daily keepsake objects. Keep record detail modular.
+
+### Water-like motion
+Motion is as soft as a ripple spreading on still water: unhurried durations (`tokens.motion`), a long soft landing (`calm` easing), no bounce (the tab indicator springs are damped so they do not overshoot), one-shot and never looping. On the receipt, lines and the barcode draw themselves from left to right and top to bottom, and the words fade in under them. Everything is hidden from screen readers when decorative, and replaced by an instant, static view when the system asks for reduced motion.
 
 ## Initial component inventory
 `AppScreen`, `AppHeader`, `PrimaryButton`, `SecondaryButton`, `TextField`, `JournalComposer`, `MessageBubble` (if conversation retained), `EmotionChip`, `EmotionCandidate`, `EvidenceText`, `RecordPreview`, `RecordDate`, `EmptyState`, `LoadingState`, `ErrorState`, `ConfirmDialog`, `BottomNavigation`.
