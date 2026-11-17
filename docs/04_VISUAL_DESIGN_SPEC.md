@@ -11,13 +11,18 @@ Lunéa (`lunea`, 루네아): quiet, minimal, reflective, intimate. Moonlight may
 - Motion supports orientation, never competes with reading.
 - No visual gamification or decorative complexity.
 
+## Visual direction (D-34)
+Accepted by the owner on 2026-11-16: a bright warm white background (`#FAF9F6`), black ink (`#151515`) as the only accent, hairline strokes and small dots, one emphasis at a time, and calm motion that keeps the screens from feeling empty. Inspiration only: a public tab-bar motion sample (a short ink bar that slides between tabs, its leading edge springing ahead of the trailing edge). Nothing from the paid pack was used, and nothing is copied. Dark mode (D-20), fonts and the high-fi core flow are still open.
+
 ## Color tokens
-Exact palette TBD. Use semantic tokens: `background`, `surface`, `surfaceElevated`, `textPrimary`, `textSecondary`, `textMuted`, `borderSubtle`, `accent`, `accentSoft`, `success`, `warning`, `danger`. Use neutral surfaces and one restrained accent. Never encode emotion meaning only by color.
+The final palette is still TBD pending the high-fi design; the values in `apps/mobile/src/theme/tokens.ts` follow D-34. Text colors must keep 4.5:1 contrast on the backgrounds they are used on (checked by `tests/design-tokens.test.ts`). Use semantic tokens: `background`, `surface`, `surfaceElevated`, `textPrimary`, `textSecondary`, `textMuted`, `borderSubtle`, `accent`, `accentSoft`, `success`, `warning`, `danger`. Use neutral surfaces and one restrained accent. Never encode emotion meaning only by color.
 
 ## Typography/layout
 Prioritize Korean long-form readability, comfortable line height, legible weights, safe-area-aware layout, consistent spacing, and accessible touch targets. Font and exact scale TBD pending platform/licensing review.
 
 ## Motion
+Tokens (`tokens.motion`): durations 150/250/400 ms; the tab indicator uses a fast leading spring and a slower trailing spring. Every animation reads `useReducedMotion()` and falls back to an instant change.
+
 Optional opacity/position transitions and subtle focus/save feedback. Respect OS reduced-motion; avoid continuous battery-draining animation; no motion that implies the user's emotion; all interactions must work with animation disabled.
 
 ## Unresolved metaphor
