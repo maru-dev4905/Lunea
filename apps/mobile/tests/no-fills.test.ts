@@ -44,11 +44,19 @@ const STROKES: { file: string; text: string; count: number }[] = [
 
 type Fill = { file: string; line: number; text: string };
 
+// The screen canvas is allowed only as a plain `backgroundColor: color.background` value, not as
+// a substring of some other expression such as a conditional that can pick another color.
+function isCanvasFill(text: string): boolean {
+  return (
+    /backgroundColor:\s*(?:theme\.)?color\.background\s*[,}]/.test(text) && !text.includes('?')
+  );
+}
+
 // Every fill that is neither the screen canvas nor an allowed stroke.
 function unexpectedFills(fills: Fill[]): string[] {
   const used = new Map<string, number>();
   return fills
-    .filter((f) => !f.text.includes('color.background'))
+    .filter((f) => !isCanvasFill(f.text))
     .filter((f) => {
       const allowed = STROKES.find((s) => s.file === f.file && s.text === f.text);
       if (!allowed) return true;
@@ -127,11 +135,19 @@ describe('no filled backgrounds (D-36)', () => {
     it('rejects an allowed line text in another file', () => {
       expect(unexpectedFills([{ ...bar, file: 'src/receipt/Receipt.tsx' }])).toHaveLength(1);
     });
+    it('rejects an expression that merely mentions the canvas color', () => {
+      const tricky = {
+        file: 'src/receipt/Barcode.tsx',
+        line: 1,
+        text: 'style={[styles.row, { backgroundColor: reduced ? color.background : color.textPrimary }]}',
+      };
+      expect(unexpectedFills([tricky])).toHaveLength(1);
+    });
     it('accepts the screen canvas anywhere', () => {
       const canvas = {
         file: 'app/x.tsx',
         line: 1,
-        text: 'backgroundColor: theme.color.background',
+        text: 'style={{ backgroundColor: theme.color.background }}',
       };
       expect(unexpectedFills([canvas])).toEqual([]);
     });
