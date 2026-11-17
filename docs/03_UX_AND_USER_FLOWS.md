@@ -24,7 +24,7 @@ This is a proposal, not final IA. No stats/social/AI-chat tabs in MVP without ap
 
 ## Screen behavior
 ### Today
-Clear entry point, no mandatory daily completion, no guilt copy. The Today screen itself shows no streak or score; a streak and prices appear only on the receipt (D-37, prototype on synthetic data).
+Clear entry point, no mandatory daily completion, no guilt copy. The Today screen itself shows no streak or score; a streak and prices appear only on the receipt (D-37, see the Receipt economy in docs/01; prototype on synthetic data).
 
 ### Journal editor
 Comfortable long-form input; no mandatory emotion selection; preserve draft on transient errors; disclose AI processing before sending text.
