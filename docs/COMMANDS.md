@@ -17,7 +17,7 @@ Claude Code(Orca 작업자 포함)에서 쓰는 명령어를 모았습니다. `/
 | 둘 다 별로 → 다시 비교 | `/lunea-retry LUN-15 "더 조용하게, 움직임 최소"` |
 | 1번이 거의 맞음 → 다듬기 | `/lunea-refine LUN-15 1 "속도만 더 느리게"` |
 | 뭘 원하는지 아직 모르겠음 | `/lunea-back-to-design LUN-15` |
-| 독립 작업 여러 개 동시에 | `/lunea-parallel LUN-20 LUN-21` |
+| 작업 1개 또는 독립 작업 여러 개를 조율자에게 맡기기 | `/lunea-parallel LUN-21` 또는 `/lunea-parallel LUN-20 LUN-21` |
 | PR 독립 검증 | `/lunea-verify 12` 또는 `/lunea-verify 12 a1b2c3d` (새 세션에서. 순차형은 최종 push 후 사람이 실행, 조율형은 자동) |
 | 작업 마무리 | `/lunea-finish` |
 | 고민 과정 기록(포트폴리오) | `/lunea-log "주제"` |
@@ -31,7 +31,7 @@ Claude Code(Orca 작업자 포함)에서 쓰는 명령어를 모았습니다. `/
 |---|---|---|---|
 | **A. 순차형** | 기반 작업(FND-02, FND-04 등), 선택된 시안 다듬기 | `/lunea-seq` | `mode-seq` |
 | **B. 비교형** | 인터랙션이 중요한 화면 | `/lunea-compare` | `mode-compare` |
-| **C. 조율 + 구현 + 검증** | 방향이 정해진 뒤 병렬 구현 | `/lunea-parallel` | `mode-parallel` |
+| **C. 조율 + 구현 + 검증** | 방향이 정해진 뒤 구현(작업 1개도 가능, 여러 개는 병렬) | `/lunea-parallel` | `mode-parallel` |
 | D. 완전 자동 | **보류** (비용 검토 후 결정, D-23) | — | `auto-pr` |
 
 ### 비교형 이후 흐름
@@ -72,8 +72,12 @@ Claude Code(Orca 작업자 포함)에서 쓰는 명령어를 모았습니다. `/
 ### `/lunea-back-to-design LUN-번호`
 구현을 멈추고, 시도한 것과 탈락 이유를 정리한 뒤 디자인 작업(참고 영상·스케치·인터랙션 명세)으로 되돌립니다.
 
-### `/lunea-parallel LUN-a LUN-b ...`
-서로 파일이 겹치지 않는 작업만 동시에 진행합니다. `package.json`·lockfile, Supabase 마이그레이션, 공통 토큰, `CLAUDE.md`·`.claude/`를 건드리는 작업은 거절하고 순서대로 하자고 알려 줍니다. 구현자가 최종 push의 head SHA를 보고하면 별도 검증자가 그 SHA로 `/lunea-verify PR번호 SHA`를 실행합니다. 이후 push가 있으면 새 head SHA에 대해 다시 실행합니다.
+### `/lunea-parallel LUN-a [LUN-b ...]`
+조율자 세션(이 세션) 하나만 열어 두고 이 한 줄만 입력하면, 구현자·검증자 세션은 조율자가 Orca로 직접 만들고 닫습니다. 작업이 여러 개면 서로 파일이 겹치지 않아야 하고, `package.json`·lockfile, Supabase 마이그레이션, 공통 토큰, `CLAUDE.md`·`.claude/`를 건드리는 작업은 병렬을 거절하고 순서대로 하자고 알려 줍니다.
+
+흐름: 구현자가 작업하고 PR을 올림 → 조율할 내용은 구현자 → 조율자 → 사용자 → 구현자 순으로 전달 → 조율자가 CodeRabbit 지적을 지켜보다 같은 구현자에게 넘김(최대 2회) → 최종 push의 SHA를 세 곳에서 확인 → 새 검증자가 그 SHA로 `/lunea-verify PR번호 SHA` 실행 → 조율자가 한국어로 보고. 이후 push가 있으면 새 검증자가 다시 실행합니다. 구현자는 검증 지적까지 처리되고 머지할 수 있을 때까지, 검증자는 매번 새로 만듭니다. 검증이 시작된 뒤에는 검증 지적을 고치는 push만 허용하고(그러면 새 head를 다시 검증), 검증을 통과한 head 뒤에는 push하지 않으며, `docs/STATUS.md`는 머지 후 별도 문서 PR로 갱신합니다.
+
+사용자가 하는 일: 이 명령, 조율자가 묻는 제품 결정에 답, 머지, 실기기 확인. 머지했다고 알리면 조율자가 머지됨·미커밋 변경 없음을 확인한 뒤 그 작업의 worktree와 로컬 브랜치를 정리합니다.
 
 ### `/lunea-verify PR번호 [SHA]`
 구현하지 않은 새 세션이 PR을 검증합니다. SHA를 주면 그 커밋을, 생략하면 시작 시점의 PR head를 체크아웃하고, 준 SHA가 PR head와 다르면 멈추고 알립니다. 검증 내용: 검사 재실행, 수용 기준별 충족 여부와 근거, 인터랙션·접근성 체크, 제품 원칙(원문 보존, 사용자 확인 없는 AI 저장 금지, 로그에 일기 원문 금지). 결과는 PR 코멘트로 남기고 직접 수정하지는 않습니다.
