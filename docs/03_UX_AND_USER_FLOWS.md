@@ -9,6 +9,8 @@ Quiet, intimate, non-judgmental. Writing begins before categorization. AI feels 
 - Settings: account, privacy, AI processing, data controls.
 This is a proposal, not final IA. No stats/social/AI-chat tabs in MVP without approval.
 
+Low-fi wireframes and the core flow diagram for these screens are in `docs/03a_WIREFRAMES.md` (LUN-14). Emotion review and Save feedback are marked there as compare targets (mode B candidates). Keep the two files consistent.
+
 ## Primary flow
 1. Open Today.
 2. Start a record.
