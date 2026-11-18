@@ -32,7 +32,7 @@ flowchart TD
   DS -->|"send"| P["Calm progress"]
   P -->|"analysis ready"| R["Emotion review (COMPARE TARGET)"]
   P -->|"analysis failed"| F["Failure notice"]
-  F -->|"retry"| P
+  F -->|"retry (disclosure rule TBD, PRIV-02)"| P
   F -->|"save without analysis"| SV
   R -->|"confirm, or skip all"| SV["Save: what will be saved"]
   SV -->|"edit text"| E
@@ -49,7 +49,7 @@ flowchart TD
 
 Notes:
 - Leaving at any step keeps the draft (docs/03 "Journal editor"); nothing asks the user to finish.
-- The only path that uses AI passes through the disclosure; text is never sent before the user agrees.
+- The first send goes through the disclosure; text is never sent before the user agrees. Whether a retry asks again or reuses that consent is TBD until PRIV-02 (per request or once), so the retry edge above is not decided.
 - Whether editing text after an analysis keeps or invalidates the candidates follows D-31 (the user must re-confirm after a text change). The screen behavior for that is TBD (PRIV-01/COL-01).
 
 ## Tab bar (shared by Today, Collection, Settings)
@@ -217,7 +217,7 @@ Purpose: an explicit confirmation that separates the three layers (docs/03 "Save
 |  (nothing is saved until you tap this)   |
 +------------------------------------------+
 ```
-- Reached from Emotion review, from the editor (plain save, D-32) or from a failure notice (save without analysis). With no AI, the "Written by AI" block is absent, and "Your feelings" may be empty or hold labels the user added.
+- Reached from Emotion review, from the editor (plain save, D-32) or from a failure notice (save without analysis). With no AI, the "Written by AI" block is absent and "Your feelings" is empty. TBD (owner decision): whether plain Save offers manual emotion entry. Option 1: no manual labels on plain Save (labels come only from the AI review). Option 2: a manual add step before Save (a new step, not drawn here). Until decided, no manual add path exists in these wireframes.
 - AI success never reaches Save on its own, and Save is never a default action of a gesture or timeout.
 - Double taps must not create two records (docs/03 edge cases). `[ Back ]` returns to the previous step with choices kept; an edit-text path returns to the editor.
 
