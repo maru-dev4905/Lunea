@@ -1,7 +1,7 @@
 import { fireEvent, renderRouter, screen } from 'expo-router/testing-library';
-import { AccessibilityInfo } from 'react-native';
 
 // LUN-20 / docs/03 Today + Journal editor. The draft lives in memory only (ADR-0003).
+// Saving is covered by journal-records.test.tsx (LUN-21).
 //
 // fireEvent is async in React Native Testing Library 14: always await it, otherwise act()
 // calls overlap and navigation state leaks from one test into the next.
@@ -93,22 +93,5 @@ describe('Journal editor', () => {
     await fireEvent.press(screen.getByRole('button', { name: '닫기' }));
     expect(await screen.findByRole('header', { name: 'Today' })).toBeOnTheScreen();
     expect(screen).toHavePathname('/');
-  });
-});
-
-// accessibilityLiveRegion only works on Android, so the same message is announced explicitly
-// for VoiceOver on iOS.
-describe('save notice announcement', () => {
-  afterEach(() => jest.restoreAllMocks());
-
-  it('announces the notice for screen readers when save is pressed', async () => {
-    const announce = jest
-      .spyOn(AccessibilityInfo, 'announceForAccessibility')
-      .mockImplementation(() => {});
-    const input = await openEditor();
-    await fireEvent.changeText(input, '오늘은 발표가 끝나서 마음이 놓였다.');
-    await fireEvent.press(screen.getByRole('button', { name: '저장' }));
-    const notice = await screen.findByText(/저장 기능은 다음 업데이트/);
-    expect(announce).toHaveBeenCalledWith(notice.props.children);
   });
 });

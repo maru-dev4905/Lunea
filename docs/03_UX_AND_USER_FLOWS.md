@@ -42,8 +42,10 @@ Show label, optional plain-language description, evidence snippet, optional user
 ### Save
 Clearly distinguish original text, AI-generated summary, and user-confirmed labels. Explicit save action required.
 
+Plain save without AI (LUN-21, D-32): Save in the editor stores the text exactly as typed, with no emotion step, clears the draft and opens the saved record's Detail. Save is idempotent (a double tap makes one record). Save feedback is one calm line ("저장했어요."), shown once on arrival at Detail with a single hairline that draws itself (static under reduced motion) and a screen-reader announcement; no points, streaks or praise. The feedback placement is still a compare target (docs/03a §5); this is the baseline. Records are kept in memory only (ADR-0003) and vanish when the app closes.
+
 ### Collection/detail
-Date-ordered list with short preview; pagination. Original writing remains accessible. Confirmed interpretation is primary. Clearly label AI-derived content. Edit/delete are discoverable. No forced receipt-like layout.
+Date-ordered list with short preview; pagination. Original writing remains accessible. Empty Collection: one calm line and a way to start a record, with no guilt or streak wording. Several records on one day are separate items, newest first (D-14 grouping is TBD). Confirmed interpretation is primary. Clearly label AI-derived content. Edit/delete are discoverable. No forced receipt-like layout.
 
 ### Settings
 Account/session, AI/privacy explanation, data export/delete entry points when implemented.

@@ -1,11 +1,13 @@
 import { Stack } from 'expo-router';
 
-import { DraftProvider } from '@/journal';
+import { DraftProvider, RecordsProvider } from '@/journal';
 
 export default function RootLayout() {
   return (
     <DraftProvider>
-      <Stack screenOptions={{ headerShown: false }} />
+      <RecordsProvider>
+        <Stack screenOptions={{ headerShown: false }} />
+      </RecordsProvider>
     </DraftProvider>
   );
 }

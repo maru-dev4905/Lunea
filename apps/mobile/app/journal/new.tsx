@@ -1,7 +1,6 @@
 import { useRouter } from 'expo-router';
-import { useState } from 'react';
+import { useRef } from 'react';
 import {
-  AccessibilityInfo,
   KeyboardAvoidingView,
   Platform,
   Pressable,
@@ -12,7 +11,7 @@ import {
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-import { isSubmittable, useDraft } from '@/journal';
+import { isSubmittable, useDraft, useRecords } from '@/journal';
 import { FadeIn } from '@/motion/FadeIn';
 import { useTheme } from '@/theme';
 
@@ -21,8 +20,21 @@ export default function JournalEditorScreen() {
   const theme = useTheme();
   const router = useRouter();
   const { draft, setDraft } = useDraft();
-  const [notice, setNotice] = useState<string | null>(null);
+  const { addRecord } = useRecords();
+  // Set synchronously on the first press: a second tap before the screen re-renders must not
+  // create a second record (docs/03a: save is idempotent).
+  const saving = useRef(false);
   const canSave = isSubmittable(draft);
+
+  // Plain save (D-32): no AI, no emotions. The text is stored exactly as typed.
+  const save = () => {
+    if (saving.current) return;
+    const record = addRecord(draft);
+    if (!record) return;
+    saving.current = true;
+    setDraft('');
+    router.replace({ pathname: '/record/[id]', params: { id: record.id, saved: '1' } });
+  };
 
   // On the web the editor can be the first screen, so there may be nothing to go back to.
   const close = () => (router.canGoBack() ? router.back() : router.replace('/'));
@@ -60,34 +72,17 @@ export default function JournalEditorScreen() {
             placeholder="오늘은 어땠나요?"
             placeholderTextColor={theme.color.textSecondary}
             value={draft}
-            onChangeText={(text) => {
-              setDraft(text);
-              setNotice(null);
-            }}
+            onChangeText={setDraft}
             style={[
               styles.input,
               { color: theme.color.textPrimary, borderColor: theme.color.borderSubtle },
             ]}
           />
 
-          {notice ? (
-            <Text
-              accessibilityLiveRegion="polite"
-              style={[styles.feedback, { color: theme.color.textSecondary }]}
-            >
-              {notice}
-            </Text>
-          ) : null}
-
           <Pressable
             accessibilityRole="button"
             disabled={!canSave}
-            onPress={() => {
-              const message = '저장 기능은 다음 업데이트에서 추가돼요.';
-              setNotice(message);
-              // accessibilityLiveRegion is Android only; this reaches VoiceOver on iOS as well.
-              AccessibilityInfo.announceForAccessibility(message);
-            }}
+            onPress={save}
             style={({ pressed }) => [
               styles.save,
               {
@@ -127,7 +122,6 @@ const styles = StyleSheet.create({
     borderWidth: StyleSheet.hairlineWidth,
   },
   input: { flex: 1, borderWidth: 1, borderRadius: 12, padding: 16, fontSize: 17, lineHeight: 26 },
-  feedback: { fontSize: 14, lineHeight: 20 },
   save: {
     minHeight: 48,
     borderRadius: 999,
