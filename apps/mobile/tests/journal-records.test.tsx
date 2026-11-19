@@ -96,14 +96,21 @@ describe('save flow', () => {
     expect(await screen.findByTestId('record-text')).toHaveTextContent(text, { exact: true });
   });
 
+  // The default platform in tests is iOS; this one checks the other platforms.
   it('says it saved once, calmly, and announces it for screen readers', async () => {
+    const original = Platform.OS;
+    Platform.OS = 'android';
     const announce = jest
       .spyOn(AccessibilityInfo, 'announceForAccessibility')
       .mockImplementation(() => {});
-    await writeAndSave(TEXT);
-    expect(await screen.findByText('저장했어요.')).toBeOnTheScreen();
-    expect(announce).toHaveBeenCalledWith('저장했어요.');
-    expect(screen.queryByText(/잘했어요|축하|연속|점수/)).toBeNull();
+    try {
+      await writeAndSave(TEXT);
+      expect(await screen.findByText('저장했어요.')).toBeOnTheScreen();
+      expect(announce).toHaveBeenCalledWith('저장했어요.');
+      expect(screen.queryByText(/잘했어요|축하|연속|점수/)).toBeNull();
+    } finally {
+      Platform.OS = original;
+    }
   });
 
   // On iOS a plain announcement interrupts what VoiceOver is reading; the queued one waits.
