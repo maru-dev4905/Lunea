@@ -1,7 +1,7 @@
 import { act, renderHook } from '@testing-library/react-native';
 import { fireEvent, renderRouter, screen } from 'expo-router/testing-library';
 import type { ReactNode } from 'react';
-import { AccessibilityInfo } from 'react-native';
+import { AccessibilityInfo, Platform } from 'react-native';
 
 import { formatRecordDate, RecordsProvider, useRecords } from '@/journal';
 
@@ -104,6 +104,26 @@ describe('save flow', () => {
     expect(await screen.findByText('저장했어요.')).toBeOnTheScreen();
     expect(announce).toHaveBeenCalledWith('저장했어요.');
     expect(screen.queryByText(/잘했어요|축하|연속|점수/)).toBeNull();
+  });
+
+  // On iOS a plain announcement interrupts what VoiceOver is reading; the queued one waits.
+  it('queues the announcement behind the current reading on iOS', async () => {
+    const original = Platform.OS;
+    Platform.OS = 'ios';
+    const plain = jest
+      .spyOn(AccessibilityInfo, 'announceForAccessibility')
+      .mockImplementation(() => {});
+    const queued = jest
+      .spyOn(AccessibilityInfo, 'announceForAccessibilityWithOptions')
+      .mockImplementation(() => {});
+    try {
+      await writeAndSave(TEXT);
+      await screen.findByText('저장했어요.');
+      expect(queued).toHaveBeenCalledWith('저장했어요.', { queue: true });
+      expect(plain).not.toHaveBeenCalled();
+    } finally {
+      Platform.OS = original;
+    }
   });
 
   it('shows the record in Collection, newest first, with its date', async () => {

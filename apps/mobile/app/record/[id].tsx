@@ -1,6 +1,14 @@
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { useEffect } from 'react';
-import { AccessibilityInfo, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import {
+  AccessibilityInfo,
+  Platform,
+  Pressable,
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+} from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { formatRecordDate, useRecords } from '@/journal';
@@ -22,8 +30,14 @@ export default function RecordDetailScreen() {
   const justSaved = saved === '1' && record !== undefined;
 
   useEffect(() => {
-    // accessibilityLiveRegion is Android only; this reaches VoiceOver on iOS as well.
-    if (justSaved) AccessibilityInfo.announceForAccessibility(SAVED);
+    if (!justSaved) return;
+    // accessibilityLiveRegion is Android only; this reaches VoiceOver on iOS as well. On iOS the
+    // plain announcement interrupts what is being read, so it is queued behind it instead.
+    if (Platform.OS === 'ios') {
+      AccessibilityInfo.announceForAccessibilityWithOptions(SAVED, { queue: true });
+    } else {
+      AccessibilityInfo.announceForAccessibility(SAVED);
+    }
   }, [justSaved]);
 
   // On the web the detail can be the first screen, so there may be nothing to go back to.
