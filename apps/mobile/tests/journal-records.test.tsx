@@ -96,23 +96,6 @@ describe('save flow', () => {
     expect(await screen.findByTestId('record-text')).toHaveTextContent(text, { exact: true });
   });
 
-  // The default platform in tests is iOS; this one checks the other platforms.
-  it('says it saved once, calmly, and announces it for screen readers', async () => {
-    const original = Platform.OS;
-    Platform.OS = 'android';
-    const announce = jest
-      .spyOn(AccessibilityInfo, 'announceForAccessibility')
-      .mockImplementation(() => {});
-    try {
-      await writeAndSave(TEXT);
-      expect(await screen.findByText('저장했어요.')).toBeOnTheScreen();
-      expect(announce).toHaveBeenCalledWith('저장했어요.');
-      expect(screen.queryByText(/잘했어요|축하|연속|점수/)).toBeNull();
-    } finally {
-      Platform.OS = original;
-    }
-  });
-
   // On iOS a plain announcement interrupts what VoiceOver is reading; the queued one waits.
   it('queues the announcement behind the current reading on iOS', async () => {
     const original = Platform.OS;
@@ -193,5 +176,24 @@ describe('save flow', () => {
     expect(await screen.findByText('이 기록을 찾을 수 없어요.')).toBeOnTheScreen();
     await fireEvent.press(screen.getByRole('button', { name: 'Collection으로' }));
     expect(await screen.findByRole('header', { name: 'Collection' })).toBeOnTheScreen();
+  });
+
+  // The default platform in tests is iOS; this one checks the other platforms. It runs last: a screen
+  // left over from an earlier test can still announce in the next one, and a leftover announcement
+  // is harmless here but would break the iOS test's "plain was not used" check.
+  it('says it saved once, calmly, and announces it for screen readers', async () => {
+    const original = Platform.OS;
+    Platform.OS = 'android';
+    const announce = jest
+      .spyOn(AccessibilityInfo, 'announceForAccessibility')
+      .mockImplementation(() => {});
+    try {
+      await writeAndSave(TEXT);
+      expect(await screen.findByText('저장했어요.')).toBeOnTheScreen();
+      expect(announce).toHaveBeenCalledWith('저장했어요.');
+      expect(screen.queryByText(/잘했어요|축하|연속|점수/)).toBeNull();
+    } finally {
+      Platform.OS = original;
+    }
   });
 });
