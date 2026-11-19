@@ -117,7 +117,7 @@ Purpose: free writing first. Emotions are never asked for here.
 - `[ Save ]` and `[ Suggest feelings with AI ]` are disabled while the text is empty or only whitespace. Both are enabled with no emotion chosen.
 - `[ Save ]` goes to Save (plain save, D-32). `[ Suggest feelings with AI ]` goes to the disclosure (below).
 - Close keeps the draft. A transient error never loses typed text.
-- No character counter targets, no "write more" nudges. (An optional gentle prompt for short entries is a receipt-side idea in D-37 and is not part of the core editor; TBD whether it exists at all.)
+- No character counter targets, no "write more" nudges. (docs/01 "Receipt economy" lets the app offer an optional, gentle prompt to add more when an entry is short. Whether it exists, and whether it appears in the editor or only in the receipt module, is TBD and not drawn here.)
 
 ### AI disclosure (before sending)
 ```
@@ -217,7 +217,7 @@ Purpose: an explicit confirmation that separates the three layers (docs/03 "Save
 |  (nothing is saved until you tap this)   |
 +------------------------------------------+
 ```
-- Reached from Emotion review, from the editor (plain save, D-32) or from a failure notice (save without analysis). With no AI, the "Written by AI" block is absent and "Your feelings" is empty. TBD (owner decision): whether plain Save offers manual emotion entry. Option 1: no manual labels on plain Save (labels come only from the AI review). Option 2: a manual add step before Save (a new step, not drawn here). Until decided, no manual add path exists in these wireframes.
+- Reached from Emotion review, from the editor (plain save, D-32) or from a failure notice (save without analysis). With no AI, the "Written by AI" block is absent and "Your feelings" is empty. Decided (owner, 2026-11-19, D-38): plain Save has no manual emotion entry; labels come only from the AI review, and a record saved without AI has zero emotions (D-32). A manual add step is not part of the MVP.
 - AI success never reaches Save on its own, and Save is never a default action of a gesture or timeout.
 - Double taps must not create two records (docs/03 edge cases). `[ Back ]` returns to the previous step with choices kept; an edit-text path returns to the editor.
 
@@ -241,7 +241,7 @@ Fixed requirements (both variants): saved is stated only after the backend confi
 Compare target, what would differ between two variants (not designed here):
 - Where it appears: inline on the Save screen vs on arrival at Detail vs a transient notice over Collection.
 - How long it lasts and how it moves (still, a single line draw, a ripple per D-36), and whether it dismisses itself.
-- The next step offered: open the record, return to Today, or (PROVISIONAL) offer the receipt view.
+- The next step offered: open the record or return to Today. The receipt view is not offered here: it is reached only from Detail (PROVISIONAL).
 Judged on: does it feel finished and quiet, and does it tempt the user to measure themselves.
 
 ## 6. Collection
