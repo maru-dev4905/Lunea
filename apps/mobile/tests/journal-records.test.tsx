@@ -1,5 +1,5 @@
 import { act, renderHook } from '@testing-library/react-native';
-import { fireEvent, renderRouter, screen } from 'expo-router/testing-library';
+import { cleanup, fireEvent, renderRouter, screen } from 'expo-router/testing-library';
 import type { ReactNode } from 'react';
 import { AccessibilityInfo, Platform } from 'react-native';
 
@@ -88,7 +88,13 @@ describe('Collection', () => {
 });
 
 describe('save flow', () => {
-  afterEach(() => jest.restoreAllMocks());
+  // Each test starts clean: spies are removed with their call history and rendered screens are
+  // unmounted, so no test depends on which one ran before it.
+  afterEach(() => {
+    jest.restoreAllMocks();
+    jest.clearAllMocks();
+    cleanup();
+  });
 
   it('lands on the saved record and shows the exact original text', async () => {
     const text = '  첫 줄\n\n둘째 줄  ';
@@ -106,6 +112,9 @@ describe('save flow', () => {
     const queued = jest
       .spyOn(AccessibilityInfo, 'announceForAccessibilityWithOptions')
       .mockImplementation(() => {});
+    // Only calls made after this point count, whatever an earlier test left behind.
+    plain.mockClear();
+    queued.mockClear();
     try {
       await writeAndSave(TEXT);
       await screen.findByText('저장했어요.');
@@ -178,15 +187,14 @@ describe('save flow', () => {
     expect(await screen.findByRole('header', { name: 'Collection' })).toBeOnTheScreen();
   });
 
-  // The default platform in tests is iOS; this one checks the other platforms. It runs last: a screen
-  // left over from an earlier test can still announce in the next one, and a leftover announcement
-  // is harmless here but would break the iOS test's "plain was not used" check.
+  // The default platform in tests is iOS; this one checks the other platforms.
   it('says it saved once, calmly, and announces it for screen readers', async () => {
     const original = Platform.OS;
     Platform.OS = 'android';
     const announce = jest
       .spyOn(AccessibilityInfo, 'announceForAccessibility')
       .mockImplementation(() => {});
+    announce.mockClear();
     try {
       await writeAndSave(TEXT);
       expect(await screen.findByText('저장했어요.')).toBeOnTheScreen();
